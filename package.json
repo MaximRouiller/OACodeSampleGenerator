@@ -19,7 +19,6 @@
   "homepage": "https://github.com/MaximRouiller/OACodeSampleGenerator#readme",
   "dependencies": {
     "@apidevtools/swagger-parser": "^10.0.3",
-    "@openapitools/openapi-generator-cli": "^2.4.25",
     "swagger2openapi": "^7.0.8"
   }
 }
