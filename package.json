@@ -1,0 +1,25 @@
+{
+  "name": "oacodesamplegenerator",
+  "version": "1.0.0",
+  "description": "Generate code samples from OpenAPI specifications",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "generate": "openapi-generator-cli generate -i https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/resources/resource-manager/Microsoft.Resources/stable/2021-04-01/resources.json -g typescript-angular -o generated-sources/openapi --additional-properties=ngVersion=6.1.7,npmName=restClient,supportsES6=true,npmVersion=6.9.0,withInterfaces=true"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MaximRouiller/OACodeSampleGenerator.git"
+  },
+  "author": "S. Imran, Y. Fu, D. Du, L. Huang, A. Wongkittiruk",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MaximRouiller/OACodeSampleGenerator/issues"
+  },
+  "homepage": "https://github.com/MaximRouiller/OACodeSampleGenerator#readme",
+  "dependencies": {
+    "@apidevtools/swagger-parser": "^10.0.3",
+    "@openapitools/openapi-generator-cli": "^2.4.25",
+    "swagger2openapi": "^7.0.8"
+  }
+}
