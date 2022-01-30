@@ -1,0 +1,2 @@
+test.js shows the usage of swagger2openapi in NodeJS
+traverse.js attempts to do the convertion for all JSON files in azure specifications but currently encounter the error: opening too many files
