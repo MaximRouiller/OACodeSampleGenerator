@@ -1,0 +1,2242 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Azure AgriFood RP Service",
+    "description": "APIs documentation for Azure AgriFood Resource Provider Service.",
+    "version": "2020-05-12-preview"
+  },
+  "paths": {
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgFoodPlatform/farmBeats/{farmBeatsResourceName}/extensions/{extensionId}": {
+      "put": {
+        "tags": [
+          "Extensions"
+        ],
+        "description": "Install extension.",
+        "operationId": "Extensions_Create",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "extensionId",
+            "description": "Id of extension resource.",
+            "required": true,
+            "type": "string",
+            "x-ms-parameter-location": "method"
+          },
+          {
+            "in": "path",
+            "name": "farmBeatsResourceName",
+            "description": "FarmBeats resource name.",
+            "required": true,
+            "type": "string",
+            "x-ms-parameter-location": "method"
+          },
+          {
+            "name": "resourceGroupName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The name of the resource group. The name is case insensitive.",
+            "minLength": 1,
+            "maxLength": 90,
+            "x-ms-parameter-location": "method"
+          },
+          {
+            "name": "subscriptionId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The ID of the target subscription.",
+            "minLength": 1
+          },
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "The API version to use for this operation.",
+            "minLength": 1
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Success",
+            "schema": {
+              "description": "Extension resource.",
+              "type": "object",
+              "allOf": [
+                {
+                  "title": "Proxy Resource",
+                  "description": "The resource model definition for a Azure Resource Manager proxy resource. It will not have tags and a location",
+                  "type": "object",
+                  "allOf": [
+                    {
+                      "title": "Resource",
+                      "description": "Common fields that are returned in the response for all Azure Resource Manager resources",
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "readOnly": true,
+                          "type": "string",
+                          "description": "Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"
+                        },
+                        "name": {
+                          "readOnly": true,
+                          "type": "string",
+                          "description": "The name of the resource"
+                        },
+                        "type": {
+                          "readOnly": true,
+                          "type": "string",
+                          "description": "The type of the resource. E.g. \"Microsoft.Compute/virtualMachines\" or \"Microsoft.Storage/storageAccounts\""
+                        }
+                      },
+                      "x-ms-azure-resource": true
+                    }
+                  ]
+                }
+              ],
+              "properties": {
+                "systemData": {
+                  "description": "Metadata pertaining to creation and last modification of the resource.",
+                  "type": "object",
+                  "readOnly": true,
+                  "properties": {
+                    "createdBy": {
+                      "type": "string",
+                      "description": "The identity that created the resource."
+                    },
+                    "createdByType": {
+                      "type": "string",
+                      "description": "The type of identity that created the resource.",
+                      "enum": [
+                        "User",
+                        "Application",
+                        "ManagedIdentity",
+                        "Key"
+                      ],
+                      "x-ms-enum": {
+                        "name": "createdByType",
+                        "modelAsString": true
+                      }
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "The timestamp of resource creation (UTC)."
+                    },
+                    "lastModifiedBy": {
+                      "type": "string",
+                      "description": "The identity that last modified the resource."
+                    },
+                    "lastModifiedByType": {
+                      "type": "string",
+                      "description": "The type of identity that last modified the resource.",
+                      "enum": [
+                        "User",
+                        "Application",
+                        "ManagedIdentity",
+                        "Key"
+                      ],
+                      "x-ms-enum": {
+                        "name": "createdByType",
+                        "modelAsString": true
+                      }
+                    },
+                    "lastModifiedAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "The timestamp of resource last modification (UTC)"
+                    }
+                  }
+                },
+                "properties": {
+                  "x-ms-client-flatten": true,
+                  "description": "Extension resource properties.",
+                  "type": "object",
+                  "properties": {
+                    "extensionId": {
+                      "description": "Extension Id.",
+                      "pattern": "^[a-zA-Z]{3,50}[.][a-zA-Z]{3,100}$",
+                      "type": "string",
+                      "readOnly": true
+                    },
+                    "extensionCategory": {
+                      "description": "Extension category. e.g. weather/sensor/satellite.",
+                      "type": "string",
+                      "readOnly": true
+                    },
+                    "installedExtensionVersion": {
+                      "description": "Installed extension version.",
+                      "pattern": "^([1-9]|10).\\d$",
+                      "type": "string",
+                      "readOnly": true
+                    },
+                    "extensionAuthLink": {
+                      "description": "Extension auth link.",
+                      "type": "string",
+                      "readOnly": true
+                    },
+                    "extensionApiDocsLink": {
+                      "description": "Extension api docs link.",
+                      "type": "string",
+                      "readOnly": true
+                    }
+                  }
+                },
+                "eTag": {
+                  "description": "The ETag value to implement optimistic concurrency.",
+                  "type": "string",
+                  "readOnly": true
+                }
+              },
+              "x-ms-azure-resource": true
+            }
+          },
+          "default": {
+            "description": "Error",
+            "schema": {
+              "title": "Error response",
+              "description": "Common error response for all Azure Resource Manager APIs to return error details for failed operations. (This also follows the OData error response format.).",
+              "type": "object",
+              "properties": {
+                "error": {
+                  "description": "The error object.",
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "readOnly": true,
+                      "type": "string",
+                      "description": "The error code."
+                    },
+                    "message": {
+                      "readOnly": true,
+                      "type": "string",
+                      "description": "The error message."
+                    },
+                    "target": {
+                      "readOnly": true,
+                      "type": "string",
+                      "description": "The error target."
+                    },
+                    "details": {
+                      "readOnly": true,
+                      "type": "array",
+                      "items": {
+                        "description": "The error detail.",
+                        "type": "object"
+                      },
+                      "description": "The error details."
+                    },
+                    "additionalInfo": {
+                      "readOnly": true,
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "readOnly": true,
+                            "type": "string",
+                            "description": "The additional info type."
+                          },
+                          "info": {
+                            "readOnly": true,
+                            "type": "object",
+                            "description": "The additional info."
+                          }
+                        },
+                        "description": "The resource management error additional info."
+                      },
+                      "description": "The error additional info."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-ms-examples": {
+          "Extensions_Create": {
+            "parameters": {
+              "api-version": "2020-05-12-preview",
+              "subscriptionId": "11111111-2222-3333-4444-555555555555",
+              "resourceGroupName": "examples-rg",
+              "farmBeatsResourceName": "examples-farmbeatsResourceName",
+              "extensionId": "provider.extension"
+            },
+            "responses": {
+              "201": {
+                "body": {
+                  "id": "/subscriptions/11111111-2222-3333-4444-555555555555/resourceGroups/examples-rg/Microsoft.AgFoodPlatform/farmBeats/examples-farmbeatsResourceName/extensions/provider.extension",
+                  "name": "provider.extension",
+                  "type": "Microsoft.AgFoodPlatform/farmBeats/extensions",
+                  "systemData": {
+                    "createdBy": "string",
+                    "createdByType": "User",
+                    "createdAt": "2020-02-01T01:01:01.1075056Z",
+                    "lastModifiedBy": "string",
+                    "lastModifiedByType": "User",
+                    "lastModifiedAt": "2020-02-01T01:01:01.1075056Z"
+                  },
+                  "eTag": "7200b954-0000-0700-0000-603cbbc40000",
+                  "properties": {
+                    "extensionCategory": "Weather",
+                    "installedExtensionVersion": "1.0",
+                    "extensionAuthLink": "https://www.provider.com/extension/",
+                    "extensionApiDocsLink": "https://docs.provider.com/documentation/extension"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Extensions"
+        ],
+        "description": "Get installed extension details by extension id.",
+        "operationId": "Extensions_Get",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "default": {
+            "description": "Error"
+          }
+        },
+        "x-ms-examples": {
+          "Extensions_Get": {
+            "parameters": {
+              "api-version": "2020-05-12-preview",
+              "subscriptionId": "11111111-2222-3333-4444-555555555555",
+              "resourceGroupName": "examples-rg",
+              "farmBeatsResourceName": "examples-farmbeatsResourceName",
+              "extensionId": "provider.extension"
+            },
+            "responses": {
+              "200": {
+                "body": {
+                  "id": "/subscriptions/11111111-2222-3333-4444-555555555555/resourceGroups/examples-rg/Microsoft.AgFoodPlatform/farmBeats/examples-farmbeatsResourceName/extensions/provider.extension",
+                  "name": "provider.extension",
+                  "type": "Microsoft.AgFoodPlatform/farmBeats/extensions",
+                  "systemData": {
+                    "createdBy": "string",
+                    "createdByType": "User",
+                    "createdAt": "2020-02-01T01:01:01.1075056Z",
+                    "lastModifiedBy": "string",
+                    "lastModifiedByType": "User",
+                    "lastModifiedAt": "2020-02-01T01:01:01.1075056Z"
+                  },
+                  "eTag": "7200b954-0000-0700-0000-603cbbc40000",
+                  "properties": {
+                    "extensionCategory": "Weather",
+                    "installedExtensionVersion": "1.0",
+                    "extensionAuthLink": "https://www.provider.com/extension/",
+                    "extensionApiDocsLink": "https://docs.provider.com/documentation/extension"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Extensions"
+        ],
+        "description": "Upgrade to latest extension.",
+        "operationId": "Extensions_Update",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "default": {
+            "description": "Error"
+          }
+        },
+        "x-ms-examples": {
+          "Extensions_Update": {
+            "parameters": {
+              "api-version": "2020-05-12-preview",
+              "subscriptionId": "11111111-2222-3333-4444-555555555555",
+              "resourceGroupName": "examples-rg",
+              "farmBeatsResourceName": "examples-farmbeatsResourceName",
+              "extensionId": "provider.extension"
+            },
+            "responses": {
+              "200": {
+                "body": {
+                  "id": "/subscriptions/11111111-2222-3333-4444-555555555555/resourceGroups/examples-rg/Microsoft.AgFoodPlatform/farmBeats/examples-farmbeatsResourceName/extensions/provider.extension",
+                  "name": "provider.extension",
+                  "type": "Microsoft.AgFoodPlatform/farmBeats/extensions",
+                  "systemData": {
+                    "createdBy": "string",
+                    "createdByType": "User",
+                    "createdAt": "2020-02-01T01:01:01.1075056Z",
+                    "lastModifiedBy": "string",
+                    "lastModifiedByType": "User",
+                    "lastModifiedAt": "2020-02-01T01:01:01.1075056Z"
+                  },
+                  "eTag": "7200b954-0000-0700-0000-603cbbc40000",
+                  "properties": {
+                    "extensionCategory": "Weather",
+                    "installedExtensionVersion": "2.0",
+                    "extensionAuthLink": "https://www.provider.com/extension/",
+                    "extensionApiDocsLink": "https://docs.provider.com/documentation/extension"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Extensions"
+        ],
+        "description": "Uninstall extension.",
+        "operationId": "Extensions_Delete",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "204": {
+            "description": "Success"
+          },
+          "default": {
+            "description": "Error"
+          }
+        },
+        "x-ms-examples": {
+          "Extensions_Delete": {
+            "parameters": {
+              "api-version": "2020-05-12-preview",
+              "subscriptionId": "11111111-2222-3333-4444-555555555555",
+              "resourceGroupName": "examples-rg",
+              "farmBeatsResourceName": "examples-farmbeatsResourceName",
+              "extensionId": "provider.extension"
+            },
+            "responses": {
+              "200": {},
+              "204": {}
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgFoodPlatform/farmBeats/{farmBeatsResourceName}/extensions": {
+      "get": {
+        "tags": [
+          "Extensions"
+        ],
+        "description": "Get installed extensions details.",
+        "operationId": "Extensions_ListByFarmBeats",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          null,
+          null,
+          null,
+          null,
+          {
+            "in": "query",
+            "name": "extensionIds",
+            "description": "Installed extension ids.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi"
+          },
+          {
+            "in": "query",
+            "name": "extensionCategories",
+            "description": "Installed extension categories.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi"
+          },
+          {
+            "in": "query",
+            "name": "$maxPageSize",
+            "description": "Maximum number of items needed (inclusive).\r\nMinimum = 10, Maximum = 1000, Default value = 50.",
+            "type": "integer",
+            "format": "int32",
+            "default": 50,
+            "maximum": 1000,
+            "minimum": 10
+          },
+          {
+            "in": "query",
+            "name": "$skipToken",
+            "description": "Skip token for getting next set of results.",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "description": "Paged response contains list of requested objects and a URL link to get the next set of results.",
+              "type": "object",
+              "properties": {
+                "value": {
+                  "description": "List of requested objects.",
+                  "type": "array"
+                },
+                "nextLink": {
+                  "description": "Continuation link (absolute URI) to the next page of results in the list.",
+                  "type": "string",
+                  "readOnly": true
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error"
+          }
+        },
+        "x-ms-pageable": {
+          "nextLinkName": "nextLink"
+        },
+        "x-ms-examples": {
+          "Extensions_ListByFarmBeats": {
+            "parameters": {
+              "api-version": "2020-05-12-preview",
+              "subscriptionId": "11111111-2222-3333-4444-555555555555",
+              "resourceGroupName": "examples-rg",
+              "farmBeatsResourceName": "examples-farmbeatsResourceName"
+            },
+            "responses": {
+              "200": {
+                "headers": {},
+                "body": {
+                  "value": [
+                    {
+                      "id": "/subscriptions/11111111-2222-3333-4444-555555555555/resourceGroups/examples-rg/Microsoft.AgFoodPlatform/farmBeats/examples-farmbeatsResourceName/extensions/provider.extension",
+                      "name": "provider.extension",
+                      "type": "Microsoft.AgFoodPlatform/farmBeats/extensions",
+                      "systemData": {
+                        "createdBy": "string",
+                        "createdByType": "User",
+                        "createdAt": "2020-02-01T01:01:01.1075056Z",
+                        "lastModifiedBy": "string",
+                        "lastModifiedByType": "User",
+                        "lastModifiedAt": "2020-02-01T01:01:01.1075056Z"
+                      },
+                      "eTag": "7200b954-0000-0700-0000-603cbbc40000",
+                      "properties": {
+                        "extensionCategory": "Weather",
+                        "installedExtensionVersion": "1.0",
+                        "extensionAuthLink": "https://www.provider.com/extension/",
+                        "extensionApiDocsLink": "https://docs.provider.com/documentation/extension"
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/providers/Microsoft.AgFoodPlatform/farmBeatsExtensionDefinitions": {
+      "get": {
+        "tags": [
+          "FarmBeatsExtensions"
+        ],
+        "description": "Get list of farmBeats extension.",
+        "operationId": "FarmBeatsExtensions_List",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "farmBeatsExtensionIds",
+            "description": "FarmBeatsExtension ids.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi"
+          },
+          {
+            "in": "query",
+            "name": "farmBeatsExtensionNames",
+            "description": "FarmBeats extension names.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi"
+          },
+          {
+            "in": "query",
+            "name": "extensionCategories",
+            "description": "Extension categories.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi"
+          },
+          {
+            "in": "query",
+            "name": "publisherIds",
+            "description": "Publisher ids.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi"
+          },
+          {
+            "in": "query",
+            "name": "$maxPageSize",
+            "description": "Maximum number of items needed (inclusive).\r\nMinimum = 10, Maximum = 1000, Default value = 50.",
+            "type": "integer",
+            "format": "int32",
+            "default": 50,
+            "maximum": 1000,
+            "minimum": 10
+          },
+          null
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "description": "Paged response contains list of requested objects and a URL link to get the next set of results.",
+              "type": "object",
+              "properties": {
+                "value": {
+                  "description": "List of requested objects.",
+                  "type": "array",
+                  "items": {
+                    "description": "FarmBeats extension resource.",
+                    "type": "object",
+                    "allOf": [
+                      null
+                    ],
+                    "properties": {
+                      "properties": {
+                        "x-ms-client-flatten": true,
+                        "description": "FarmBeatsExtension properties.",
+                        "type": "object",
+                        "properties": {
+                          "targetResourceType": {
+                            "description": "Target ResourceType of the farmBeatsExtension.",
+                            "type": "string",
+                            "readOnly": true
+                          },
+                          "farmBeatsExtensionId": {
+                            "description": "FarmBeatsExtension ID.",
+                            "maxLength": 100,
+                            "minLength": 2,
+                            "pattern": "^[a-zA-Z]{3,50}[.][a-zA-Z]{3,100}$",
+                            "type": "string",
+                            "readOnly": true
+                          },
+                          "farmBeatsExtensionName": {
+                            "description": "FarmBeatsExtension name.",
+                            "maxLength": 100,
+                            "minLength": 2,
+                            "type": "string",
+                            "readOnly": true
+                          },
+                          "farmBeatsExtensionVersion": {
+                            "description": "FarmBeatsExtension version.",
+                            "maxLength": 100,
+                            "minLength": 2,
+                            "pattern": "^([1-9]|10).\\d$",
+                            "type": "string",
+                            "readOnly": true
+                          },
+                          "publisherId": {
+                            "description": "Publisher ID.",
+                            "maxLength": 100,
+                            "minLength": 2,
+                            "type": "string",
+                            "readOnly": true
+                          },
+                          "description": {
+                            "description": "Textual description.",
+                            "maxLength": 500,
+                            "minLength": 2,
+                            "type": "string",
+                            "readOnly": true
+                          },
+                          "extensionCategory": {
+                            "description": "Category of the extension. e.g. weather/sensor/satellite.",
+                            "maxLength": 100,
+                            "minLength": 2,
+                            "type": "string",
+                            "readOnly": true
+                          },
+                          "extensionAuthLink": {
+                            "description": "FarmBeatsExtension auth link.",
+                            "type": "string",
+                            "readOnly": true
+                          },
+                          "extensionApiDocsLink": {
+                            "description": "FarmBeatsExtension api docs link.",
+                            "type": "string",
+                            "readOnly": true
+                          },
+                          "detailedInformation": {
+                            "description": "Detailed information which shows summary of requested data.\r\nUsed in descriptive get extension metadata call.\r\nInformation for weather category per api included are apisSupported,\r\ncustomParameters, PlatformParameters and Units supported.",
+                            "type": "array",
+                            "items": {
+                              "description": "Model to capture detailed information for farmBeatsExtensions.",
+                              "type": "object",
+                              "properties": {
+                                "apiName": {
+                                  "description": "ApiName available for the farmBeatsExtension.",
+                                  "type": "string",
+                                  "example": "dailyforecast, dailyhistorical."
+                                },
+                                "customParameters": {
+                                  "description": "List of customParameters.",
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string"
+                                  }
+                                },
+                                "platformParameters": {
+                                  "description": "List of platformParameters.",
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string"
+                                  }
+                                },
+                                "unitsSupported": {
+                                  "description": "Unit systems info for the data provider.",
+                                  "required": [
+                                    "key",
+                                    "values"
+                                  ],
+                                  "type": "object",
+                                  "properties": {
+                                    "key": {
+                                      "description": "UnitSystem key sent as part of ProviderInput.",
+                                      "maxLength": 100,
+                                      "minLength": 2,
+                                      "type": "string"
+                                    },
+                                    "values": {
+                                      "description": "List of unit systems supported by this data provider.",
+                                      "type": "array",
+                                      "items": {
+                                        "type": "string"
+                                      }
+                                    }
+                                  }
+                                },
+                                "apiInputParameters": {
+                                  "description": "List of apiInputParameters.",
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string"
+                                  }
+                                }
+                              }
+                            },
+                            "readOnly": true
+                          }
+                        }
+                      }
+                    },
+                    "x-ms-azure-resource": true
+                  }
+                },
+                "nextLink": {
+                  "description": "Continuation link (absolute URI) to the next page of results in the list.",
+                  "type": "string",
+                  "readOnly": true
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error"
+          }
+        },
+        "x-ms-pageable": {
+          "nextLinkName": "nextLink"
+        },
+        "x-ms-examples": {
+          "FarmBeatsExtensions_List": {
+            "parameters": {
+              "api-version": "2020-05-12-preview"
+            },
+            "responses": {
+              "200": {
+                "headers": {},
+                "body": {
+                  "value": [
+                    {
+                      "id": "Microsoft.AgFoodPlatform/farmBeatsExtensionDefinitions/DTN.ContentServices",
+                      "type": "Microsoft.AgFoodPlatform/farmBeatsExtensionDefinitions",
+                      "systemData": {
+                        "createdAt": "2021-04-12T15:28:06Z",
+                        "lastModifiedAt": "2021-04-12T15:30:01Z"
+                      },
+                      "properties": {
+                        "targetResourceType": "FarmBeats",
+                        "farmBeatsExtensionId": "DTN.ContentServices",
+                        "farmBeatsExtensionName": "DTN",
+                        "farmBeatsExtensionVersion": "1.0",
+                        "publisherId": "dtn",
+                        "extensionCategory": "Weather",
+                        "extensionAuthLink": "https://www.dtn.com/dtn-content-integration/",
+                        "extensionApiDocsLink": "https://cs-docs.dtn.com/api/weather-observations-and-forecasts-rest-api/",
+                        "detailedInformation": [
+                          {
+                            "apiName": "GetDailyObservations",
+                            "customParameters": [
+                              "stationId",
+                              "stationLatitude",
+                              "stationLongitude",
+                              "timeZone",
+                              "sunrise",
+                              "sunset",
+                              "weatherCode",
+                              "weatherDescription",
+                              "maxTemperature",
+                              "minTemperature",
+                              "avgHeatIndex",
+                              "maxHeatIndex",
+                              "minHeatIndex",
+                              "maxWindChill",
+                              "minWindChill",
+                              "maxFeelsLike",
+                              "minFeelsLike",
+                              "avgFeelsLike",
+                              "maxWindSpeed",
+                              "avgWetBulbGlobeTemp",
+                              "maxWetBulbGlobeTemp",
+                              "minWetBulbGlobeTemp",
+                              "minutesOfSunshine",
+                              "cornHeatUnit",
+                              "evapotranspiration"
+                            ],
+                            "platformParameters": [
+                              "cloudCover",
+                              "dewPoint",
+                              "growingDegreeDay",
+                              "precipitation",
+                              "pressure",
+                              "relativeHumidity",
+                              "temperature",
+                              "wetBulbTemperature",
+                              "dateTime",
+                              "windChill",
+                              "windSpeed",
+                              "windDirection"
+                            ],
+                            "unitsSupported": {
+                              "key": "units",
+                              "values": [
+                                "us",
+                                "si"
+                              ]
+                            },
+                            "apiInputParameters": [
+                              "stationId",
+                              "lat",
+                              "lon",
+                              "days",
+                              "units",
+                              "precision",
+                              "sector"
+                            ]
+                          },
+                          {
+                            "apiName": "GetHourlyObservations",
+                            "customParameters": [
+                              "stationId",
+                              "stationLatitude",
+                              "stationLongitude",
+                              "timeZone",
+                              "weatherCode",
+                              "weatherDescription",
+                              "feelsLike",
+                              "visibilityWeatherCode",
+                              "visibilityWeatherDescription",
+                              "minutesOfSunshine"
+                            ],
+                            "platformParameters": [
+                              "cloudCover",
+                              "dewPoint",
+                              "precipitation",
+                              "pressure",
+                              "relativeHumidity",
+                              "temperature",
+                              "wetBulbTemperature",
+                              "dateTime",
+                              "visibility",
+                              "windChill",
+                              "windSpeed",
+                              "windDirection",
+                              "windGust"
+                            ],
+                            "unitsSupported": {
+                              "key": "units",
+                              "values": [
+                                "us",
+                                "si"
+                              ]
+                            },
+                            "apiInputParameters": [
+                              "stationId",
+                              "lat",
+                              "lon",
+                              "hours",
+                              "units",
+                              "precision",
+                              "sector"
+                            ]
+                          },
+                          {
+                            "apiName": "GetHourlyForecasts",
+                            "customParameters": [
+                              "stationId",
+                              "stationLatitude",
+                              "stationLongitude",
+                              "timeZone",
+                              "weatherCode",
+                              "weatherDescription",
+                              "feelsLike",
+                              "visibilityWeatherCode",
+                              "visibilityWeatherDescription",
+                              "minutesOfSunshine"
+                            ],
+                            "platformParameters": [
+                              "cloudCover",
+                              "dewPoint",
+                              "precipitation",
+                              "pressure",
+                              "relativeHumidity",
+                              "temperature",
+                              "wetBulbTemperature",
+                              "dateTime",
+                              "visibility",
+                              "windChill",
+                              "windSpeed",
+                              "windDirection",
+                              "windGust"
+                            ],
+                            "unitsSupported": {
+                              "key": "units",
+                              "values": [
+                                "us",
+                                "si"
+                              ]
+                            },
+                            "apiInputParameters": [
+                              "stationId",
+                              "lat",
+                              "lon",
+                              "days",
+                              "units",
+                              "precision",
+                              "sector"
+                            ]
+                          },
+                          {
+                            "apiName": "GetDailyForecasts",
+                            "customParameters": [
+                              "stationId",
+                              "stationLatitude",
+                              "stationLongitude",
+                              "timeZone",
+                              "sunrise",
+                              "sunset",
+                              "weatherCode",
+                              "weatherDescription",
+                              "maxTemperature",
+                              "minTemperature",
+                              "avgHeatIndex",
+                              "maxHeatIndex",
+                              "minHeatIndex",
+                              "maxWindChill",
+                              "minWindChill",
+                              "maxFeelsLike",
+                              "minFeelsLike",
+                              "avgFeelsLike",
+                              "maxWindSpeed",
+                              "avgWetBulbGlobeTemp",
+                              "maxWetBulbGlobeTemp",
+                              "minWetBulbGlobeTemp",
+                              "minutesOfSunshine",
+                              "cornHeatUnit",
+                              "evapotranspiration"
+                            ],
+                            "platformParameters": [
+                              "cloudCover",
+                              "dewPoint",
+                              "growingDegreeDay",
+                              "precipitation",
+                              "pressure",
+                              "relativeHumidity",
+                              "temperature",
+                              "wetBulbTemperature",
+                              "dateTime",
+                              "windChill",
+                              "windSpeed",
+                              "windDirection"
+                            ],
+                            "unitsSupported": {
+                              "key": "units",
+                              "values": [
+                                "us",
+                                "si"
+                              ]
+                            },
+                            "apiInputParameters": [
+                              "stationId",
+                              "lat",
+                              "lon",
+                              "days",
+                              "units",
+                              "precision",
+                              "sector"
+                            ]
+                          }
+                        ]
+                      },
+                      "name": "DTN.ContentServices"
+                    }
+                  ],
+                  "nextLink": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/providers/Microsoft.AgFoodPlatform/farmBeatsExtensionDefinitions/{farmBeatsExtensionId}": {
+      "get": {
+        "tags": [
+          "FarmBeatsExtensions"
+        ],
+        "description": "Get farmBeats extension.",
+        "operationId": "FarmBeatsExtensions_Get",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "farmBeatsExtensionId",
+            "description": "farmBeatsExtensionId to be queried.",
+            "required": true,
+            "type": "string",
+            "pattern": "^[a-zA-Z]{3,50}[.][a-zA-Z]{3,100}$"
+          },
+          null
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "default": {
+            "description": "Error"
+          }
+        },
+        "x-ms-examples": {
+          "FarmBeatsExtensions_Get": {
+            "parameters": {
+              "api-version": "2020-05-12-preview",
+              "farmBeatsExtensionId": "DTN.ContentServices"
+            },
+            "responses": {
+              "200": {
+                "body": {
+                  "id": "Microsoft.AgFoodPlatform/farmBeatsExtensionDefinitions/DTN.ContentServices",
+                  "type": "Microsoft.AgFoodPlatform/farmBeatsExtensionDefinitions",
+                  "systemData": {
+                    "createdAt": "2021-04-12T15:28:06Z",
+                    "lastModifiedAt": "2021-04-12T15:30:01Z"
+                  },
+                  "properties": {
+                    "targetResourceType": "FarmBeats",
+                    "farmBeatsExtensionId": "DTN.ContentServices",
+                    "farmBeatsExtensionName": "DTN",
+                    "farmBeatsExtensionVersion": "1.0",
+                    "publisherId": "dtn",
+                    "extensionCategory": "Weather",
+                    "extensionAuthLink": "https://www.dtn.com/dtn-content-integration/",
+                    "extensionApiDocsLink": "https://cs-docs.dtn.com/api/weather-observations-and-forecasts-rest-api/",
+                    "detailedInformation": [
+                      {
+                        "apiName": "GetDailyObservations",
+                        "customParameters": [
+                          "stationId",
+                          "stationLatitude",
+                          "stationLongitude",
+                          "timeZone",
+                          "sunrise",
+                          "sunset",
+                          "weatherCode",
+                          "weatherDescription",
+                          "maxTemperature",
+                          "minTemperature",
+                          "avgHeatIndex",
+                          "maxHeatIndex",
+                          "minHeatIndex",
+                          "maxWindChill",
+                          "minWindChill",
+                          "maxFeelsLike",
+                          "minFeelsLike",
+                          "avgFeelsLike",
+                          "maxWindSpeed",
+                          "avgWetBulbGlobeTemp",
+                          "maxWetBulbGlobeTemp",
+                          "minWetBulbGlobeTemp",
+                          "minutesOfSunshine",
+                          "cornHeatUnit",
+                          "evapotranspiration"
+                        ],
+                        "platformParameters": [
+                          "cloudCover",
+                          "dewPoint",
+                          "growingDegreeDay",
+                          "precipitation",
+                          "pressure",
+                          "relativeHumidity",
+                          "temperature",
+                          "wetBulbTemperature",
+                          "dateTime",
+                          "windChill",
+                          "windSpeed",
+                          "windDirection"
+                        ],
+                        "unitsSupported": {
+                          "key": "units",
+                          "values": [
+                            "us",
+                            "si"
+                          ]
+                        },
+                        "apiInputParameters": [
+                          "stationId",
+                          "lat",
+                          "lon",
+                          "days",
+                          "units",
+                          "precision",
+                          "sector"
+                        ]
+                      },
+                      {
+                        "apiName": "GetHourlyObservations",
+                        "customParameters": [
+                          "stationId",
+                          "stationLatitude",
+                          "stationLongitude",
+                          "timeZone",
+                          "weatherCode",
+                          "weatherDescription",
+                          "feelsLike",
+                          "visibilityWeatherCode",
+                          "visibilityWeatherDescription",
+                          "minutesOfSunshine"
+                        ],
+                        "platformParameters": [
+                          "cloudCover",
+                          "dewPoint",
+                          "precipitation",
+                          "pressure",
+                          "relativeHumidity",
+                          "temperature",
+                          "wetBulbTemperature",
+                          "dateTime",
+                          "visibility",
+                          "windChill",
+                          "windSpeed",
+                          "windDirection",
+                          "windGust"
+                        ],
+                        "unitsSupported": {
+                          "key": "units",
+                          "values": [
+                            "us",
+                            "si"
+                          ]
+                        },
+                        "apiInputParameters": [
+                          "stationId",
+                          "lat",
+                          "lon",
+                          "hours",
+                          "units",
+                          "precision",
+                          "sector"
+                        ]
+                      },
+                      {
+                        "apiName": "GetHourlyForecasts",
+                        "customParameters": [
+                          "stationId",
+                          "stationLatitude",
+                          "stationLongitude",
+                          "timeZone",
+                          "weatherCode",
+                          "weatherDescription",
+                          "feelsLike",
+                          "visibilityWeatherCode",
+                          "visibilityWeatherDescription",
+                          "minutesOfSunshine"
+                        ],
+                        "platformParameters": [
+                          "cloudCover",
+                          "dewPoint",
+                          "precipitation",
+                          "pressure",
+                          "relativeHumidity",
+                          "temperature",
+                          "wetBulbTemperature",
+                          "dateTime",
+                          "visibility",
+                          "windChill",
+                          "windSpeed",
+                          "windDirection",
+                          "windGust"
+                        ],
+                        "unitsSupported": {
+                          "key": "units",
+                          "values": [
+                            "us",
+                            "si"
+                          ]
+                        },
+                        "apiInputParameters": [
+                          "stationId",
+                          "lat",
+                          "lon",
+                          "days",
+                          "units",
+                          "precision",
+                          "sector"
+                        ]
+                      },
+                      {
+                        "apiName": "GetDailyForecasts",
+                        "customParameters": [
+                          "stationId",
+                          "stationLatitude",
+                          "stationLongitude",
+                          "timeZone",
+                          "sunrise",
+                          "sunset",
+                          "weatherCode",
+                          "weatherDescription",
+                          "maxTemperature",
+                          "minTemperature",
+                          "avgHeatIndex",
+                          "maxHeatIndex",
+                          "minHeatIndex",
+                          "maxWindChill",
+                          "minWindChill",
+                          "maxFeelsLike",
+                          "minFeelsLike",
+                          "avgFeelsLike",
+                          "maxWindSpeed",
+                          "avgWetBulbGlobeTemp",
+                          "maxWetBulbGlobeTemp",
+                          "minWetBulbGlobeTemp",
+                          "minutesOfSunshine",
+                          "cornHeatUnit",
+                          "evapotranspiration"
+                        ],
+                        "platformParameters": [
+                          "cloudCover",
+                          "dewPoint",
+                          "growingDegreeDay",
+                          "precipitation",
+                          "pressure",
+                          "relativeHumidity",
+                          "temperature",
+                          "wetBulbTemperature",
+                          "dateTime",
+                          "windChill",
+                          "windSpeed",
+                          "windDirection"
+                        ],
+                        "unitsSupported": {
+                          "key": "units",
+                          "values": [
+                            "us",
+                            "si"
+                          ]
+                        },
+                        "apiInputParameters": [
+                          "stationId",
+                          "lat",
+                          "lon",
+                          "days",
+                          "units",
+                          "precision",
+                          "sector"
+                        ]
+                      }
+                    ]
+                  },
+                  "name": "DTN.ContentServices"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgFoodPlatform/farmBeats/{farmBeatsResourceName}": {
+      "get": {
+        "tags": [
+          "FarmBeatsModels"
+        ],
+        "description": "Get FarmBeats resource.",
+        "operationId": "FarmBeatsModels_Get",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          null,
+          null,
+          null,
+          null
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "description": "FarmBeats ARM Resource.",
+              "type": "object",
+              "allOf": [
+                {
+                  "title": "Tracked Resource",
+                  "description": "The resource model definition for an Azure Resource Manager tracked top level resource which has 'tags' and a 'location'",
+                  "type": "object",
+                  "properties": {
+                    "tags": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string"
+                      },
+                      "x-ms-mutability": [
+                        "read",
+                        "create",
+                        "update"
+                      ],
+                      "description": "Resource tags."
+                    },
+                    "location": {
+                      "type": "string",
+                      "x-ms-mutability": [
+                        "read",
+                        "create"
+                      ],
+                      "description": "The geo-location where the resource lives"
+                    }
+                  },
+                  "required": [
+                    "location"
+                  ],
+                  "allOf": [
+                    null
+                  ]
+                }
+              ],
+              "properties": {
+                "properties": {
+                  "x-ms-client-flatten": true,
+                  "description": "FarmBeats ARM Resource properties.",
+                  "type": "object",
+                  "properties": {
+                    "instanceUri": {
+                      "format": "uri",
+                      "description": "Uri of the FarmBeats instance.",
+                      "type": "string",
+                      "readOnly": true
+                    },
+                    "provisioningState": {
+                      "description": "FarmBeats instance provisioning state.",
+                      "enum": [
+                        "Succeeded",
+                        "Failed"
+                      ],
+                      "type": "string",
+                      "readOnly": true,
+                      "x-ms-enum": {
+                        "name": "ProvisioningState",
+                        "modelAsString": true
+                      }
+                    }
+                  }
+                }
+              },
+              "x-ms-azure-resource": true
+            }
+          },
+          "default": {
+            "description": "Error"
+          }
+        },
+        "x-ms-examples": {
+          "FarmBeatsModels_Get": {
+            "parameters": {
+              "api-version": "2020-05-12-preview",
+              "subscriptionId": "11111111-2222-3333-4444-555555555555",
+              "resourceGroupName": "examples-rg",
+              "farmBeatsResourceName": "examples-farmBeatsResourceName"
+            },
+            "responses": {
+              "200": {
+                "body": {
+                  "id": "/subscriptions/11111111-2222-3333-4444-555555555555/resourceGroups/examples-rg/Microsoft.AgFoodPlatform/farmBeats/examples-farmbeatsResourceName",
+                  "name": "examples-farmBeatsResourceName",
+                  "type": "Microsoft.AgFoodPlatform/farmBeats",
+                  "location": "eastus2",
+                  "tags": {
+                    "key1": "value1",
+                    "key2": "value2"
+                  },
+                  "systemData": {
+                    "createdBy": "string",
+                    "createdByType": "User",
+                    "createdAt": "2020-02-01T01:01:01.1075056Z",
+                    "lastModifiedBy": "string",
+                    "lastModifiedByType": "User",
+                    "lastModifiedAt": "2020-02-01T01:01:01.1075056Z"
+                  },
+                  "properties": {
+                    "instanceUri": "https://examples-farmbeatsResourceName.eastus2.farmbeats.azure.net",
+                    "provisioningState": "Succeeded"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "FarmBeatsModels"
+        ],
+        "description": "Create or update FarmBeats resource.",
+        "operationId": "FarmBeatsModels_CreateOrUpdate",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          null,
+          null,
+          null,
+          null,
+          {
+            "in": "body",
+            "name": "body",
+            "description": "FarmBeats resource create or update request object.",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "201": {
+            "description": "Success"
+          },
+          "default": {
+            "description": "Error"
+          }
+        },
+        "x-ms-examples": {
+          "FarmBeatsModels_CreateOrUpdate": {
+            "parameters": {
+              "api-version": "2020-05-12-preview",
+              "subscriptionId": "11111111-2222-3333-4444-555555555555",
+              "resourceGroupName": "examples-rg",
+              "farmBeatsResourceName": "examples-farmbeatsResourceName",
+              "body": {
+                "location": "eastus2",
+                "tags": {
+                  "key1": "value1",
+                  "key2": "value2"
+                }
+              }
+            },
+            "responses": {
+              "200": {
+                "body": {
+                  "id": "/subscriptions/11111111-2222-3333-4444-555555555555/resourceGroups/examples-rg/Microsoft.AgFoodPlatform/farmBeats/examples-farmbeatsResourceName",
+                  "name": "examples-farmbeatsResourceName",
+                  "type": "Microsoft.AgFoodPlatform/farmBeats",
+                  "location": "eastus2",
+                  "tags": {
+                    "key1": "value1",
+                    "key2": "value2"
+                  },
+                  "systemData": {
+                    "createdBy": "string",
+                    "createdByType": "User",
+                    "createdAt": "2020-02-01T01:01:01.1075056Z",
+                    "lastModifiedBy": "string",
+                    "lastModifiedByType": "User",
+                    "lastModifiedAt": "2020-02-01T01:01:01.1075056Z"
+                  },
+                  "properties": {
+                    "instanceUri": "https://examples-farmbeatsResourceName.eastus2.farmbeats.azure.net",
+                    "provisioningState": "Succeeded"
+                  }
+                }
+              },
+              "201": {
+                "body": {
+                  "id": "/subscriptions/11111111-2222-3333-4444-555555555555/resourceGroups/examples-rg/Microsoft.AgFoodPlatform/farmBeats/examples-farmbeatsResourceName",
+                  "name": "examples-farmbeatsResourceName",
+                  "type": "Microsoft.AgFoodPlatform/farmBeats",
+                  "location": "eastus2",
+                  "tags": {
+                    "key1": "value1",
+                    "key2": "value2"
+                  },
+                  "systemData": {
+                    "createdBy": "string",
+                    "createdByType": "User",
+                    "createdAt": "2020-02-01T01:01:01.1075056Z",
+                    "lastModifiedBy": "string",
+                    "lastModifiedByType": "User",
+                    "lastModifiedAt": "2020-02-01T01:01:01.1075056Z"
+                  },
+                  "properties": {
+                    "instanceUri": "https://examples-farmbeatsResourceName.eastus2.farmbeats.azure.net",
+                    "provisioningState": "Failed"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "FarmBeatsModels"
+        ],
+        "description": "Update a FarmBeats resource.",
+        "operationId": "FarmBeatsModels_Update",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          null,
+          null,
+          null,
+          null,
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Request object.",
+            "required": true,
+            "schema": {
+              "description": "FarmBeats update request.",
+              "type": "object",
+              "properties": {
+                "location": {
+                  "description": "Geo-location where the resource lives.",
+                  "type": "string"
+                },
+                "tags": {
+                  "description": "Resource tags.",
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "default": {
+            "description": "Error"
+          }
+        },
+        "x-ms-examples": {
+          "FarmBeatsModels_Update": {
+            "parameters": {
+              "api-version": "2020-05-12-preview",
+              "subscriptionId": "11111111-2222-3333-4444-555555555555",
+              "resourceGroupName": "examples-rg",
+              "farmBeatsResourceName": "examples-farmBeatsResourceName",
+              "body": {
+                "tags": {
+                  "key1": "value1",
+                  "key2": "value2"
+                }
+              }
+            },
+            "responses": {
+              "200": {
+                "body": {
+                  "id": "/subscriptions/11111111-2222-3333-4444-555555555555/resourceGroups/examples-rg/Microsoft.AgFoodPlatform/farmBeats/examples-farmbeatsResourceName",
+                  "name": "examples-farmBeatsResourceName",
+                  "type": "Microsoft.AgFoodPlatform/farmBeats",
+                  "location": "eastus2",
+                  "tags": {
+                    "key1": "value1",
+                    "key2": "value2"
+                  },
+                  "systemData": {
+                    "createdBy": "string",
+                    "createdByType": "User",
+                    "createdAt": "2020-02-01T01:01:01.1075056Z",
+                    "lastModifiedBy": "string",
+                    "lastModifiedByType": "User",
+                    "lastModifiedAt": "2020-02-01T01:01:01.1075056Z"
+                  },
+                  "properties": {
+                    "instanceUri": "https://examples-farmbeatsResourceName.eastus2.farmbeats.azure.net",
+                    "provisioningState": "Succeeded"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "FarmBeatsModels"
+        ],
+        "description": "Delete a FarmBeats resource.",
+        "operationId": "FarmBeatsModels_Delete",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          null,
+          null,
+          null,
+          null
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "204": {
+            "description": "Success"
+          },
+          "default": {
+            "description": "Error"
+          }
+        },
+        "x-ms-examples": {
+          "FarmBeatsModels_Delete": {
+            "parameters": {
+              "api-version": "2020-05-12-preview",
+              "subscriptionId": "11111111-2222-3333-4444-555555555555",
+              "resourceGroupName": "examples-rg",
+              "farmBeatsResourceName": "examples-farmBeatsResourceName"
+            },
+            "responses": {
+              "200": {},
+              "204": {}
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.AgFoodPlatform/farmBeats": {
+      "get": {
+        "tags": [
+          "FarmBeatsModels"
+        ],
+        "description": "Lists the FarmBeats instances for a subscription.",
+        "operationId": "FarmBeatsModels_ListBySubscription",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "$maxPageSize",
+            "description": "Maximum number of items needed (inclusive).\r\nMinimum = 10, Maximum = 1000, Default value = 50.",
+            "type": "integer",
+            "format": "int32",
+            "default": 50,
+            "maximum": 1000,
+            "minimum": 10
+          },
+          {
+            "in": "query",
+            "name": "$skipToken",
+            "description": "Skip token for getting next set of results.",
+            "type": "string"
+          },
+          null,
+          null
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "description": "Paged response contains list of requested objects and a URL link to get the next set of results.",
+              "type": "object",
+              "properties": {
+                "value": {
+                  "description": "List of requested objects.",
+                  "type": "array",
+                  "uniqueItems": false
+                },
+                "nextLink": {
+                  "description": "Continuation link (absolute URI) to the next page of results in the list.",
+                  "type": "string",
+                  "readOnly": true
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error"
+          }
+        },
+        "x-ms-pageable": {
+          "nextLinkName": "nextLink"
+        },
+        "x-ms-examples": {
+          "FarmBeatsModels_ListBySubscription": {
+            "parameters": {
+              "api-version": "2020-05-12-preview",
+              "subscriptionId": "11111111-2222-3333-4444-555555555555"
+            },
+            "responses": {
+              "200": {
+                "headers": {},
+                "body": {
+                  "value": [
+                    {
+                      "id": "/subscriptions/11111111-2222-3333-4444-555555555555/resourceGroups/examples-rg/Microsoft.AgFoodPlatform/farmBeats/examples-farmbeatsResourceName",
+                      "name": "examples-farmBeatsResourceName",
+                      "type": "Microsoft.AgFoodPlatform/farmBeats",
+                      "location": "eastus2",
+                      "tags": {
+                        "key1": "value1",
+                        "key2": "value2"
+                      },
+                      "systemData": {
+                        "createdBy": "string",
+                        "createdByType": "User",
+                        "createdAt": "2020-02-01T01:01:01.1075056Z",
+                        "lastModifiedBy": "string",
+                        "lastModifiedByType": "User",
+                        "lastModifiedAt": "2020-02-01T01:01:01.1075056Z"
+                      },
+                      "properties": {
+                        "instanceUri": "https://examples-farmbeatsResourceName.eastus2.farmbeats.azure.net",
+                        "provisioningState": "Succeeded"
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgFoodPlatform/farmBeats": {
+      "get": {
+        "tags": [
+          "FarmBeatsModels"
+        ],
+        "description": "Lists the FarmBeats instances for a resource group.",
+        "operationId": "FarmBeatsModels_ListByResourceGroup",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "$maxPageSize",
+            "description": "Maximum number of items needed (inclusive).\r\nMinimum = 10, Maximum = 1000, Default value = 50.",
+            "type": "integer",
+            "format": "int32",
+            "default": 50,
+            "maximum": 1000,
+            "minimum": 10
+          },
+          {
+            "in": "query",
+            "name": "$skipToken",
+            "description": "Continuation token for getting next set of results.",
+            "type": "string"
+          },
+          null,
+          null,
+          null
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "default": {
+            "description": "Error"
+          }
+        },
+        "x-ms-pageable": {
+          "nextLinkName": "nextLink"
+        },
+        "x-ms-examples": {
+          "FarmBeatsModels_ListByResourceGroup": {
+            "parameters": {
+              "api-version": "2020-05-12-preview",
+              "subscriptionId": "11111111-2222-3333-4444-555555555555",
+              "resourceGroupName": "examples-rg"
+            },
+            "responses": {
+              "200": {
+                "headers": {},
+                "body": {
+                  "value": [
+                    {
+                      "id": "/subscriptions/11111111-2222-3333-4444-555555555555/resourceGroups/examples-rg/Microsoft.AgFoodPlatform/farmBeats/examples-farmbeatsResourceName",
+                      "name": "examples-farmBeatsResourceName",
+                      "type": "Microsoft.AgFoodPlatform/farmBeats",
+                      "location": "eastus2",
+                      "tags": {
+                        "key1": "value1",
+                        "key2": "value2"
+                      },
+                      "systemData": {
+                        "createdBy": "string",
+                        "createdByType": "User",
+                        "createdAt": "2020-02-01T01:01:01.1075056Z",
+                        "lastModifiedBy": "string",
+                        "lastModifiedByType": "User",
+                        "lastModifiedAt": "2020-02-01T01:01:01.1075056Z"
+                      },
+                      "properties": {
+                        "instanceUri": "https://examples-farmbeatsResourceName.eastus2.farmbeats.azure.net",
+                        "provisioningState": "Succeeded"
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscriptions/{subscriptionId}/providers/Microsoft.AgFoodPlatform/checkNameAvailability": {
+      "post": {
+        "tags": [
+          "Locations"
+        ],
+        "description": "Checks the name availability of the resource with requested resource name.",
+        "operationId": "Locations_CheckNameAvailability",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          null,
+          null,
+          {
+            "in": "body",
+            "name": "body",
+            "description": "NameAvailabilityRequest object.",
+            "required": true,
+            "schema": {
+              "description": "The check availability request body.",
+              "type": "object",
+              "properties": {
+                "name": {
+                  "description": "The name of the resource for which availability needs to be checked.",
+                  "type": "string"
+                },
+                "type": {
+                  "description": "The resource type.",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "description": "The check availability result.",
+              "type": "object",
+              "properties": {
+                "nameAvailable": {
+                  "description": "Indicates if the resource name is available.",
+                  "type": "boolean"
+                },
+                "reason": {
+                  "description": "The reason why the given name is not available.",
+                  "type": "string",
+                  "enum": [
+                    "Invalid",
+                    "AlreadyExists"
+                  ],
+                  "x-ms-enum": {
+                    "name": "CheckNameAvailabilityReason",
+                    "modelAsString": true
+                  }
+                },
+                "message": {
+                  "description": "Detailed reason why the given name is available.",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error"
+          }
+        },
+        "x-ms-examples": {
+          "Locations_CheckNameAvailability_AlreadyExists": {
+            "parameters": {
+              "api-version": "2020-05-12-preview",
+              "subscriptionId": "11111111-2222-3333-4444-555555555555",
+              "body": {
+                "name": "existingaccountname",
+                "type": "Microsoft.AgFoodPlatform/farmBeats"
+              }
+            },
+            "responses": {
+              "200": {
+                "body": {
+                  "nameAvailable": false,
+                  "reason": "AlreadyExists",
+                  "message": "An account named 'existingaccountname' is already in use."
+                }
+              }
+            }
+          },
+          "Locations_CheckNameAvailability_Available": {
+            "parameters": {
+              "api-version": "2020-05-12-preview",
+              "subscriptionId": "11111111-2222-3333-4444-555555555555",
+              "body": {
+                "name": "newaccountname",
+                "type": "Microsoft.AgFoodPlatform/farmBeats"
+              }
+            },
+            "responses": {
+              "200": {
+                "body": {
+                  "nameAvailable": true
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/providers/Microsoft.AgFoodPlatform/operations": {
+      "get": {
+        "tags": [
+          "Operations"
+        ],
+        "description": "Lists the available operations of Microsoft.AgFoodPlatform resource provider.",
+        "operationId": "Operations_List",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          null
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "description": "A list of REST API operations supported by an Azure Resource Provider. It contains an URL link to get the next set of results.",
+              "type": "object",
+              "properties": {
+                "value": {
+                  "type": "array",
+                  "items": {
+                    "title": "REST API Operation",
+                    "description": "Details of a REST API operation, returned from the Resource Provider Operations API",
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "description": "The name of the operation, as per Resource-Based Access Control (RBAC). Examples: \"Microsoft.Compute/virtualMachines/write\", \"Microsoft.Compute/virtualMachines/capture/action\"",
+                        "type": "string",
+                        "readOnly": true
+                      },
+                      "isDataAction": {
+                        "description": "Whether the operation applies to data-plane. This is \"true\" for data-plane operations and \"false\" for ARM/control-plane operations.",
+                        "type": "boolean",
+                        "readOnly": true
+                      },
+                      "display": {
+                        "description": "Localized display information for this particular operation.",
+                        "type": "object",
+                        "properties": {
+                          "provider": {
+                            "description": "The localized friendly form of the resource provider name, e.g. \"Microsoft Monitoring Insights\" or \"Microsoft Compute\".",
+                            "type": "string",
+                            "readOnly": true
+                          },
+                          "resource": {
+                            "description": "The localized friendly name of the resource type related to this operation. E.g. \"Virtual Machines\" or \"Job Schedule Collections\".",
+                            "type": "string",
+                            "readOnly": true
+                          },
+                          "operation": {
+                            "description": "The concise, localized friendly name for the operation; suitable for dropdowns. E.g. \"Create or Update Virtual Machine\", \"Restart Virtual Machine\".",
+                            "type": "string",
+                            "readOnly": true
+                          },
+                          "description": {
+                            "description": "The short, localized friendly description of the operation; suitable for tool tips and detailed views.",
+                            "type": "string",
+                            "readOnly": true
+                          }
+                        }
+                      },
+                      "origin": {
+                        "description": "The intended executor of the operation; as in Resource Based Access Control (RBAC) and audit logs UX. Default value is \"user,system\"",
+                        "type": "string",
+                        "readOnly": true,
+                        "enum": [
+                          "user",
+                          "system",
+                          "user,system"
+                        ],
+                        "x-ms-enum": {
+                          "name": "Origin",
+                          "modelAsString": true
+                        }
+                      },
+                      "actionType": {
+                        "description": "Enum. Indicates the action type. \"Internal\" refers to actions that are for internal only APIs.",
+                        "type": "string",
+                        "readOnly": true,
+                        "enum": [
+                          "Internal"
+                        ],
+                        "x-ms-enum": {
+                          "name": "ActionType",
+                          "modelAsString": true
+                        }
+                      }
+                    }
+                  },
+                  "description": "List of operations supported by the resource provider",
+                  "readOnly": true
+                },
+                "nextLink": {
+                  "type": "string",
+                  "description": "URL to get the next set of operation list results (if there are any).",
+                  "readOnly": true
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error"
+          }
+        },
+        "x-ms-pageable": {
+          "nextLinkName": "nextLink"
+        },
+        "x-ms-examples": {
+          "Operations_List": {
+            "parameters": {
+              "api-version": "2020-05-12-preview"
+            },
+            "responses": {
+              "200": {
+                "body": {
+                  "value": [
+                    {
+                      "name": "Microsoft.AgFoodPlatform/farmBeats/read",
+                      "isDataAction": false,
+                      "display": {
+                        "provider": "Microsoft AgFoodPlatform",
+                        "resource": "AgFoodPlatform FarmBeats",
+                        "operation": "Get or List AgFoodPlatform FarmBeats resource(s).",
+                        "description": "Gets or Lists existing AgFoodPlatform FarmBeats resource(s)."
+                      }
+                    },
+                    {
+                      "name": "Microsoft.AgFoodPlatform/farmBeats/write",
+                      "isDataAction": false,
+                      "display": {
+                        "provider": "Microsoft AgFoodPlatform",
+                        "resource": "AgFoodPlatform FarmBeats",
+                        "operation": "Create or Update AgFoodPlatform FarmBeats.",
+                        "description": "Creates or Updates AgFoodPlatform FarmBeats."
+                      }
+                    },
+                    {
+                      "name": "Microsoft.AgFoodPlatform/farmBeats/delete",
+                      "isDataAction": false,
+                      "display": {
+                        "provider": "Microsoft AgFoodPlatform",
+                        "resource": "AgFoodPlatform FarmBeats",
+                        "operation": "Delete AgFoodPlatform FarmBeats resource.",
+                        "description": "Deletes an existing AgFoodPlatform FarmBeats resource."
+                      }
+                    },
+                    {
+                      "name": "Microsoft.AgFoodPlatform/locations/checkNameAvailability/action",
+                      "isDataAction": false,
+                      "display": {
+                        "provider": "Microsoft AgFoodPlatform",
+                        "resource": "Locations",
+                        "operation": "Check Name Availability",
+                        "description": "Checks that resource name is valid and is not in use."
+                      }
+                    },
+                    {
+                      "name": "Microsoft.AgFoodPlatform/operations/read",
+                      "isDataAction": false,
+                      "display": {
+                        "provider": "Microsoft AgFoodPlatform",
+                        "resource": "List all operations in Microsoft AgFoodPlatform resource provider.",
+                        "operation": "List all operations.",
+                        "description": "List all operations in Microsoft AgFoodPlatform resource provider."
+                      }
+                    },
+                    {
+                      "name": "Microsoft.AgFoodPlatform/farmBeats/extensions/read",
+                      "isDataAction": false,
+                      "display": {
+                        "provider": "Microsoft AgFoodPlatform",
+                        "resource": "AgFoodPlatform Extensions",
+                        "operation": "Get or List AgFoodPlatform Extensions resource(s).",
+                        "description": "Gets or Lists existing AgFoodPlatform Extensions resource(s)."
+                      }
+                    },
+                    {
+                      "name": "Microsoft.AgFoodPlatform/farmBeats/extensions/write",
+                      "isDataAction": false,
+                      "display": {
+                        "provider": "Microsoft AgFoodPlatform",
+                        "resource": "AgFoodPlatform Extensions",
+                        "operation": "Create or Update AgFoodPlatform Extensions.",
+                        "description": "Creates or Updates AgFoodPlatform Extensions."
+                      }
+                    },
+                    {
+                      "name": "Microsoft.AgFoodPlatform/farmBeats/extensions/delete",
+                      "isDataAction": false,
+                      "display": {
+                        "provider": "Microsoft AgFoodPlatform",
+                        "resource": "AgFoodPlatform Extensions",
+                        "operation": "Delete AgFoodPlatform Extensions resource.",
+                        "description": "Deletes an existing AgFoodPlatform Extensions resource."
+                      }
+                    }
+                  ],
+                  "nextLink": "https://management.azure.com/providers/Microsoft.AgFoodPlatform/operations?$skiptoken={token}"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "ExtensionProperties": {
+      "description": "Extension resource properties.",
+      "type": "object"
+    },
+    "FarmBeatsExtensionProperties": {
+      "description": "FarmBeatsExtension properties.",
+      "type": "object"
+    },
+    "FarmBeatsProperties": {
+      "description": "FarmBeats ARM Resource properties.",
+      "type": "object"
+    }
+  },
+  "parameters": {},
+  "securityDefinitions": {
+    "azure_auth": {
+      "type": "oauth2",
+      "flow": "implicit",
+      "authorizationUrl": "https://login.microsoftonline.com/common/oauth2/authorize",
+      "scopes": {
+        "user_impersonation": "impersonate your user account"
+      },
+      "description": "Azure Active Directory OAuth2 Flow."
+    }
+  },
+  "security": [
+    {
+      "azure_auth": [
+        "user_impersonation"
+      ]
+    }
+  ],
+  "host": "management.azure.com",
+  "schemes": [
+    "https"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "consumes": [
+    "application/json"
+  ]
+}
