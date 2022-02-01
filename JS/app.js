@@ -1,8 +1,15 @@
 const SwaggerParser = require('@apidevtools/swagger-parser');
 const fs = require('fs');
 const { safeStringify } = require('./utilities');
+const converter = require('swagger2openapi');
 
 JSON.safeStringify = safeStringify;
+let inputFile = "parsedSpecExample.json";
+let options = {};
+options.resolve = true;
+options.outfile = "convertedSpecExample.json";
+options.patch = true;
+options.source = inputFile;
 
 (async () => {
   try {
@@ -20,5 +27,23 @@ JSON.safeStringify = safeStringify;
   } catch (err) {
     console.error(err);
   }
+
+  converter.convertFile(options.source, options, function(err, options){
+    if (err) {
+      delete err.options;
+      console.warn(err);
+      return process.exitCode = 1;
+    }
+    
+    let s;
+    try {
+      s = JSON.stringify(options.openapi, null, options.indent||4);
+    }
+    catch (ex) {
+      console.warn('The result cannot be represented safely in the chosen output format');
+      s = '{}';
+    }
+    fs.writeFileSync(options.outfile, s, options.encoding || 'utf8');
+  });
 })();
 
