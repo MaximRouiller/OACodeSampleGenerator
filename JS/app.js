@@ -2,6 +2,7 @@ const SwaggerParser = require('@apidevtools/swagger-parser');
 const fs = require('fs');
 const { safeStringify } = require('./utilities');
 const converter = require('swagger2openapi');
+const validator = require('oas-validator');
 
 JSON.safeStringify = safeStringify;
 let inputFile = "parsedSpecExample.json";
@@ -34,7 +35,17 @@ options.source = inputFile;
       console.warn(err);
       return process.exitCode = 1;
     }
-    
+
+    validator.validate(options.openapi, options)
+    .then(function(){
+      console.log(options.outfile + " is Valid!");
+    })
+    .catch(function(err){
+      console.log(options.outfile + " is Invalid!");
+      console.warn(err.message);
+      if (options.context) console.warn('Location',options.context.pop());
+    });
+
     let s;
     try {
       s = JSON.stringify(options.openapi, null, options.indent||4);
