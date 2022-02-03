@@ -46,6 +46,9 @@ function getOperations(spec) {
 // With HTTPClient for Java 11+ https://openjdk.java.net/groups/net/httpclient/intro.html
 // Request is synchronous
 function getGeneratedJavaRequestCode({ operationGroupPath, operationType, operation }, apiVersion) {
+  operationType = operationType.toUpperCase();
+  const hasBody = ['PUT', 'POST', 'PATCH'].includes(operationType);
+
   return `
   // ${operation.operationId}
 
@@ -54,12 +57,31 @@ function getGeneratedJavaRequestCode({ operationGroupPath, operationType, operat
   HttpRequest request = HttpRequest.newBuilder()
     .uri(URI.create("https://managemement.azure.com${operationGroupPath}?api-version=${apiVersion}"))
     .header("Content-Type", "application/json")
-    .${operationType.toUpperCase()}()
+    .${operationType}(${hasBody ? 'BodyPublishers.ofFile(Paths.get("body.json"))' : ''})
     .build();
 
   HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
   System.out.println(response.statusCode());
   System.out.println(response.body());
+
+  ${hasBody ? getJSONRequestBody(operation) : ''}
+  `;
+}
+
+function getJSONRequestBody(operation) {
+  const properties = Object.entries(
+    operation.requestBody.content['application/json'].schema.properties
+  ).filter((prop) => !prop[1].readOnly);
+
+  return `-----
+
+  body.json:
+
+  {${properties.map(
+    (prop) => `
+    ${prop[0]}: ...`
+  )}
+  }
   `;
 }
 
