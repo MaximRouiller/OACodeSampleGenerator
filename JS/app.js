@@ -25,7 +25,13 @@ const converter = require('swagger2openapi');
       (op) => op.operation.operationId === 'ResourceGroups_CreateOrUpdate'
     );
 
-    console.log(getGeneratedJavaRequestCode(exampleOperation, api.info.version));
+    const operationType = exampleOperation.operationType.toUpperCase();
+    const hasBody = ['PUT', 'POST', 'PATCH'].includes(operationType);
+    console.log(
+      getGeneratedJavaRequestCode({ ...exampleOperation, operationType }, api.info.version, hasBody)
+    );
+    if (hasBody) console.log(getJSONRequestBody(exampleOperation.operation));
+
     // console.log(getGeneratedJavaResponseCode(exampleOperation));
   } catch (err) {
     console.error(err);
@@ -45,10 +51,11 @@ function getOperations(spec) {
 
 // With HTTPClient for Java 11+ https://openjdk.java.net/groups/net/httpclient/intro.html
 // Request is synchronous
-function getGeneratedJavaRequestCode({ operationGroupPath, operationType, operation }, apiVersion) {
-  operationType = operationType.toUpperCase();
-  const hasBody = ['PUT', 'POST', 'PATCH'].includes(operationType);
-
+function getGeneratedJavaRequestCode(
+  { operationGroupPath, operationType, operation },
+  apiVersion,
+  hasBody
+) {
   return `
 // ${operation.operationId}
 
@@ -62,9 +69,7 @@ HttpRequest request = HttpRequest.newBuilder()
 
 HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
 System.out.println(response.statusCode());
-System.out.println(response.body());
-
-${hasBody ? getJSONRequestBody(operation) : ''}`;
+System.out.println(response.body());`;
 }
 
 function getJSONRequestBody(operation) {
@@ -72,7 +77,8 @@ function getJSONRequestBody(operation) {
     operation.requestBody.content['application/json'].schema.properties
   ).filter((prop) => !prop[1].readOnly);
 
-  return `-----
+  return `
+-----
 
 body.json:
 
