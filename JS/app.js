@@ -50,22 +50,21 @@ function getGeneratedJavaRequestCode({ operationGroupPath, operationType, operat
   const hasBody = ['PUT', 'POST', 'PATCH'].includes(operationType);
 
   return `
-  // ${operation.operationId}
+// ${operation.operationId}
 
-  HttpClient client = HttpClient.newHttpClient();
+HttpClient client = HttpClient.newHttpClient();
 
-  HttpRequest request = HttpRequest.newBuilder()
-    .uri(URI.create("https://managemement.azure.com${operationGroupPath}?api-version=${apiVersion}"))
-    .header("Content-Type", "application/json")
-    .${operationType}(${hasBody ? 'BodyPublishers.ofFile(Paths.get("body.json"))' : ''})
-    .build();
+HttpRequest request = HttpRequest.newBuilder()
+  .uri(URI.create("https://managemement.azure.com${operationGroupPath}?api-version=${apiVersion}"))
+  .header("Content-Type", "application/json")
+  .${operationType}(${hasBody ? 'BodyPublishers.ofFile(Paths.get("body.json"))' : ''})
+  .build();
 
-  HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
-  System.out.println(response.statusCode());
-  System.out.println(response.body());
+HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
+System.out.println(response.statusCode());
+System.out.println(response.body());
 
-  ${hasBody ? getJSONRequestBody(operation) : ''}
-  `;
+${hasBody ? getJSONRequestBody(operation) : ''}`;
 }
 
 function getJSONRequestBody(operation) {
@@ -75,14 +74,13 @@ function getJSONRequestBody(operation) {
 
   return `-----
 
-  body.json:
+body.json:
 
-  {${properties.map(
+{${properties.map(
     (prop) => `
-    ${prop[0]}: ...`
+  ${prop[0]}: ...`
   )}
-  }
-  `;
+}`;
 }
 
 // TODO: Create response deserialiser model generator for Java
