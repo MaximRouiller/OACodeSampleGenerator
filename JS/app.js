@@ -22,7 +22,7 @@ const converter = require('swagger2openapi');
     console.log('API name: %s, Version: %s', api.info.title, api.info.version);
 
     const exampleOperation = getOperations(api).find(
-      (op) => op.operation.operationId === 'ResourceGroups_CreateOrUpdate'
+      (op) => op.operationId === 'ResourceGroups_CreateOrUpdate'
     );
 
     const operationType = exampleOperation.operationType.toUpperCase();
@@ -30,7 +30,7 @@ const converter = require('swagger2openapi');
     console.log(
       getGeneratedJavaRequestCode({ ...exampleOperation, operationType }, api.info.version, hasBody)
     );
-    if (hasBody) console.log(getJSONRequestBody(exampleOperation.operation));
+    if (hasBody) console.log(getJSONRequestBody(exampleOperation));
 
     // console.log(getGeneratedJavaResponseCode(exampleOperation));
   } catch (err) {
@@ -43,7 +43,7 @@ function getOperations(spec) {
   let operations = [];
   for (const [operationGroupPath, operationGroup] of Object.entries(spec.paths)) {
     for (const [operationType, operation] of Object.entries(operationGroup)) {
-      operations.push({ operationGroupPath, operationType, operation });
+      operations.push({ operationGroupPath, operationType, ...operation });
     }
   }
   return operations;
@@ -52,12 +52,12 @@ function getOperations(spec) {
 // With HTTPClient for Java 11+ https://openjdk.java.net/groups/net/httpclient/intro.html
 // Request is synchronous
 function getGeneratedJavaRequestCode(
-  { operationGroupPath, operationType, operation },
+  { operationGroupPath, operationType, operationId },
   apiVersion,
   hasBody
 ) {
   return `
-// ${operation.operationId}
+// ${operationId}
 
 HttpClient client = HttpClient.newHttpClient();
 
