@@ -84,7 +84,7 @@ body.json:
 
 {${properties.map(
     (prop) => `
-  ${prop[0]}: ...`
+  "${prop[0]}": ...`
   )}
 }`;
 }
