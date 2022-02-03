@@ -26,7 +26,7 @@ const converter = require('swagger2openapi');
       (op) => op.operation.operationId === 'ResourceGroups_CreateOrUpdate'
     );
 
-    console.log(getGeneratedJavaRequestCode(ResourceGroups_CreateOrUpdate));
+    console.log(getGeneratedJavaRequestCode(ResourceGroups_CreateOrUpdate, api.info.version));
 
     // console.log(getGeneratedJavaResponseCode(ResourceGroups_CreateOrUpdate));
   } catch (err) {
@@ -47,14 +47,14 @@ function getOperations(spec) {
 
 // With HTTPClient for Java 11+ https://openjdk.java.net/groups/net/httpclient/intro.html
 // Request is synchronous
-function getGeneratedJavaRequestCode({ operationGroupPath, operationType, operation }) {
+function getGeneratedJavaRequestCode({ operationGroupPath, operationType, operation }, apiVersion) {
   return `
   // ${operation.operationId}
 
   HttpClient client = HttpClient.newHttpClient();
 
   HttpRequest request = HttpRequest.newBuilder()
-    .uri(URI.create("https://managemement.azure.com${operationGroupPath}"))
+    .uri(URI.create("https://managemement.azure.com${operationGroupPath}?api-version=${apiVersion}"))
     .header("Content-Type", "application/json")
     .${operationType.toUpperCase()}()
     .build();
