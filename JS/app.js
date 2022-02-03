@@ -21,14 +21,12 @@ const converter = require('swagger2openapi');
 
     console.log('API name: %s, Version: %s', api.info.title, api.info.version);
 
-    // Get ResourceGroups_CreateOrUpdate operation
-    const ResourceGroups_CreateOrUpdate = getOperations(api).find(
+    const exampleOperation = getOperations(api).find(
       (op) => op.operation.operationId === 'ResourceGroups_CreateOrUpdate'
     );
 
-    console.log(getGeneratedJavaRequestCode(ResourceGroups_CreateOrUpdate, api.info.version));
-
-    // console.log(getGeneratedJavaResponseCode(ResourceGroups_CreateOrUpdate));
+    console.log(getGeneratedJavaRequestCode(exampleOperation, api.info.version));
+    // console.log(getGeneratedJavaResponseCode(exampleOperation));
   } catch (err) {
     console.error(err);
   }
