@@ -1,15 +1,12 @@
 const fs = require('fs');
-let spec = JSON.parse(fs.readFileSync('../example/convertedSpecExample.json', 'utf8'));
+let spec = JSON.parse(fs.readFileSync('../example/endSpecExample.json'));
 
-let CreateOrUpdate;
-
-for (const operationGroup of Object.values(spec.paths)) {
-  for (const operation of Object.values(operationGroup)) {
-    // console.log(operationType, " ",operation.operationId);
-    if (operation.operationId === 'ResourceGroups_CreateOrUpdate') {
-      CreateOrUpdate = operation;
+exports.getOperations = () => {
+  let operations = [];
+  for (const operationGroup of Object.values(spec.paths)) {
+    for (const [operationType, operation] of Object.entries(operationGroup)) {
+      operations.push({ operationType, operation });
     }
   }
-}
-
-console.log(CreateOrUpdate);
+  return operations;
+};
