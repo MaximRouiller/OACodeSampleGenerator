@@ -26,12 +26,9 @@ const converter = require('swagger2openapi');
       (op) => op.operation.operationId === 'ResourceGroups_CreateOrUpdate'
     );
 
-    console.log(
-      getGeneratedJavaRequestCode(
-        ResourceGroups_CreateOrUpdate.operationType,
-        ResourceGroups_CreateOrUpdate.operation
-      )
-    );
+    console.log(getGeneratedJavaRequestCode(ResourceGroups_CreateOrUpdate));
+
+    // console.log(getGeneratedJavaResponseCode(ResourceGroups_CreateOrUpdate));
   } catch (err) {
     console.error(err);
   }
@@ -40,16 +37,35 @@ const converter = require('swagger2openapi');
 // Split spec into operations
 function getOperations(spec) {
   let operations = [];
-  for (const operationGroup of Object.values(spec.paths)) {
+  for (const [operationGroupPath, operationGroup] of Object.entries(spec.paths)) {
     for (const [operationType, operation] of Object.entries(operationGroup)) {
-      operations.push({ operationType, operation });
+      operations.push({ operationGroupPath, operationType, operation });
     }
   }
   return operations;
 }
 
-// With HTTPRequest
-function getGeneratedJavaRequestCode(operationType, operation) {
-  let snippet = '';
-  return snippet;
+// With HTTPClient for Java 11+ https://openjdk.java.net/groups/net/httpclient/intro.html
+// Request is synchronous
+function getGeneratedJavaRequestCode({ operationGroupPath, operationType, operation }) {
+  return `
+  // ${operation.operationId}
+
+  HttpClient client = HttpClient.newHttpClient();
+
+  HttpRequest request = HttpRequest.newBuilder()
+    .uri(URI.create("https://managemement.azure.com${operationGroupPath}"))
+    .header("Content-Type", "application/json")
+    .${operationType.toUpperCase()}()
+    .build();
+
+  HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
+  System.out.println(response.statusCode());
+  System.out.println(response.body());
+  `;
 }
+
+// TODO: Create response deserialiser model generator for Java
+// function getGeneratedJavaResponseCode({ operation }) {
+//   return ``;
+// }
