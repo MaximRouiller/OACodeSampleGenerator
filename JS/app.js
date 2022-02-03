@@ -2,8 +2,6 @@ const SwaggerParser = require('@apidevtools/swagger-parser');
 const fs = require('fs');
 const converter = require('swagger2openapi');
 
-const { getOperations } = require('./split');
-
 (async () => {
   try {
     const specURL =
@@ -24,7 +22,7 @@ const { getOperations } = require('./split');
     console.log('API name: %s, Version: %s', api.info.title, api.info.version);
 
     // Get ResourceGroups_CreateOrUpdate operation
-    const ResourceGroups_CreateOrUpdate = getOperations().find(
+    const ResourceGroups_CreateOrUpdate = getOperations(api).find(
       (op) => op.operation.operationId === 'ResourceGroups_CreateOrUpdate'
     );
 
@@ -38,6 +36,17 @@ const { getOperations } = require('./split');
     console.error(err);
   }
 })();
+
+// Split spec into operations
+function getOperations(spec) {
+  let operations = [];
+  for (const operationGroup of Object.values(spec.paths)) {
+    for (const [operationType, operation] of Object.entries(operationGroup)) {
+      operations.push({ operationType, operation });
+    }
+  }
+  return operations;
+}
 
 // With HTTPRequest
 function getGeneratedJavaRequestCode(operationType, operation) {
