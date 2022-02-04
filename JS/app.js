@@ -21,16 +21,24 @@ const converter = require('swagger2openapi');
 
     console.log('API name: %s, Version: %s', api.info.title, api.info.version);
 
-    const exampleOperation = getOperations(api).find(
+    const operation = getOperations(api).find(
       (op) => op.operationId === 'ResourceGroups_CreateOrUpdate'
     );
 
-    const operationType = exampleOperation.operationType.toUpperCase();
-    const hasBody = ['PUT', 'POST', 'PATCH'].includes(operationType);
+    const operationType = operation.operationType.toUpperCase();
+    const hasBody = operation.requestBody !== undefined;
+
     console.log(
-      getGeneratedJavaRequestCode({ ...exampleOperation, operationType }, api.info.version, hasBody)
+      getGeneratedJavaRequestCode({ ...operation, operationType }, api.info.version, hasBody)
     );
-    if (hasBody) console.log(getJSONRequestBody(exampleOperation));
+
+    const properties =
+      hasBody && operation.requestBody.content['application/json'].schema.properties;
+    if (properties) {
+      console.log(
+        getJSONRequestBody(Object.entries(properties).filter((prop) => !prop[1].readOnly))
+      );
+    }
 
     // console.log(getGeneratedJavaResponseCode(exampleOperation));
   } catch (err) {
@@ -72,11 +80,7 @@ System.out.println(response.statusCode());
 System.out.println(response.body());`;
 }
 
-function getJSONRequestBody(operation) {
-  const properties = Object.entries(
-    operation.requestBody.content['application/json'].schema.properties
-  ).filter((prop) => !prop[1].readOnly);
-
+function getJSONRequestBody(properties) {
   return `
 -----
 
