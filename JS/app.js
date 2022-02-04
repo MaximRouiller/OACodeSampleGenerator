@@ -26,14 +26,9 @@ const converter = require('swagger2openapi');
     getOperations(api)
       .filter((op) => op.operationId === 'ResourceGroups_CreateOrUpdate')
       .forEach((operation) => {
-        const operationType = operation.operationType.toUpperCase();
         const hasBody = operation.requestBody !== undefined;
 
-        javaSnippet += getJavaRequestCode(
-          { ...operation, operationType },
-          api.info.version,
-          hasBody
-        );
+        javaSnippet += getJavaRequestCode(operation, api.info.version, hasBody);
 
         const properties =
           hasBody && operation.requestBody.content['application/json'].schema.properties;
@@ -78,7 +73,7 @@ HttpClient client = HttpClient.newHttpClient();
 HttpRequest request = HttpRequest.newBuilder()
   .uri(URI.create("https://managemement.azure.com${operationGroupPath}?api-version=${apiVersion}"))
   .header("Content-Type", "application/json")
-  .${operationType}(${hasBody ? 'BodyPublishers.ofFile(Paths.get("body.json"))' : ''})
+  .${operationType.toUpperCase()}(${hasBody ? 'BodyPublishers.ofFile(Paths.get("body.json"))' : ''})
   .build();
 
 HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
