@@ -26,16 +26,16 @@ const converter = require('swagger2openapi');
     getOperations(api)
       .filter((op) => op.operationId === 'ResourceGroups_CreateOrUpdate')
       .forEach((operation) => {
-        const hasBody = operation.requestBody !== undefined;
+        const bodyProperties = operation.requestBody?.content['application/json'].schema.properties;
 
-        javaSnippet += getJavaRequestCode(operation, api.info.version, hasBody);
+        javaSnippet += getJavaRequestCode(operation, api.info.version, bodyProperties);
 
-        const properties =
-          hasBody && operation.requestBody.content['application/json'].schema.properties;
-        if (properties) {
-          javaSnippet += getJSONRequestBody(
-            Object.entries(properties).filter((prop) => !prop[1].readOnly)
+        if (bodyProperties) {
+          const writeProperties = Object.entries(bodyProperties).filter(
+            (prop) => !prop[1].readOnly
           );
+
+          javaSnippet += getJSONRequestBody(writeProperties);
         }
 
         // javaSnippet += getJavaResponseCode(operation);
