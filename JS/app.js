@@ -19,26 +19,35 @@ const converter = require('swagger2openapi');
     api = await SwaggerParser.validate(api.openapi, { dereference: { circular: 'ignore' } });
     fs.writeFileSync('../example/endSpecExample.json', JSON.stringify(api, null, 2));
 
-    console.log('API name: %s, Version: %s', api.info.title, api.info.version);
+    console.log(`API name: ${api.info.title}, Version: ${api.info.version}`);
 
-    const operation = getOperations(api).find(
-      (op) => op.operationId === 'ResourceGroups_CreateOrUpdate'
-    );
+    let javaSnippet = '';
 
-    const operationType = operation.operationType.toUpperCase();
-    const hasBody = operation.requestBody !== undefined;
+    getOperations(api)
+      .filter((op) => op.operationId === 'ResourceGroups_CreateOrUpdate')
+      .forEach((operation) => {
+        const operationType = operation.operationType.toUpperCase();
+        const hasBody = operation.requestBody !== undefined;
 
-    console.log(getJavaRequestCode({ ...operation, operationType }, api.info.version, hasBody));
+        javaSnippet += getJavaRequestCode(
+          { ...operation, operationType },
+          api.info.version,
+          hasBody
+        );
 
-    const properties =
-      hasBody && operation.requestBody.content['application/json'].schema.properties;
-    if (properties) {
-      console.log(
-        getJSONRequestBody(Object.entries(properties).filter((prop) => !prop[1].readOnly))
-      );
-    }
+        const properties =
+          hasBody && operation.requestBody.content['application/json'].schema.properties;
+        if (properties) {
+          javaSnippet += getJSONRequestBody(
+            Object.entries(properties).filter((prop) => !prop[1].readOnly)
+          );
+        }
 
-    // console.log(getJavaResponseCode(exampleOperation));
+        // javaSnippet += getJavaResponseCode(operation);
+      });
+
+    fs.writeFileSync('../example/javaSnippet.txt', javaSnippet);
+    console.log(javaSnippet);
   } catch (err) {
     console.error(err);
   }
@@ -62,8 +71,7 @@ function getJavaRequestCode(
   apiVersion,
   hasBody
 ) {
-  return `
-// ${operationId}
+  return `// ${operationId}
 
 HttpClient client = HttpClient.newHttpClient();
 
@@ -75,12 +83,13 @@ HttpRequest request = HttpRequest.newBuilder()
 
 HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
 System.out.println(response.statusCode());
-System.out.println(response.body());`;
+System.out.println(response.body());
+
+`;
 }
 
 function getJSONRequestBody(properties) {
-  return `
------
+  return `-----
 
 body.json:
 
@@ -88,10 +97,12 @@ body.json:
     (prop) => `
   "${prop[0]}": ...`
   )}
-}`;
+}
+
+`;
 }
 
 // TODO: Create response deserialiser model generator for Java
-// function getJavaResponseCode({ operation }) {
+// function getJavaResponseCode(operation) {
 //   return ``;
 // }
