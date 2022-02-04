@@ -6,12 +6,6 @@
   "directories": {
     "test": "test"
   },
-  "dependencies": {
-    "chai": "^4.3.6",
-    "mocha": "^9.2.0",
-    "swagger2openapi": "^7.0.8"
-  },
-  "devDependencies": {},
   "scripts": {
     "start": "node JS/app.js",
     "test": "mocha"
@@ -25,5 +19,11 @@
   "bugs": {
     "url": "https://github.com/MaximRouiller/OACodeSampleGenerator/issues"
   },
-  "homepage": "https://github.com/MaximRouiller/OACodeSampleGenerator#readme"
+  "homepage": "https://github.com/MaximRouiller/OACodeSampleGenerator#readme",
+  "dependencies": {
+    "@apidevtools/swagger-parser": "^10.0.3",
+    "chai": "^4.3.6",
+    "mocha": "^9.2.0",
+    "swagger2openapi": "^7.0.8"
+  }
 }
