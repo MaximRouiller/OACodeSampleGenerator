@@ -3,9 +3,12 @@
   "version": "1.0.0",
   "description": "Generate code samples from OpenAPI specifications",
   "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
   "scripts": {
-    "start": "node ./JS/app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node JS/app.js",
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
