@@ -28,9 +28,7 @@ const converter = require('swagger2openapi');
     const operationType = operation.operationType.toUpperCase();
     const hasBody = operation.requestBody !== undefined;
 
-    console.log(
-      getGeneratedJavaRequestCode({ ...operation, operationType }, api.info.version, hasBody)
-    );
+    console.log(getJavaRequestCode({ ...operation, operationType }, api.info.version, hasBody));
 
     const properties =
       hasBody && operation.requestBody.content['application/json'].schema.properties;
@@ -40,7 +38,7 @@ const converter = require('swagger2openapi');
       );
     }
 
-    // console.log(getGeneratedJavaResponseCode(exampleOperation));
+    // console.log(getJavaResponseCode(exampleOperation));
   } catch (err) {
     console.error(err);
   }
@@ -59,7 +57,7 @@ function getOperations(spec) {
 
 // With HTTPClient for Java 11+ https://openjdk.java.net/groups/net/httpclient/intro.html
 // Request is synchronous
-function getGeneratedJavaRequestCode(
+function getJavaRequestCode(
   { operationGroupPath, operationType, operationId },
   apiVersion,
   hasBody
@@ -94,6 +92,6 @@ body.json:
 }
 
 // TODO: Create response deserialiser model generator for Java
-// function getGeneratedJavaResponseCode({ operation }) {
+// function getJavaResponseCode({ operation }) {
 //   return ``;
 // }
