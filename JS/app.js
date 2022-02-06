@@ -22,6 +22,7 @@ const converter = require('swagger2openapi');
     console.log(`API name: ${api.info.title}, Version: ${api.info.version}`);
 
     let javaSnippet = '';
+    let pythonSnippet = '';
 
     getOperations(api)
       .filter((op) => op.operationId === 'ResourceGroups_CreateOrUpdate')
@@ -29,6 +30,7 @@ const converter = require('swagger2openapi');
         const bodyProperties = operation.requestBody?.content['application/json'].schema.properties;
 
         javaSnippet += getJavaRequestCode(operation, api.info.version, bodyProperties);
+        pythonSnippet += getPythonRequestCode(operation, api.info.version, bodyProperties);
 
         if (bodyProperties) {
           const writeProperties = Object.entries(bodyProperties).filter(
@@ -36,13 +38,17 @@ const converter = require('swagger2openapi');
           );
 
           javaSnippet += getJSONRequestBody(writeProperties);
+          pythonSnippet += getJSONRequestBody(writeProperties);
         }
 
         // javaSnippet += getJavaResponseCode(operation);
+        // pythonSnippet += getPythonResponseCode(operation);
       });
 
     fs.writeFileSync('../example/javaSnippet.txt', javaSnippet);
+    fs.writeFileSync('../example/pythonSnippet.txt', pythonSnippet);
     console.log(javaSnippet);
+    console.log(pythonSnippet);
   } catch (err) {
     console.error(err);
   }
@@ -83,6 +89,32 @@ System.out.println(response.body());
 `;
 }
 
+// With Requests for python 2.7 & 3.6+ https://docs.python-requests.org/en/latest/
+// Request is synchronous
+function getPythonRequestCode(
+  { operationGroupPath, operationType, operationId },
+  apiVersion,
+  hasBody
+) {
+  return `# ${operationId}
+# The Requests is not a standard Python library.
+# Thus, please remember to import it
+# by uncomment the next line
+# import requests
+
+headers = {"Content-Type": "application/json"}
+
+response = requests.${operationType}(
+  "https://managemement.azure.com${operationGroupPath}? \\
+  api-version=${apiVersion}",
+  headers=headers${hasBody ? ', files={"file": open("body.json", "r")}' : ''})
+
+print(response.status_code)
+print(response.content)
+
+`;
+}
+
 function getJSONRequestBody(properties) {
   return `-----
 
@@ -99,5 +131,10 @@ body.json:
 
 // TODO: Create response deserialiser model generator for Java
 // function getJavaResponseCode(operation) {
+//   return ``;
+// }
+
+// TODO: Create response deserialiser model generator for Python
+// function getPythonResponseCode(operation) {
 //   return ``;
 // }
