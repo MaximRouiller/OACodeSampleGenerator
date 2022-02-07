@@ -122,6 +122,7 @@ print(response.content)
 }
 
 // With HTTPClient for C# https://docs.microsoft.com/en-us/dotnet/api/system.net.http.httpclient?view=net-6.0 
+// Request is Asynchronous
 function getCSharpRequestCode ({operationGroupPath, operationType, operationId}, apiVersion, hasBody) {
   const capitalise = (s) => s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
   return ` // ${operationId}
