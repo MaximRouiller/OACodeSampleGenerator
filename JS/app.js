@@ -97,9 +97,7 @@ function getPythonRequestCode(
   hasBody
 ) {
   return `# ${operationId}
-# The Requests is not a standard Python library.
-# Thus, please remember to import it
-# by uncomment the next line
+
 # import requests
 
 headers = {"Content-Type": "application/json"}
