@@ -121,23 +121,33 @@ print(response.content)
 `;
 }
 
-// With HTTPClient for C# https://docs.microsoft.com/en-us/dotnet/api/system.net.http.httpclient?view=net-6.0 
+// With HTTPClient for C# https://docs.microsoft.com/en-us/dotnet/api/system.net.http.httpclient?view=net-6.0
 // Request is Asynchronous
-function getCSharpRequestCode ({operationGroupPath, operationType, operationId}, apiVersion, hasBody) {
+function getCSharpRequestCode(
+  { operationGroupPath, operationType, operationId },
+  apiVersion,
+  hasBody
+) {
   const capitalise = (s) => s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
   return ` // ${operationId}
-    HttpClient client = new HttpClient();
-    HttpRequestMessage req = new HttpRequestMessage(HttpMethod.${capitalise(operationType)}, "https://managemement.azure.com${operationGroupPath}?api-version=${apiVersion}");
-    req.Content = new StringContent(${hasBody ? 'System.IO.File.ReadAllText(@"body.json"), Encoding.UTF8, "application/json"' : ''});
+    
+HttpClient client = new HttpClient();
+  HttpRequestMessage req = new HttpRequestMessage(HttpMethod.${capitalise(
+    operationType
+  )}, "https://managemement.azure.com${operationGroupPath}?api-version=${apiVersion}");
+  req.Content = new StringContent(${
+    hasBody ? 'System.IO.File.ReadAllText(@"body.json"), Encoding.UTF8, "application/json"' : ''
+  });
 
-    HttpResponseMessage httpResponseMessage = await client.SendAsync(req);
-    httpResponseMessage.EnsureSuccessStatusCode();
-    HttpContent httpContent = httpResponseMessage.Content;
-    string responseString = await httpContent.ReadAsStringAsync();
-    string responseStatus = httpResponseMessage.StatusCode.ToString();
-    Console.WriteLine(responseString);
-    Console.WriteLine(responseString);
-  `
+HttpResponseMessage httpResponseMessage = await client.SendAsync(req);
+httpResponseMessage.EnsureSuccessStatusCode();
+HttpContent httpContent = httpResponseMessage.Content;
+string responseString = await httpContent.ReadAsStringAsync();
+string responseStatus = httpResponseMessage.StatusCode.ToString();
+Console.WriteLine(responseString);
+Console.WriteLine(responseString);
+
+  `;
 }
 
 function getJSONRequestBody(properties) {
