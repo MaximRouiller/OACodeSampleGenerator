@@ -23,6 +23,7 @@ const converter = require('swagger2openapi');
 
     let javaSnippet = '';
     let pythonSnippet = '';
+    let csharpSnippet = '';
 
     getOperations(api)
       .filter((op) => op.operationId === 'ResourceGroups_CreateOrUpdate')
@@ -31,6 +32,7 @@ const converter = require('swagger2openapi');
 
         javaSnippet += getJavaRequestCode(operation, api.info.version, bodyProperties);
         pythonSnippet += getPythonRequestCode(operation, api.info.version, bodyProperties);
+        csharpSnippet += getCSharpRequestCode(operation, api.info.version, bodyProperties);
 
         if (bodyProperties) {
           const writeProperties = Object.entries(bodyProperties).filter(
@@ -39,16 +41,20 @@ const converter = require('swagger2openapi');
 
           javaSnippet += getJSONRequestBody(writeProperties);
           pythonSnippet += getJSONRequestBody(writeProperties);
+          csharpSnippet += getJSONRequestBody(writeProperties);
         }
 
         // javaSnippet += getJavaResponseCode(operation);
         // pythonSnippet += getPythonResponseCode(operation);
+        // csharpSnippet += getCSharpResponseCode(operation);
       });
 
     fs.writeFileSync('../example/javaSnippet.txt', javaSnippet);
     fs.writeFileSync('../example/pythonSnippet.txt', pythonSnippet);
+    fs.writeFileSync('../example/csharpSnippet.txt', csharpSnippet);
     console.log(javaSnippet);
     console.log(pythonSnippet);
+    console.log(csharpSnippet);
   } catch (err) {
     console.error(err);
   }
@@ -113,6 +119,35 @@ print(response.content)
 `;
 }
 
+// With HTTPClient for C# https://docs.microsoft.com/en-us/dotnet/api/system.net.http.httpclient?view=net-6.0
+// Request is Asynchronous
+function getCSharpRequestCode(
+  { operationGroupPath, operationType, operationId },
+  apiVersion,
+  hasBody
+) {
+  const capitalise = (s) => s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
+  return `// ${operationId}
+    
+HttpClient client = new HttpClient();
+HttpRequestMessage req = new HttpRequestMessage(HttpMethod.${capitalise(
+    operationType
+  )}, "https://managemement.azure.com${operationGroupPath}?api-version=${apiVersion}");
+req.Content = new StringContent(${
+    hasBody ? 'System.IO.File.ReadAllText(@"body.json"), Encoding.UTF8, "application/json"' : ''
+  });
+
+HttpResponseMessage httpResponseMessage = await client.SendAsync(req);
+httpResponseMessage.EnsureSuccessStatusCode();
+HttpContent httpContent = httpResponseMessage.Content;
+string responseString = await httpContent.ReadAsStringAsync();
+string responseStatus = httpResponseMessage.StatusCode.ToString();
+Console.WriteLine(responseString);
+Console.WriteLine(responseString);
+
+`;
+}
+
 function getJSONRequestBody(properties) {
   return `-----
 
@@ -134,5 +169,10 @@ body.json:
 
 // TODO: Create response deserialiser model generator for Python
 // function getPythonResponseCode(operation) {
+//   return ``;
+// }
+
+// TODO: Create response deserialiser model generator for C#
+// function getCSharpResponseCode(operation) {
 //   return ``;
 // }
