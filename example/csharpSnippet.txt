@@ -1,15 +1,18 @@
- // ResourceGroups_CreateOrUpdate
-    HttpClient client = new HttpClient();
-    HttpRequestMessage req = new HttpRequestMessage(HttpMethod.Put, "https://managemement.azure.com/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}?api-version=2021-04-01");
-    req.Content = new StringContent(System.IO.File.ReadAllText(@"body.json"), Encoding.UTF8, "application/json");
+// ResourceGroups_CreateOrUpdate
+    
+HttpClient client = new HttpClient();
+HttpRequestMessage req = new HttpRequestMessage(HttpMethod.Put, "https://managemement.azure.com/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}?api-version=2021-04-01");
+req.Content = new StringContent(System.IO.File.ReadAllText(@"body.json"), Encoding.UTF8, "application/json");
 
-    HttpResponseMessage httpResponseMessage = await client.SendAsync(req);
-    httpResponseMessage.EnsureSuccessStatusCode();
-    HttpContent httpContent = httpResponseMessage.Content;
-    string responseString = await httpContent.ReadAsStringAsync();
-    string responseStatus = httpResponseMessage.StatusCode.ToString();
-    Console.WriteLine(responseString);
-  -----
+HttpResponseMessage httpResponseMessage = await client.SendAsync(req);
+httpResponseMessage.EnsureSuccessStatusCode();
+HttpContent httpContent = httpResponseMessage.Content;
+string responseString = await httpContent.ReadAsStringAsync();
+string responseStatus = httpResponseMessage.StatusCode.ToString();
+Console.WriteLine(responseString);
+Console.WriteLine(responseString);
+
+-----
 
 body.json:
 

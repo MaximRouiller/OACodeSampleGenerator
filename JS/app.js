@@ -129,13 +129,13 @@ function getCSharpRequestCode(
   hasBody
 ) {
   const capitalise = (s) => s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
-  return ` // ${operationId}
+  return `// ${operationId}
     
 HttpClient client = new HttpClient();
-  HttpRequestMessage req = new HttpRequestMessage(HttpMethod.${capitalise(
+HttpRequestMessage req = new HttpRequestMessage(HttpMethod.${capitalise(
     operationType
   )}, "https://managemement.azure.com${operationGroupPath}?api-version=${apiVersion}");
-  req.Content = new StringContent(${
+req.Content = new StringContent(${
     hasBody ? 'System.IO.File.ReadAllText(@"body.json"), Encoding.UTF8, "application/json"' : ''
   });
 
@@ -147,7 +147,7 @@ string responseStatus = httpResponseMessage.StatusCode.ToString();
 Console.WriteLine(responseString);
 Console.WriteLine(responseString);
 
-  `;
+`;
 }
 
 function getJSONRequestBody(properties) {
