@@ -9,15 +9,15 @@ const converter = require('swagger2openapi');
 
     // Bundle
     let api = await SwaggerParser.bundle(specURL);
-    fs.writeFileSync('../example/bundledSpecExample.json', JSON.stringify(api, null, 2));
+    fs.writeFileSync('../example/bundledSpec.json', JSON.stringify(api, null, 2));
 
     // Convert
     api = await converter.convertObj(api, {});
-    fs.writeFileSync('../example/convertedSpecExample.json', JSON.stringify(api, null, 2));
+    fs.writeFileSync('../example/convertedSpec.json', JSON.stringify(api, null, 2));
 
     // Validate and dereference
     api = await SwaggerParser.validate(api.openapi, { dereference: { circular: 'ignore' } });
-    fs.writeFileSync('../example/endSpecExample.json', JSON.stringify(api, null, 2));
+    fs.writeFileSync('../example/endSpec.json', JSON.stringify(api, null, 2));
 
     console.log(`API name: ${api.info.title}, Version: ${api.info.version}`);
 
@@ -25,36 +25,50 @@ const converter = require('swagger2openapi');
     let pythonSnippet = '';
     let csharpSnippet = '';
 
-    getOperations(api)
-      .filter((op) => op.operationId === 'ResourceGroups_CreateOrUpdate')
-      .forEach((operation) => {
-        const bodyProperties = operation.requestBody?.content['application/json'].schema.properties;
+    let requestBody = '';
 
-        javaSnippet += getJavaRequestCode(operation, api.info.version, bodyProperties);
-        pythonSnippet += getPythonRequestCode(operation, api.info.version, bodyProperties);
-        csharpSnippet += getCSharpRequestCode(operation, api.info.version, bodyProperties);
+    let javaModel = '';
+    // let pythonModel = '';
+    // let csharpModel = '';
 
-        if (bodyProperties) {
-          const writeProperties = Object.entries(bodyProperties).filter(
-            (prop) => !prop[1].readOnly
-          );
+    for (const operation of getOperations(api)) {
+      const operationId = operation.operationId;
 
-          javaSnippet += getJSONRequestBody(writeProperties);
-          pythonSnippet += getJSONRequestBody(writeProperties);
-          csharpSnippet += getJSONRequestBody(writeProperties);
-        }
+      if (operationId !== 'ResourceGroups_CreateOrUpdate') continue;
 
-        // javaSnippet += getJavaResponseCode(operation);
-        // pythonSnippet += getPythonResponseCode(operation);
-        // csharpSnippet += getCSharpResponseCode(operation);
-      });
+      const requestBodyProperties =
+        operation.requestBody?.content['application/json'].schema.properties;
+
+      javaSnippet += getJavaRequestCode(operation, api.info.version, requestBodyProperties);
+      pythonSnippet += getPythonRequestCode(operation, api.info.version, requestBodyProperties);
+      csharpSnippet += getCSharpRequestCode(operation, api.info.version, requestBodyProperties);
+
+      if (requestBodyProperties) {
+        requestBody += getJSONRequestBody(
+          operationId,
+          Object.entries(requestBodyProperties).filter((prop) => !prop[1].readOnly)
+        );
+      }
+
+      const responseBodyProperties =
+        operation.responses[200]?.content?.['application/json'].schema.properties;
+
+      if (responseBodyProperties) {
+        javaModel += getJavaResponseCode(operationId, Object.entries(responseBodyProperties));
+        // pythonModel += getPythonResponseCode(operationId, responseBodyProperties);
+        // csharpModel += getCSharpResponseCode(operationId, responseBodyProperties);
+      }
+    }
 
     fs.writeFileSync('../example/javaSnippet.txt', javaSnippet);
     fs.writeFileSync('../example/pythonSnippet.txt', pythonSnippet);
     fs.writeFileSync('../example/csharpSnippet.txt', csharpSnippet);
-    console.log(javaSnippet);
-    console.log(pythonSnippet);
-    console.log(csharpSnippet);
+
+    fs.writeFileSync('../example/requestBody.txt', requestBody);
+
+    fs.writeFileSync('../example/javaModel.txt', javaModel);
+    // fs.writeFileSync('../example/pythonModel.txt', pythonModel);
+    // fs.writeFileSync('../example/csharpModel.txt', csharpModel);
   } catch (err) {
     console.error(err);
   }
@@ -126,7 +140,6 @@ function getCSharpRequestCode(
   apiVersion,
   hasBody
 ) {
-  const capitalise = (s) => s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
   return `// ${operationId}
     
 HttpClient client = new HttpClient();
@@ -148,10 +161,8 @@ Console.WriteLine(responseString);
 `;
 }
 
-function getJSONRequestBody(properties) {
-  return `-----
-
-body.json:
+function getJSONRequestBody(operationId, properties) {
+  return `${operationId} - body.json:
 
 {${properties.map(
     (prop) => `
@@ -162,17 +173,30 @@ body.json:
 `;
 }
 
-// TODO: Create response deserialiser model generator for Java
-// function getJavaResponseCode(operation) {
-//   return ``;
-// }
+function getJavaResponseCode(operationId, properties) {
+  return `class ${operationId} {${properties
+    .map((prop) => {
+      let type = prop[1].type;
+      if (type === 'array') type = 'List<Object>';
+      return `
+  ${capitalise(type || 'object')} ${prop[0]};`;
+    })
+    .join('')} 
+}
+
+`;
+}
 
 // TODO: Create response deserialiser model generator for Python
-// function getPythonResponseCode(operation) {
+// function getPythonResponseCode(operationId, properties) {
 //   return ``;
 // }
 
 // TODO: Create response deserialiser model generator for C#
-// function getCSharpResponseCode(operation) {
+// function getCSharpResponseCode(operationId, properties) {
 //   return ``;
 // }
+
+// Utilities
+
+const capitalise = (s) => s.charAt(0).toUpperCase() + s.slice(1);

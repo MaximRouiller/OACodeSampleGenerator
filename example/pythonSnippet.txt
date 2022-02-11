@@ -12,14 +12,3 @@ response = requests.put(
 print(response.status_code)
 print(response.content)
 
------
-
-body.json:
-
-{
-  "properties": ...,
-  "location": ...,
-  "managedBy": ...,
-  "tags": ...
-}
-

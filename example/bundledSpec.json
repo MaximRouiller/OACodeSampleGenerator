@@ -182,7 +182,155 @@
         "x-ms-long-running-operation": true,
         "x-ms-examples": {
           "Create deployment at a given scope.": {
-            "$ref": "./examples/PutDeploymentAtScope.json"
+            "parameters": {
+              "scope": "providers/Microsoft.Management/managementGroups/my-management-group-id",
+              "deploymentName": "my-deployment",
+              "api-version": "2021-04-01",
+              "parameters": {
+                "location": "eastus",
+                "properties": {
+                  "templateLink": {
+                    "uri": "https://example.com/exampleTemplate.json"
+                  },
+                  "parameters": {},
+                  "mode": "Incremental"
+                },
+                "tags": {
+                  "tagKey1": "tag-value-1",
+                  "tagKey2": "tag-value-2"
+                }
+              }
+            },
+            "responses": {
+              "200": {
+                "body": {
+                  "id": "/providers/Microsoft.Management/managementGroups/my-management-group-id/providers/Microsoft.Resources/deployments/my-deployment",
+                  "name": "my-deployment",
+                  "type": "Microsoft.Resources/deployments",
+                  "location": "eastus",
+                  "properties": {
+                    "parameters": {},
+                    "mode": "Incremental",
+                    "provisioningState": "Accepted",
+                    "timestamp": "2019-04-24T22:52:38.7895563Z",
+                    "duration": "PT1.2970875S",
+                    "correlationId": "00000000-0000-0000-0000-000000000000",
+                    "providers": [
+                      {
+                        "namespace": "Microsoft.Authorization",
+                        "resourceTypes": [
+                          {
+                            "resourceType": "policyDefinitions",
+                            "locations": [
+                              null
+                            ]
+                          },
+                          {
+                            "resourceType": "policyAssignments",
+                            "locations": [
+                              null
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "namespace": "Microsoft.Resources",
+                        "resourceTypes": [
+                          {
+                            "resourceType": "deployments",
+                            "locations": [
+                              "eastus"
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "dependencies": [
+                      {
+                        "dependsOn": [
+                          {
+                            "id": "/providers/Microsoft.Management/managementGroups/my-management-group-id/providers/Microsoft.Authorization/policyDefinitions/policy-definition-name",
+                            "resourceType": "Microsoft.Authorization/policyDefinitions",
+                            "resourceName": "policy-definition-name"
+                          }
+                        ],
+                        "id": "/providers/Microsoft.Management/managementGroups/my-management-group-id/providers/Microsoft.Authorization/policyAssignments/location-lock",
+                        "resourceType": "Microsoft.Authorization/policyAssignments",
+                        "resourceName": "location-lock"
+                      }
+                    ]
+                  },
+                  "tags": {
+                    "tagKey1": "tag-value-1",
+                    "tagKey2": "tag-value-2"
+                  }
+                }
+              },
+              "201": {
+                "body": {
+                  "id": "/providers/Microsoft.Management/managementGroups/my-management-group-id/providers/Microsoft.Resources/deployments/my-deployment",
+                  "name": "my-deployment",
+                  "type": "Microsoft.Resources/deployments",
+                  "location": "eastus",
+                  "properties": {
+                    "parameters": {},
+                    "mode": "Incremental",
+                    "provisioningState": "Accepted",
+                    "timestamp": "2019-04-24T22:52:38.7895563Z",
+                    "duration": "PT1.2970875S",
+                    "correlationId": "00000000-0000-0000-0000-000000000000",
+                    "providers": [
+                      {
+                        "namespace": "Microsoft.Authorization",
+                        "resourceTypes": [
+                          {
+                            "resourceType": "policyDefinitions",
+                            "locations": [
+                              null
+                            ]
+                          },
+                          {
+                            "resourceType": "policyAssignments",
+                            "locations": [
+                              null
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "namespace": "Microsoft.Resources",
+                        "resourceTypes": [
+                          {
+                            "resourceType": "deployments",
+                            "locations": [
+                              "eastus"
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "dependencies": [
+                      {
+                        "dependsOn": [
+                          {
+                            "id": "/providers/Microsoft.Management/managementGroups/my-management-group-id/providers/Microsoft.Authorization/policyDefinitions/policy-definition-name",
+                            "resourceType": "Microsoft.Authorization/policyDefinitions",
+                            "resourceName": "policy-definition-name"
+                          }
+                        ],
+                        "id": "/providers/Microsoft.Management/managementGroups/my-management-group-id/providers/Microsoft.Authorization/policyAssignments/location-lock",
+                        "resourceType": "Microsoft.Authorization/policyAssignments",
+                        "resourceName": "location-lock"
+                      }
+                    ]
+                  },
+                  "tags": {
+                    "tagKey1": "tag-value-1",
+                    "tagKey2": "tag-value-2"
+                  }
+                }
+              }
+            }
           }
         }
       },
@@ -496,7 +644,154 @@
         "x-ms-long-running-operation": true,
         "x-ms-examples": {
           "Create deployment at tenant scope.": {
-            "$ref": "./examples/PutDeploymentAtTenant.json"
+            "parameters": {
+              "deploymentName": "tenant-dep01",
+              "api-version": "2021-04-01",
+              "parameters": {
+                "location": "eastus",
+                "properties": {
+                  "templateLink": {
+                    "uri": "https://example.com/exampleTemplate.json"
+                  },
+                  "parameters": {},
+                  "mode": "Incremental"
+                },
+                "tags": {
+                  "tagKey1": "tag-value-1",
+                  "tagKey2": "tag-value-2"
+                }
+              }
+            },
+            "responses": {
+              "200": {
+                "body": {
+                  "id": "/providers/Microsoft.Resources/deployments/tenant-dep01",
+                  "name": "tenant-dep01",
+                  "type": "Microsoft.Resources/deployments",
+                  "location": "eastus",
+                  "properties": {
+                    "parameters": {},
+                    "mode": "Incremental",
+                    "provisioningState": "Accepted",
+                    "timestamp": "2019-04-24T22:52:38.7895563Z",
+                    "duration": "PT1.2970875S",
+                    "correlationId": "00000000-0000-0000-0000-000000000000",
+                    "providers": [
+                      {
+                        "namespace": "Microsoft.Authorization",
+                        "resourceTypes": [
+                          {
+                            "resourceType": "policyDefinitions",
+                            "locations": [
+                              null
+                            ]
+                          },
+                          {
+                            "resourceType": "policyAssignments",
+                            "locations": [
+                              null
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "namespace": "Microsoft.Resources",
+                        "resourceTypes": [
+                          {
+                            "resourceType": "deployments",
+                            "locations": [
+                              "eastus"
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "dependencies": [
+                      {
+                        "dependsOn": [
+                          {
+                            "id": "/providers/Microsoft.Authorization/policyDefinitions/policy-definition-name",
+                            "resourceType": "Microsoft.Authorization/policyDefinitions",
+                            "resourceName": "policy-definition-name"
+                          }
+                        ],
+                        "id": "/providers/Microsoft.Authorization/policyAssignments/location-lock",
+                        "resourceType": "Microsoft.Authorization/policyAssignments",
+                        "resourceName": "location-lock"
+                      }
+                    ]
+                  },
+                  "tags": {
+                    "tagKey1": "tag-value-1",
+                    "tagKey2": "tag-value-2"
+                  }
+                }
+              },
+              "201": {
+                "body": {
+                  "id": "/providers/Microsoft.Resources/deployments/tenant-dep01",
+                  "name": "tenant-dep01",
+                  "type": "Microsoft.Resources/deployments",
+                  "location": "eastus",
+                  "properties": {
+                    "parameters": {},
+                    "mode": "Incremental",
+                    "provisioningState": "Accepted",
+                    "timestamp": "2019-04-24T22:52:38.7895563Z",
+                    "duration": "PT1.2970875S",
+                    "correlationId": "00000000-0000-0000-0000-000000000000",
+                    "providers": [
+                      {
+                        "namespace": "Microsoft.Authorization",
+                        "resourceTypes": [
+                          {
+                            "resourceType": "policyDefinitions",
+                            "locations": [
+                              null
+                            ]
+                          },
+                          {
+                            "resourceType": "policyAssignments",
+                            "locations": [
+                              null
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "namespace": "Microsoft.Resources",
+                        "resourceTypes": [
+                          {
+                            "resourceType": "deployments",
+                            "locations": [
+                              "eastus"
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "dependencies": [
+                      {
+                        "dependsOn": [
+                          {
+                            "id": "/providers/Microsoft.Authorization/policyDefinitions/policy-definition-name",
+                            "resourceType": "Microsoft.Authorization/policyDefinitions",
+                            "resourceName": "policy-definition-name"
+                          }
+                        ],
+                        "id": "/providers/Microsoft.Authorization/policyAssignments/location-lock",
+                        "resourceType": "Microsoft.Authorization/policyAssignments",
+                        "resourceName": "location-lock"
+                      }
+                    ]
+                  },
+                  "tags": {
+                    "tagKey1": "tag-value-1",
+                    "tagKey2": "tag-value-2"
+                  }
+                }
+              }
+            }
           }
         }
       },
@@ -662,7 +957,44 @@
         },
         "x-ms-examples": {
           "Predict template changes at management group scope": {
-            "$ref": "./examples/PostDeploymentWhatIfOnTenant.json"
+            "parameters": {
+              "deploymentName": "exampleDeploymentName",
+              "api-version": "2021-04-01",
+              "parameters": {
+                "location": "eastus",
+                "properties": {
+                  "templateLink": "https://example.com/exampleTemplate.json",
+                  "parameters": {},
+                  "mode": "Incremental"
+                }
+              }
+            },
+            "responses": {
+              "200": {
+                "body": {
+                  "status": "Succeeded",
+                  "properties": {
+                    "changes": [
+                      {
+                        "resourceId": "/providers/Microsoft.Management/managementGroups/myManagementGroup",
+                        "changeType": "Create",
+                        "after": {
+                          "id": "/providers/Microsoft.Management/managementGroups/myManagementGroup",
+                          "apiVersion": "2019-11-01",
+                          "type": "Microsoft.Management/managementGroups",
+                          "name": "myManagementGroup"
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              "202": {
+                "headers": {
+                  "Location": "/subscriptions/4d0ca63b-7939-4c9c-afbe-5fafae501724/operationresults/ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ"
+                }
+              }
+            }
           }
         },
         "x-ms-long-running-operation": true,
@@ -866,7 +1198,143 @@
         "x-ms-long-running-operation": true,
         "x-ms-examples": {
           "Create deployment at management group scope.": {
-            "$ref": "./examples/PutDeploymentAtManagementGroup.json"
+            "parameters": {
+              "groupId": "my-management-group-id",
+              "deploymentName": "my-deployment",
+              "api-version": "2021-04-01",
+              "parameters": {
+                "location": "eastus",
+                "properties": {
+                  "templateLink": {
+                    "uri": "https://example.com/exampleTemplate.json"
+                  },
+                  "parameters": {},
+                  "mode": "Incremental"
+                }
+              }
+            },
+            "responses": {
+              "200": {
+                "body": {
+                  "id": "/providers/Microsoft.Management/managementGroups/my-management-group-id/providers/Microsoft.Resources/deployments/my-deployment",
+                  "name": "my-deployment",
+                  "type": "Microsoft.Resources/deployments",
+                  "location": "eastus",
+                  "properties": {
+                    "parameters": {},
+                    "mode": "Incremental",
+                    "provisioningState": "Accepted",
+                    "timestamp": "2019-04-24T22:52:38.7895563Z",
+                    "duration": "PT1.2970875S",
+                    "correlationId": "00000000-0000-0000-0000-000000000000",
+                    "providers": [
+                      {
+                        "namespace": "Microsoft.Authorization",
+                        "resourceTypes": [
+                          {
+                            "resourceType": "policyDefinitions",
+                            "locations": [
+                              null
+                            ]
+                          },
+                          {
+                            "resourceType": "policyAssignments",
+                            "locations": [
+                              null
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "namespace": "Microsoft.Resources",
+                        "resourceTypes": [
+                          {
+                            "resourceType": "deployments",
+                            "locations": [
+                              "eastus"
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "dependencies": [
+                      {
+                        "dependsOn": [
+                          {
+                            "id": "/providers/Microsoft.Management/managementGroups/my-management-group-id/providers/Microsoft.Authorization/policyDefinitions/policy-definition-name",
+                            "resourceType": "Microsoft.Authorization/policyDefinitions",
+                            "resourceName": "policy-definition-name"
+                          }
+                        ],
+                        "id": "/providers/Microsoft.Management/managementGroups/my-management-group-id/providers/Microsoft.Authorization/policyAssignments/location-lock",
+                        "resourceType": "Microsoft.Authorization/policyAssignments",
+                        "resourceName": "location-lock"
+                      }
+                    ]
+                  }
+                }
+              },
+              "201": {
+                "body": {
+                  "id": "/providers/Microsoft.Management/managementGroups/my-management-group-id/providers/Microsoft.Resources/deployments/my-deployment",
+                  "name": "my-deployment",
+                  "type": "Microsoft.Resources/deployments",
+                  "location": "eastus",
+                  "properties": {
+                    "parameters": {},
+                    "mode": "Incremental",
+                    "provisioningState": "Accepted",
+                    "timestamp": "2019-04-24T22:52:38.7895563Z",
+                    "duration": "PT1.2970875S",
+                    "correlationId": "00000000-0000-0000-0000-000000000000",
+                    "providers": [
+                      {
+                        "namespace": "Microsoft.Authorization",
+                        "resourceTypes": [
+                          {
+                            "resourceType": "policyDefinitions",
+                            "locations": [
+                              null
+                            ]
+                          },
+                          {
+                            "resourceType": "policyAssignments",
+                            "locations": [
+                              null
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "namespace": "Microsoft.Resources",
+                        "resourceTypes": [
+                          {
+                            "resourceType": "deployments",
+                            "locations": [
+                              "eastus"
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "dependencies": [
+                      {
+                        "dependsOn": [
+                          {
+                            "id": "/providers/Microsoft.Management/managementGroups/my-management-group-id/providers/Microsoft.Authorization/policyDefinitions/policy-definition-name",
+                            "resourceType": "Microsoft.Authorization/policyDefinitions",
+                            "resourceName": "policy-definition-name"
+                          }
+                        ],
+                        "id": "/providers/Microsoft.Management/managementGroups/my-management-group-id/providers/Microsoft.Authorization/policyAssignments/location-lock",
+                        "resourceType": "Microsoft.Authorization/policyAssignments",
+                        "resourceName": "location-lock"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
           }
         }
       },
@@ -1044,7 +1512,91 @@
         },
         "x-ms-examples": {
           "Predict template changes at management group scope": {
-            "$ref": "./examples/PostDeploymentWhatIfOnManagementGroup.json"
+            "parameters": {
+              "groupId": "myManagementGruop",
+              "deploymentName": "exampleDeploymentName",
+              "api-version": "2021-04-01",
+              "parameters": {
+                "location": "eastus",
+                "properties": {
+                  "templateLink": "https://example.com/exampleTemplate.json",
+                  "parameters": {},
+                  "mode": "Incremental"
+                }
+              }
+            },
+            "responses": {
+              "200": {
+                "body": {
+                  "status": "Succeeded",
+                  "properties": {
+                    "changes": [
+                      {
+                        "resourceId": "/providers/Microsoft.Management/managementGroups/myManagementGroup/providers/Microsoft.Authorization/policyAssignments/myPolicyAssignment",
+                        "changeType": "Modify",
+                        "before": {
+                          "apiVersion": "2019-06-01",
+                          "id": "/providers/Microsoft.Management/managementGroups/myManagementGroup/providers/Microsoft.Authorization/policyAssignments/myPolicyAssignment",
+                          "type": "Microsoft.Authorization/policyAssignments",
+                          "name": "myPolicyAssignment",
+                          "location": "westus2",
+                          "properties": {
+                            "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/myManagementGroup/providers/Microsoft.Authorization/policyAssignments/myPolicyDefinition",
+                            "scope": "/subscriptions/00000000-0000-0000-0000-000000000001",
+                            "enforcementMode": "Default"
+                          }
+                        },
+                        "after": {
+                          "resourceId": "/providers/Microsoft.Management/managementGroups/myManagementGroup/providers/Microsoft.Authorization/policyAssignments/myPolicyAssignment",
+                          "changeType": "Modify",
+                          "before": {
+                            "apiVersion": "2019-06-01",
+                            "id": "/providers/Microsoft.Management/managementGroups/myManagementGroup/providers/Microsoft.Authorization/policyAssignments/myPolicyAssignment",
+                            "type": "Microsoft.Authorization/policyAssignments",
+                            "name": "myPolicyAssignment",
+                            "location": "westus2",
+                            "properties": {
+                              "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/myManagementGroup/providers/Microsoft.Authorization/policyAssignments/myPolicyDefinition",
+                              "scope": "/subscriptions/00000000-0000-0000-0000-000000000001",
+                              "enforcementMode": "DoNotEnforce"
+                            }
+                          },
+                          "delta": [
+                            {
+                              "path": "properties.enforcementMode",
+                              "propertyChangeType": "Modify",
+                              "before": "Default",
+                              "after": "DoNotEnforce"
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "resourceId": "/providers/Microsoft.Management/managementGroups/myManagementGroup/providers/Microsoft.Authorization/policyAssignments/myPolicyAssignment2",
+                        "changeType": "Create",
+                        "after": {
+                          "apiVersion": "2019-06-01",
+                          "id": "/providers/Microsoft.Management/managementGroups/myManagementGroup/providers/Microsoft.Authorization/policyAssignments/myPolicyAssignment2",
+                          "type": "Microsoft.Authorization/policyAssignments",
+                          "name": "myPolicyAssignment2",
+                          "location": "westus2",
+                          "properties": {
+                            "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/myManagementGroup/providers/Microsoft.Authorization/policyAssignments/myPolicyDefinition",
+                            "scope": "/subscriptions/00000000-0000-0000-0000-000000000002",
+                            "enforcementMode": "Default"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              "202": {
+                "headers": {
+                  "Location": "/subscriptions/4d0ca63b-7939-4c9c-afbe-5fafae501724/operationresults/ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ"
+                }
+              }
+            }
           }
         },
         "x-ms-long-running-operation": true,
@@ -1253,7 +1805,70 @@
         },
         "x-ms-examples": {
           "Create a deployment that will deploy a templateSpec with the given resourceId": {
-            "$ref": "./examples/PutDeploymentSubscriptionTemplateSpecsWithId.json"
+            "parameters": {
+              "subscriptionId": "00000000-0000-0000-0000-000000000001",
+              "deploymentName": "my-deployment",
+              "api-version": "2021-04-01",
+              "parameters": {
+                "location": "eastus",
+                "properties": {
+                  "templateLink": {
+                    "id": "/subscriptions/00000000-0000-0000-0000-000000000001/resourceGroups/my-resource-group/providers/Microsoft.Resources/TemplateSpecs/TemplateSpec-Name/versions/v1"
+                  },
+                  "parameters": {},
+                  "mode": "Incremental"
+                }
+              }
+            },
+            "responses": {
+              "200": {
+                "body": {
+                  "id": "/subscriptions/00000000-0000-0000-0000-000000000001/providers/Microsoft.Resources/deployments/my-deployment",
+                  "name": "my-deployment",
+                  "type": "Microsoft.Resources/deployments",
+                  "location": "eastus",
+                  "properties": {
+                    "templateLink": {
+                      "id": "/subscriptions/00000000-0000-0000-0000-000000000001/resourceGroups/my-resource-group/providers/Microsoft.Resources/TemplateSpecs/TemplateSpec-Name/versions/v1",
+                      "contentVersion": "1.0.0.0"
+                    },
+                    "templateHash": "0000000000000000000",
+                    "parameters": {},
+                    "mode": "Incremental",
+                    "provisioningState": "Succeeded",
+                    "timestamp": "2020-06-05T01:51:58.6288067Z",
+                    "duration": "PT1.2637681S",
+                    "correlationId": "00000000-0000-0000-0000-000000000000",
+                    "providers": [],
+                    "dependencies": [],
+                    "outputResources": []
+                  }
+                }
+              },
+              "201": {
+                "body": {
+                  "id": "/subscriptions/00000000-0000-0000-0000-000000000001/providers/Microsoft.Resources/deployments/my-deployment",
+                  "name": "my-deployment",
+                  "type": "Microsoft.Resources/deployments",
+                  "location": "eastus",
+                  "properties": {
+                    "templateLink": {
+                      "id": "/subscriptions/00000000-0000-0000-0000-000000000001/resourceGroups/my-resource-group/providers/Microsoft.Resources/TemplateSpecs/TemplateSpec-Name/versions/v1",
+                      "contentVersion": "1.0.0.0"
+                    },
+                    "templateHash": "0000000000000000000",
+                    "parameters": {},
+                    "mode": "Incremental",
+                    "provisioningState": "Accepted",
+                    "timestamp": "2020-06-05T01:51:58.6288067Z",
+                    "duration": "PT1.2637681S",
+                    "correlationId": "00000000-0000-0000-0000-000000000000",
+                    "providers": [],
+                    "dependencies": []
+                  }
+                }
+              }
+            }
           }
         },
         "x-ms-long-running-operation": true
@@ -1432,7 +2047,88 @@
         },
         "x-ms-examples": {
           "Predict template changes at subscription scope": {
-            "$ref": "./examples/PostDeploymentWhatIfOnSubscription.json"
+            "parameters": {
+              "subscriptionId": "00000000-0000-0000-0000-000000000001",
+              "deploymentName": "my-deployment",
+              "api-version": "2021-04-01",
+              "parameters": {
+                "location": "westus",
+                "properties": {
+                  "templateLink": "https://example.com/exampleTemplate.json",
+                  "parameters": {},
+                  "mode": "Incremental"
+                }
+              }
+            },
+            "responses": {
+              "200": {
+                "body": {
+                  "status": "succeeded",
+                  "properties": {
+                    "changes": [
+                      {
+                        "resourceId": "/subscriptions/00000000-0000-0000-0000-000000000001/resourceGroups/my-resource-group/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myExistingIdentity",
+                        "changeType": "Modify",
+                        "before": {
+                          "apiVersion": "2018-11-30",
+                          "id": "/subscriptions/00000000-0000-0000-0000-000000000001/resourceGroups/my-resource-group/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myExistingIdentity",
+                          "type": "Microsoft.ManagedIdentity/userAssignedIdentities",
+                          "name": "myExistingIdentity",
+                          "location": "westus2"
+                        },
+                        "after": {
+                          "apiVersion": "2018-11-30",
+                          "id": "/subscriptions/00000000-0000-0000-0000-000000000001/resourceGroups/my-resource-group/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myExistingIdentity",
+                          "type": "Microsoft.ManagedIdentity/userAssignedIdentities",
+                          "name": "myExistingIdentity",
+                          "location": "westus2",
+                          "tags": {
+                            "myNewTag": "my tag value"
+                          }
+                        },
+                        "delta": [
+                          {
+                            "path": "tags.myNewTag",
+                            "propertyChangeType": "Create",
+                            "after": "my tag value"
+                          }
+                        ]
+                      },
+                      {
+                        "resourceId": "/subscriptions/00000000-0000-0000-0000-000000000001/resourceGroups/my-resource-group/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myNewIdentity",
+                        "changeType": "Create",
+                        "after": {
+                          "apiVersion": "2018-11-30",
+                          "id": "/subscriptions/00000000-0000-0000-0000-000000000001/resourceGroups/my-resource-group/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myNewIdentity",
+                          "type": "Microsoft.ManagedIdentity/userAssignedIdentities",
+                          "name": "myNewIdentity",
+                          "location": "eastus",
+                          "tags": {
+                            "myOtherNewTag": "another new tag value"
+                          }
+                        }
+                      },
+                      {
+                        "resourceId": "/subscriptions/00000000-0000-0000-0000-000000000001/resourceGroups/my-resource-group2",
+                        "changeType": "Create",
+                        "after": {
+                          "apiVersion": "2019-03-01",
+                          "id": "/subscriptions/00000000-0000-0000-0000-000000000001/resourceGroups/my-resource-group2",
+                          "type": "Microsoft.Resources/resourceGroups",
+                          "name": "my-resource-group2",
+                          "location": "{location3}"
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              "202": {
+                "headers": {
+                  "Location": "/subscriptions/00000000-0000-0000-0000-000000000000/ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ"
+                }
+              }
+            }
           }
         },
         "x-ms-long-running-operation": true,
@@ -1671,16 +2367,526 @@
         },
         "x-ms-examples": {
           "Create a deployment that will redeploy the last successful deployment on failure": {
-            "$ref": "./examples/PutDeploymentWithOnErrorDeploymentLastSuccessful.json"
+            "parameters": {
+              "subscriptionId": "00000000-0000-0000-0000-000000000000",
+              "resourceGroupName": "my-resource-group",
+              "deploymentName": "my-deployment",
+              "api-version": "2021-04-01",
+              "parameters": {
+                "properties": {
+                  "templateLink": {
+                    "uri": "https://example.com/exampleTemplate.json"
+                  },
+                  "parameters": {},
+                  "mode": "Complete",
+                  "onErrorDeployment": {
+                    "type": "LastSuccessful"
+                  }
+                }
+              }
+            },
+            "responses": {
+              "200": {
+                "body": {
+                  "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/my-resource-group/providers/Microsoft.Resources/deployments/my-deployment",
+                  "name": "my-deployment",
+                  "type": "Microsoft.Resources/deployments",
+                  "properties": {
+                    "templateLink": {
+                      "uri": "https://example.com/exampleTemplate.json",
+                      "contentVersion": "1.0.0.0"
+                    },
+                    "parameters": {},
+                    "mode": "Complete",
+                    "provisioningState": "Accepted",
+                    "timestamp": "2019-03-01T00:00:00.0000000Z",
+                    "duration": "PT0.8204881S",
+                    "correlationId": "00000000-0000-0000-0000-000000000000",
+                    "providers": [
+                      {
+                        "namespace": "Microsoft.Network",
+                        "resourceTypes": [
+                          {
+                            "resourceType": "virtualNetworks",
+                            "locations": [
+                              "centralus"
+                            ]
+                          },
+                          {
+                            "resourceType": "virtualNetworks/subnets",
+                            "locations": [
+                              "centralus"
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "dependencies": [
+                      {
+                        "dependsOn": [
+                          {
+                            "id": "{resourceid}",
+                            "resourceType": "Microsoft.Network/virtualNetworks",
+                            "resourceName": "VNet1"
+                          }
+                        ],
+                        "id": "{resourceid}",
+                        "resourceType": "Microsoft.Network/virtualNetworks/subnets",
+                        "resourceName": "VNet1/Subnet1"
+                      },
+                      {
+                        "dependsOn": [
+                          {
+                            "id": "{resourceid}",
+                            "resourceType": "Microsoft.Network/virtualNetworks",
+                            "resourceName": "VNet1"
+                          },
+                          {
+                            "id": "{resourceid}",
+                            "resourceType": "Microsoft.Network/virtualNetworks/subnets",
+                            "resourceName": "VNet1/Subnet1"
+                          }
+                        ],
+                        "id": "{resourceid}",
+                        "resourceType": "Microsoft.Network/virtualNetworks/subnets",
+                        "resourceName": "VNet1/Subnet2"
+                      }
+                    ],
+                    "onErrorDeployment": {
+                      "type": "LastSuccessful",
+                      "deploymentName": "{nameOfLastSuccesfulDeployment}"
+                    }
+                  }
+                }
+              },
+              "201": {
+                "body": {
+                  "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/my-resource-group/providers/Microsoft.Resources/deployments/my-deployment",
+                  "name": "my-deployment",
+                  "type": "Microsoft.Resources/deployments",
+                  "properties": {
+                    "templateLink": {
+                      "uri": "https://example.com/exampleTemplate.json",
+                      "contentVersion": "1.0.0.0"
+                    },
+                    "parameters": {},
+                    "mode": "Complete",
+                    "provisioningState": "Accepted",
+                    "timestamp": "2019-03-01T00:00:00.0000000Z",
+                    "duration": "PT0.8204881S",
+                    "correlationId": "00000000-0000-0000-0000-000000000000",
+                    "providers": [
+                      {
+                        "namespace": "Microsoft.Network",
+                        "resourceTypes": [
+                          {
+                            "resourceType": "virtualNetworks",
+                            "locations": [
+                              "centralus"
+                            ]
+                          },
+                          {
+                            "resourceType": "virtualNetworks/subnets",
+                            "locations": [
+                              "centralus"
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "dependencies": [
+                      {
+                        "dependsOn": [
+                          {
+                            "id": "{resourceid}",
+                            "resourceType": "Microsoft.Network/virtualNetworks",
+                            "resourceName": "VNet1"
+                          }
+                        ],
+                        "id": "{resourceid}",
+                        "resourceType": "Microsoft.Network/virtualNetworks/subnets",
+                        "resourceName": "VNet1/Subnet1"
+                      },
+                      {
+                        "dependsOn": [
+                          {
+                            "id": "{resourceid}",
+                            "resourceType": "Microsoft.Network/virtualNetworks",
+                            "resourceName": "VNet1"
+                          },
+                          {
+                            "id": "{resourceid}",
+                            "resourceType": "Microsoft.Network/virtualNetworks/subnets",
+                            "resourceName": "VNet1/Subnet1"
+                          }
+                        ],
+                        "id": "{resourceid}",
+                        "resourceType": "Microsoft.Network/virtualNetworks/subnets",
+                        "resourceName": "VNet1/Subnet2"
+                      }
+                    ],
+                    "onErrorDeployment": {
+                      "type": "LastSuccessful",
+                      "deploymentName": "{nameOfLastSuccesfulDeployment}"
+                    }
+                  }
+                }
+              }
+            }
           },
           "Create a deployment that will redeploy another deployment on failure": {
-            "$ref": "./examples/PutDeploymentWithOnErrorDeploymentSpecificDeployment.json"
+            "parameters": {
+              "subscriptionId": "00000000-0000-0000-0000-000000000000",
+              "resourceGroupName": "my-resource-group",
+              "deploymentName": "my-deployment",
+              "api-version": "2021-04-01",
+              "parameters": {
+                "properties": {
+                  "templateLink": {
+                    "uri": "https://example.com/exampleTemplate.json"
+                  },
+                  "parameters": {},
+                  "mode": "Complete",
+                  "onErrorDeployment": {
+                    "type": "SpecificDeployment",
+                    "deploymentName": "name-of-deployment-to-use"
+                  }
+                }
+              }
+            },
+            "responses": {
+              "200": {
+                "body": {
+                  "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/my-resource-group/providers/Microsoft.Resources/deployments/my-deployment",
+                  "name": "my-deployment",
+                  "type": "Microsoft.Resources/deployments",
+                  "properties": {
+                    "templateLink": {
+                      "uri": "https://example.com/exampleTemplate.json",
+                      "contentVersion": "1.0.0.0"
+                    },
+                    "parameters": {},
+                    "mode": "Complete",
+                    "provisioningState": "Accepted",
+                    "timestamp": "2019-03-01T00:00:00.0000000Z",
+                    "duration": "PT0.8204881S",
+                    "correlationId": "00000000-0000-0000-0000-000000000000",
+                    "providers": [
+                      {
+                        "namespace": "Microsoft.Network",
+                        "resourceTypes": [
+                          {
+                            "resourceType": "virtualNetworks",
+                            "locations": [
+                              "centralus"
+                            ]
+                          },
+                          {
+                            "resourceType": "virtualNetworks/subnets",
+                            "locations": [
+                              "centralus"
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "dependencies": [
+                      {
+                        "dependsOn": [
+                          {
+                            "id": "{resourceid}",
+                            "resourceType": "Microsoft.Network/virtualNetworks",
+                            "resourceName": "VNet1"
+                          }
+                        ],
+                        "id": "{resourceid}",
+                        "resourceType": "Microsoft.Network/virtualNetworks/subnets",
+                        "resourceName": "VNet1/Subnet1"
+                      },
+                      {
+                        "dependsOn": [
+                          {
+                            "id": "{resourceid}",
+                            "resourceType": "Microsoft.Network/virtualNetworks",
+                            "resourceName": "VNet1"
+                          },
+                          {
+                            "id": "{resourceid}",
+                            "resourceType": "Microsoft.Network/virtualNetworks/subnets",
+                            "resourceName": "VNet1/Subnet1"
+                          }
+                        ],
+                        "id": "{resourceid}",
+                        "resourceType": "Microsoft.Network/virtualNetworks/subnets",
+                        "resourceName": "VNet1/Subnet2"
+                      }
+                    ],
+                    "onErrorDeployment": {
+                      "type": "SpecificDeployment",
+                      "deploymentName": "name-of-deployment-to-use"
+                    }
+                  }
+                }
+              },
+              "201": {
+                "body": {
+                  "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/my-resource-group/providers/Microsoft.Resources/deployments/my-deployment",
+                  "name": "my-deployment",
+                  "type": "Microsoft.Resources/deployments",
+                  "properties": {
+                    "templateLink": {
+                      "uri": "https://example.com/exampleTemplate.json",
+                      "contentVersion": "1.0.0.0"
+                    },
+                    "parameters": {},
+                    "mode": "Complete",
+                    "provisioningState": "Accepted",
+                    "timestamp": "2019-03-01T00:00:00.0000000Z",
+                    "duration": "PT0.8204881S",
+                    "correlationId": "00000000-0000-0000-0000-000000000000",
+                    "providers": [
+                      {
+                        "namespace": "Microsoft.Network",
+                        "resourceTypes": [
+                          {
+                            "resourceType": "virtualNetworks",
+                            "locations": [
+                              "centralus"
+                            ]
+                          },
+                          {
+                            "resourceType": "virtualNetworks/subnets",
+                            "locations": [
+                              "centralus"
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "dependencies": [
+                      {
+                        "dependsOn": [
+                          {
+                            "id": "{resourceid}",
+                            "resourceType": "Microsoft.Network/virtualNetworks",
+                            "resourceName": "VNet1"
+                          }
+                        ],
+                        "id": "{resourceid}",
+                        "resourceType": "Microsoft.Network/virtualNetworks/subnets",
+                        "resourceName": "VNet1/Subnet1"
+                      },
+                      {
+                        "dependsOn": [
+                          {
+                            "id": "{resourceid}",
+                            "resourceType": "Microsoft.Network/virtualNetworks",
+                            "resourceName": "VNet1"
+                          },
+                          {
+                            "id": "{resourceid}",
+                            "resourceType": "Microsoft.Network/virtualNetworks/subnets",
+                            "resourceName": "VNet1/Subnet1"
+                          }
+                        ],
+                        "id": "{resourceid}",
+                        "resourceType": "Microsoft.Network/virtualNetworks/subnets",
+                        "resourceName": "VNet1/Subnet2"
+                      }
+                    ],
+                    "onErrorDeployment": {
+                      "type": "SpecificDeployment",
+                      "deploymentName": "name-of-deployment-to-use"
+                    }
+                  }
+                }
+              }
+            }
           },
           "Create a deployment that will deploy a templateSpec with the given resourceId": {
-            "$ref": "./examples/PutDeploymentResourceGroupTemplateSpecsWithId.json"
+            "parameters": {
+              "subscriptionId": "00000000-0000-0000-0000-000000000001",
+              "resourceGroupName": "my-resource-group",
+              "deploymentName": "my-deployment",
+              "api-version": "2021-04-01",
+              "parameters": {
+                "properties": {
+                  "templateLink": {
+                    "id": "/subscriptions/00000000-0000-0000-0000-000000000001/resourceGroups/my-resource-group/providers/Microsoft.Resources/TemplateSpecs/TemplateSpec-Name/versions/v1"
+                  },
+                  "parameters": {},
+                  "mode": "Incremental"
+                }
+              }
+            },
+            "responses": {
+              "200": {
+                "body": {
+                  "id": "/subscriptions/00000000-0000-0000-0000-000000000001/resourceGroups/my-resource-group/providers/Microsoft.Resources/deployments/my-deployment",
+                  "name": "my-deployment",
+                  "type": "Microsoft.Resources/deployments",
+                  "properties": {
+                    "templateLink": {
+                      "id": "/subscriptions/00000000-0000-0000-0000-000000000001/resourceGroups/my-resource-group/providers/Microsoft.Resources/TemplateSpecs/TemplateSpec-Name/versions/v1",
+                      "contentVersion": "1.0.0.0"
+                    },
+                    "templateHash": "0000000000000000000",
+                    "parameters": {},
+                    "mode": "Incremental",
+                    "provisioningState": "Succeeded",
+                    "timestamp": "2020-06-05T01:20:01.723776Z",
+                    "duration": "PT22.8356799S",
+                    "correlationId": "00000000-0000-0000-0000-000000000000",
+                    "providers": [
+                      {
+                        "namespace": "Microsoft.Storage",
+                        "resourceTypes": [
+                          {
+                            "resourceType": "storageAccounts",
+                            "locations": [
+                              "eastus"
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "dependencies": [],
+                    "outputResources": [
+                      {
+                        "id": "/subscriptions/00000000-0000-0000-0000-000000000001/resourceGroups/my-resource-group/providers/Microsoft.Storage/storageAccounts/my-storage-account"
+                      }
+                    ]
+                  }
+                }
+              },
+              "201": {
+                "body": {
+                  "id": "/subscriptions/00000000-0000-0000-0000-000000000001/resourceGroups/my-resource-group/providers/Microsoft.Resources/deployments/my-deployment",
+                  "name": "my-deployment",
+                  "type": "Microsoft.Resources/deployments",
+                  "properties": {
+                    "templateLink": {
+                      "id": "/subscriptions/00000000-0000-0000-0000-000000000001/resourceGroups/my-resource-group/providers/Microsoft.Resources/TemplateSpecs/TemplateSpec-Name/versions/v1",
+                      "contentVersion": "1.0.0.0"
+                    },
+                    "templateHash": "0000000000000000000",
+                    "parameters": {},
+                    "mode": "Incremental",
+                    "provisioningState": "Accepted",
+                    "timestamp": "2020-06-05T01:20:01.723776Z",
+                    "duration": "PT22.8356799S",
+                    "correlationId": "00000000-0000-0000-0000-000000000000",
+                    "providers": [
+                      {
+                        "namespace": "Microsoft.Storage",
+                        "resourceTypes": [
+                          {
+                            "resourceType": "storageAccounts",
+                            "locations": [
+                              "eastus"
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "dependencies": []
+                  }
+                }
+              }
+            }
           },
           "Create a deployment that will deploy a template with a uri and queryString": {
-            "$ref": "./examples/PutDeploymentResourceGroup.json"
+            "parameters": {
+              "subscriptionId": "00000000-0000-0000-0000-000000000001",
+              "resourceGroupName": "my-resource-group",
+              "deploymentName": "my-deployment",
+              "api-version": "2021-04-01",
+              "parameters": {
+                "properties": {
+                  "templateLink": {
+                    "uri": "https://example.com/exampleTemplate.json",
+                    "queryString": "sv=2019-02-02&st=2019-04-29T22%3A18%3A26Z&se=2019-04-30T02%3A23%3A26Z&sr=b&sp=rw&sip=168.1.5.60-168.1.5.70&spr=https&sig=xxxxxxxx0xxxxxxxxxxxxx%2bxxxxxxxxxxxxxxxxxxxx%3d"
+                  },
+                  "parameters": {},
+                  "mode": "Incremental"
+                }
+              }
+            },
+            "responses": {
+              "200": {
+                "body": {
+                  "id": "/subscriptions/00000000-0000-0000-0000-000000000001/resourceGroups/my-resource-group/providers/Microsoft.Resources/deployments/my-deployment",
+                  "name": "my-deployment",
+                  "type": "Microsoft.Resources/deployments",
+                  "properties": {
+                    "templateLink": {
+                      "id": "/subscriptions/00000000-0000-0000-0000-000000000001/resourceGroups/my-resource-group/providers/Microsoft.Resources/TemplateSpecs/TemplateSpec-Name/versions/v1",
+                      "contentVersion": "1.0.0.0"
+                    },
+                    "templateHash": "0000000000000000000",
+                    "parameters": {},
+                    "mode": "Incremental",
+                    "provisioningState": "Succeeded",
+                    "timestamp": "2020-06-05T01:20:01.723776Z",
+                    "duration": "PT22.8356799S",
+                    "correlationId": "00000000-0000-0000-0000-000000000000",
+                    "providers": [
+                      {
+                        "namespace": "Microsoft.Storage",
+                        "resourceTypes": [
+                          {
+                            "resourceType": "storageAccounts",
+                            "locations": [
+                              "eastus"
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "dependencies": [],
+                    "outputResources": [
+                      {
+                        "id": "/subscriptions/00000000-0000-0000-0000-000000000001/resourceGroups/my-resource-group/providers/Microsoft.Storage/storageAccounts/my-storage-account"
+                      }
+                    ]
+                  }
+                }
+              },
+              "201": {
+                "body": {
+                  "id": "/subscriptions/00000000-0000-0000-0000-000000000001/resourceGroups/my-resource-group/providers/Microsoft.Resources/deployments/my-deployment",
+                  "name": "my-deployment",
+                  "type": "Microsoft.Resources/deployments",
+                  "properties": {
+                    "templateLink": {
+                      "id": "/subscriptions/00000000-0000-0000-0000-000000000001/resourceGroups/my-resource-group/providers/Microsoft.Resources/TemplateSpecs/TemplateSpec-Name/versions/v1",
+                      "contentVersion": "1.0.0.0"
+                    },
+                    "templateHash": "0000000000000000000",
+                    "parameters": {},
+                    "mode": "Incremental",
+                    "provisioningState": "Accepted",
+                    "timestamp": "2020-06-05T01:20:01.723776Z",
+                    "duration": "PT22.8356799S",
+                    "correlationId": "00000000-0000-0000-0000-000000000000",
+                    "providers": [
+                      {
+                        "namespace": "Microsoft.Storage",
+                        "resourceTypes": [
+                          {
+                            "resourceType": "storageAccounts",
+                            "locations": [
+                              "eastus"
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "dependencies": []
+                  }
+                }
+              }
+            }
           }
         },
         "x-ms-long-running-operation": true
@@ -1899,7 +3105,77 @@
         },
         "x-ms-examples": {
           "Predict template changes at resource group scope": {
-            "$ref": "./examples/PostDeploymentWhatIfOnResourceGroup.json"
+            "parameters": {
+              "subscriptionId": "00000000-0000-0000-0000-000000000001",
+              "resourceGroupName": "my-resource-group",
+              "deploymentName": "my-deployment",
+              "api-version": "2021-04-01",
+              "parameters": {
+                "properties": {
+                  "templateLink": "https://example.com/exampleTemplate.json",
+                  "parameters": {},
+                  "mode": "Incremental"
+                }
+              }
+            },
+            "responses": {
+              "200": {
+                "body": {
+                  "status": "succeeded",
+                  "properties": {
+                    "changes": [
+                      {
+                        "resourceId": "/subscriptions/00000000-0000-0000-0000-000000000001/resourceGroups/my-resource-group/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myExistingIdentity",
+                        "changeType": "Modify",
+                        "before": {
+                          "apiVersion": "2018-11-30",
+                          "id": "/subscriptions/00000000-0000-0000-0000-000000000001/resourceGroups/my-resource-group/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myExistingIdentity",
+                          "type": "Microsoft.ManagedIdentity/userAssignedIdentities",
+                          "name": "myExistingIdentity",
+                          "location": "westus2"
+                        },
+                        "after": {
+                          "apiVersion": "2018-11-30",
+                          "id": "/subscriptions/00000000-0000-0000-0000-000000000001/resourceGroups/my-resource-group/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myExistingIdentity",
+                          "type": "Microsoft.ManagedIdentity/userAssignedIdentities",
+                          "name": "myExistingIdentity",
+                          "location": "westus2",
+                          "tags": {
+                            "myNewTag": "my tag value"
+                          }
+                        },
+                        "delta": [
+                          {
+                            "path": "tags.myNewTag",
+                            "propertyChangeType": "Create",
+                            "after": "my tag value"
+                          }
+                        ]
+                      },
+                      {
+                        "resourceId": "/subscriptions/00000000-0000-0000-0000-000000000001/resourceGroups/my-resource-group/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myNewIdentity",
+                        "changeType": "Create",
+                        "after": {
+                          "apiVersion": "2018-11-30",
+                          "id": "/subscriptions/00000000-0000-0000-0000-000000000001/resourceGroups/my-resource-group/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myNewIdentity",
+                          "type": "Microsoft.ManagedIdentity/userAssignedIdentities",
+                          "name": "myNewIdentity",
+                          "location": "eastus",
+                          "tags": {
+                            "myOtherNewTag": "another new tag value"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              "202": {
+                "headers": {
+                  "Location": "/subscriptions/00000000-0000-0000-0000-000000000000/ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ"
+                }
+              }
+            }
           }
         },
         "x-ms-long-running-operation": true,
@@ -2123,7 +3399,41 @@
         },
         "x-ms-examples": {
           "Get provider resource types.": {
-            "$ref": "./examples/GetProviderPermissions.json"
+            "parameters": {
+              "subscriptionId": "00000000-0000-0000-0000-000000000000",
+              "resourceProviderNamespace": "Microsoft.TestRP",
+              "api-version": "2021-04-01"
+            },
+            "responses": {
+              "200": {
+                "body": {
+                  "value": [
+                    {
+                      "applicationId": "00000000-0000-0000-0000-000000000000",
+                      "roleDefinition": {
+                        "id": "00000000000000000000000000000000",
+                        "name": "Contoso service role",
+                        "isServiceRole": true,
+                        "permissions": [
+                          {
+                            "actions": [
+                              "Microsoft.Contoso/*"
+                            ],
+                            "notActions": [],
+                            "dataActions": [],
+                            "notDataActions": []
+                          }
+                        ],
+                        "scopes": [
+                          "/"
+                        ]
+                      },
+                      "providerAuthorizationConsentState": "Consented"
+                    }
+                  ]
+                }
+              }
+            }
           }
         }
       }
@@ -2216,7 +3526,179 @@
         },
         "x-ms-examples": {
           "Get providers.": {
-            "$ref": "./examples/GetProviders.json"
+            "parameters": {
+              "subscriptionId": "00000000-0000-0000-0000-000000000000",
+              "api-version": "2021-04-01"
+            },
+            "responses": {
+              "200": {
+                "body": {
+                  "value": [
+                    {
+                      "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.TestRP1",
+                      "namespace": "Microsoft.TestRP1",
+                      "registrationState": "Registering",
+                      "registrationPolicy": "RegistrationRequired",
+                      "resourceTypes": [
+                        {
+                          "resourceType": "TestResourceType",
+                          "locations": [
+                            "West US"
+                          ],
+                          "apiVersions": [
+                            "2018-01-01",
+                            "2015-05-01"
+                          ],
+                          "locationMappings": [
+                            {
+                              "location": "West US",
+                              "type": "EdgeZone",
+                              "extendedLocations": [
+                                "LosAngeles",
+                                "LosAngeles2"
+                              ]
+                            }
+                          ],
+                          "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove, SupportsTags, SupportsLocation"
+                        },
+                        {
+                          "resourceType": "TestResourceTypeSibling",
+                          "locations": [
+                            "West US"
+                          ],
+                          "apiVersions": [
+                            "2018-01-01",
+                            "2015-05-01"
+                          ],
+                          "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove, SupportsTags, SupportsLocation"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.Resources",
+                      "namespace": "Microsoft.Resources",
+                      "registrationState": "Registered",
+                      "registrationPolicy": "RegistrationFree",
+                      "resourceTypes": [
+                        {
+                          "resourceType": "subscriptions",
+                          "locations": [
+                            "eastus",
+                            "eastus2",
+                            "westus"
+                          ],
+                          "apiVersions": [
+                            "2016-09-01",
+                            "2014-04-01-preview"
+                          ],
+                          "aliases": [],
+                          "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove, SupportsTags, SupportsLocation"
+                        },
+                        {
+                          "resourceType": "resourceGroups",
+                          "locations": [
+                            "centralus",
+                            "eastasia",
+                            "southeastasia"
+                          ],
+                          "apiVersions": [
+                            "2016-09-01",
+                            "2014-04-01-preview"
+                          ],
+                          "aliases": [],
+                          "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove, SupportsTags, SupportsLocation"
+                        },
+                        {
+                          "resourceType": "subscriptions/resourceGroups",
+                          "locations": [
+                            "eastus",
+                            "eastus2",
+                            "westus"
+                          ],
+                          "apiVersions": [
+                            "2016-09-01",
+                            "2014-04-01-preview"
+                          ],
+                          "aliases": [],
+                          "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove, SupportsTags, SupportsLocation"
+                        },
+                        {
+                          "resourceType": "bulkDelete",
+                          "locations": [
+                            "centralus",
+                            "eastasia"
+                          ],
+                          "apiVersions": [
+                            "2014-04-01-preview"
+                          ],
+                          "aliases": [],
+                          "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove, SupportsTags, SupportsLocation"
+                        },
+                        {
+                          "resourceType": "deployments",
+                          "locations": [],
+                          "apiVersions": [
+                            "2017-08-01",
+                            "2017-06-01"
+                          ],
+                          "aliases": [],
+                          "capabilities": "SupportsTags"
+                        },
+                        {
+                          "resourceType": "tags",
+                          "locations": [
+                            "DevFabric"
+                          ],
+                          "apiVersions": [],
+                          "aliases": [],
+                          "capabilities": "SupportsExtension"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.TestRP2",
+                      "namespace": "Microsoft.TestRP2",
+                      "registrationState": "NotRegistered",
+                      "registrationPolicy": "RegistrationRequired",
+                      "resourceTypes": [
+                        {
+                          "resourceType": "TestResourceType",
+                          "locations": [
+                            "West US"
+                          ],
+                          "apiVersions": [
+                            "2018-01-01",
+                            "2015-05-01"
+                          ],
+                          "locationMappings": [
+                            {
+                              "location": "West US",
+                              "type": "EdgeZone",
+                              "extendedLocations": [
+                                "LosAngeles",
+                                "LosAngeles2"
+                              ]
+                            }
+                          ],
+                          "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove, SupportsTags, SupportsLocation"
+                        },
+                        {
+                          "resourceType": "TestResourceTypeSibling",
+                          "locations": [
+                            "West US"
+                          ],
+                          "apiVersions": [
+                            "2018-01-01",
+                            "2015-05-01"
+                          ],
+                          "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove, SupportsTags, SupportsLocation"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
           }
         }
       }
@@ -2304,7 +3786,55 @@
         },
         "x-ms-examples": {
           "Get provider.": {
-            "$ref": "./examples/GetProvider.json"
+            "parameters": {
+              "subscriptionId": "00000000-0000-0000-0000-000000000000",
+              "resourceProviderNamespace": "Microsoft.TestRP1",
+              "api-version": "2021-04-01"
+            },
+            "responses": {
+              "200": {
+                "body": {
+                  "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.TestRP1",
+                  "namespace": "Microsoft.TestRP1",
+                  "registrationState": "Registering",
+                  "registrationPolicy": "RegistrationRequired",
+                  "resourceTypes": [
+                    {
+                      "resourceType": "TestResourceType",
+                      "locations": [
+                        "West US"
+                      ],
+                      "apiVersions": [
+                        "2018-01-01",
+                        "2015-05-01"
+                      ],
+                      "locationMappings": [
+                        {
+                          "location": "West US",
+                          "type": "EdgeZone",
+                          "extendedLocations": [
+                            "LosAngeles",
+                            "LosAngeles2"
+                          ]
+                        }
+                      ],
+                      "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove, SupportsTags, SupportsLocation"
+                    },
+                    {
+                      "resourceType": "TestResourceTypeSibling",
+                      "locations": [
+                        "West US"
+                      ],
+                      "apiVersions": [
+                        "2018-01-01",
+                        "2015-05-01"
+                      ],
+                      "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove, SupportsTags, SupportsLocation"
+                    }
+                  ]
+                }
+              }
+            }
           }
         }
       }
@@ -2354,7 +3884,51 @@
         },
         "x-ms-examples": {
           "Get provider resource types.": {
-            "$ref": "./examples/GetProviderResourceTypes.json"
+            "parameters": {
+              "subscriptionId": "00000000-0000-0000-0000-000000000000",
+              "resourceProviderNamespace": "Microsoft.TestRP",
+              "api-version": "2021-04-01"
+            },
+            "responses": {
+              "200": {
+                "body": {
+                  "value": [
+                    {
+                      "resourceType": "TestResourceType",
+                      "locations": [
+                        "West US"
+                      ],
+                      "apiVersions": [
+                        "2018-01-01",
+                        "2015-05-01"
+                      ],
+                      "locationMappings": [
+                        {
+                          "location": "West US",
+                          "type": "EdgeZone",
+                          "extendedLocations": [
+                            "LosAngeles",
+                            "LosAngeles2"
+                          ]
+                        }
+                      ],
+                      "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove, SupportsTags, SupportsLocation"
+                    },
+                    {
+                      "resourceType": "TestResourceTypeSibling",
+                      "locations": [
+                        "West US"
+                      ],
+                      "apiVersions": [
+                        "2018-01-01",
+                        "2015-05-01"
+                      ],
+                      "capabilities": "CrossResourceGroupResourceMove, CrossSubscriptionResourceMove, SupportsTags, SupportsLocation"
+                    }
+                  ]
+                }
+              }
+            }
           }
         }
       }
@@ -2366,7 +3940,257 @@
         ],
         "x-ms-examples": {
           "Get a resource provider at tenant scope": {
-            "$ref": "./examples/GetNamedProviderAtTenant.json"
+            "parameters": {
+              "$expand": "resourceTypes/aliases",
+              "resourceProviderNamespace": "Microsoft.Storage",
+              "api-version": "2021-04-01"
+            },
+            "responses": {
+              "200": {
+                "body": {
+                  "namespace": "Microsoft.Storage",
+                  "resourceTypes": [
+                    {
+                      "resourceType": "storageAccounts",
+                      "locations": [
+                        "East US",
+                        "East US 2",
+                        "East US 2 (Stage)",
+                        "West US",
+                        "West Europe",
+                        "East Asia",
+                        "Southeast Asia",
+                        "Japan East",
+                        "Japan West",
+                        "North Central US",
+                        "South Central US",
+                        "Central US",
+                        "North Europe",
+                        "Brazil South",
+                        "Australia East",
+                        "Australia Southeast",
+                        "South India",
+                        "Central India",
+                        "West India",
+                        "Canada East",
+                        "Canada Central",
+                        "West US 2",
+                        "West Central US",
+                        "UK South",
+                        "UK West",
+                        "Korea Central",
+                        "Korea South",
+                        "East US 2 EUAP",
+                        "Central US EUAP",
+                        "France Central",
+                        "France South",
+                        "Australia Central",
+                        "Australia Central 2",
+                        "South Africa West",
+                        "South Africa North",
+                        "UAE Central",
+                        "UAE North",
+                        "Switzerland North",
+                        "Switzerland West",
+                        "Germany West Central",
+                        "Germany North",
+                        "Norway East",
+                        "Norway West",
+                        "South Central US STG",
+                        "Brazil Southeast"
+                      ],
+                      "apiVersions": [
+                        "2019-06-01",
+                        "2019-04-01",
+                        "2018-11-01",
+                        "2018-07-01",
+                        "2018-03-01-preview",
+                        "2018-02-01",
+                        "2017-10-01",
+                        "2017-06-01",
+                        "2016-12-01",
+                        "2016-05-01",
+                        "2016-01-01",
+                        "2015-06-15",
+                        "2015-05-01-preview"
+                      ],
+                      "defaultApiVersion": "2019-06-01",
+                      "apiProfiles": [
+                        {
+                          "profileVersion": "2019-03-01-hybrid",
+                          "apiVersion": "2017-10-01"
+                        },
+                        {
+                          "profileVersion": "2017-03-09-profile",
+                          "apiVersion": "2016-01-01"
+                        },
+                        {
+                          "profileVersion": "2018-03-01-hybrid",
+                          "apiVersion": "2016-01-01"
+                        },
+                        {
+                          "profileVersion": "2018-06-01-profile",
+                          "apiVersion": "2017-10-01"
+                        }
+                      ],
+                      "aliases": [
+                        {
+                          "name": "Microsoft.Storage/storageAccounts/accountType",
+                          "paths": [
+                            {
+                              "path": "properties.accountType",
+                              "apiVersions": [
+                                "2015-06-15",
+                                "2015-05-01-preview"
+                              ]
+                            },
+                            {
+                              "path": "sku.name",
+                              "apiVersions": [
+                                "2018-11-01",
+                                "2018-11-09",
+                                "2018-07-01",
+                                "2018-03-01-Preview",
+                                "2018-02-01",
+                                "2017-10-01",
+                                "2017-06-01",
+                                "2016-12-01",
+                                "2016-05-01",
+                                "2016-01-01"
+                              ]
+                            }
+                          ],
+                          "defaultPath": "sku.name"
+                        },
+                        {
+                          "name": "Microsoft.Storage/storageAccounts/sku.name",
+                          "paths": [
+                            {
+                              "path": "properties.accountType",
+                              "apiVersions": [
+                                "2015-06-15",
+                                "2015-05-01-preview"
+                              ]
+                            },
+                            {
+                              "path": "sku.name",
+                              "apiVersions": [
+                                "2018-11-01",
+                                "2018-11-09",
+                                "2018-07-01",
+                                "2018-03-01-Preview",
+                                "2018-02-01",
+                                "2017-10-01",
+                                "2017-06-01",
+                                "2016-12-01",
+                                "2016-05-01",
+                                "2016-01-01"
+                              ]
+                            }
+                          ],
+                          "defaultPath": "sku.name"
+                        },
+                        {
+                          "name": "Microsoft.Storage/storageAccounts/accessTier",
+                          "paths": [
+                            {
+                              "path": "properties.accessTier",
+                              "apiVersions": [
+                                "2018-11-01",
+                                "2018-11-09",
+                                "2018-07-01",
+                                "2018-03-01-Preview",
+                                "2018-02-01",
+                                "2017-10-01",
+                                "2017-06-01",
+                                "2016-12-01",
+                                "2016-05-01",
+                                "2016-01-01",
+                                "2015-06-15",
+                                "2015-05-01-preview"
+                              ]
+                            }
+                          ],
+                          "defaultPath": "properties.accessTier"
+                        },
+                        {
+                          "name": "Microsoft.Storage/storageAccounts/enableBlobEncryption",
+                          "paths": [
+                            {
+                              "path": "properties.encryption.services.blob.enabled",
+                              "apiVersions": [
+                                "2018-11-01",
+                                "2018-11-09",
+                                "2018-07-01",
+                                "2018-03-01-Preview",
+                                "2018-02-01",
+                                "2017-10-01",
+                                "2017-06-01",
+                                "2016-12-01",
+                                "2016-05-01",
+                                "2016-01-01",
+                                "2015-06-15",
+                                "2015-05-01-preview"
+                              ]
+                            }
+                          ],
+                          "defaultPath": "properties.encryption.services.blob.enabled"
+                        },
+                        {
+                          "name": "Microsoft.Storage/storageAccounts/enableFileEncryption",
+                          "paths": [
+                            {
+                              "path": "properties.encryption.services.file.enabled",
+                              "apiVersions": [
+                                "2018-11-01",
+                                "2018-11-09",
+                                "2018-07-01",
+                                "2018-03-01-Preview",
+                                "2018-02-01",
+                                "2017-10-01",
+                                "2017-06-01",
+                                "2016-12-01",
+                                "2016-05-01",
+                                "2016-01-01",
+                                "2015-06-15",
+                                "2015-05-01-preview"
+                              ]
+                            }
+                          ],
+                          "defaultPath": "properties.encryption.services.file.enabled"
+                        },
+                        {
+                          "name": "Microsoft.Storage/storageAccounts/supportsHttpsTrafficOnly",
+                          "paths": [
+                            {
+                              "path": "properties.supportsHttpsTrafficOnly",
+                              "apiVersions": [
+                                "2018-11-09",
+                                "2018-03-01-Preview",
+                                "2016-05-01",
+                                "2016-01-01",
+                                "2015-06-15",
+                                "2015-05-01-preview"
+                              ],
+                              "metadata": {
+                                "type": "NotSpecified",
+                                "attributes": "None"
+                              }
+                            }
+                          ],
+                          "defaultPath": "properties.supportsHttpsTrafficOnly",
+                          "defaultMetadata": {
+                            "type": "Boolean",
+                            "attributes": "Modifiable"
+                          }
+                        }
+                      ],
+                      "capabilities": "SupportsTags, SupportsLocation"
+                    }
+                  ]
+                }
+              }
+            }
           }
         },
         "operationId": "Providers_GetAtTenantScope",
@@ -2519,7 +4343,36 @@
         ],
         "x-ms-examples": {
           "Create or update a resource group": {
-            "$ref": "./examples/CreateResourceGroup.json"
+            "parameters": {
+              "subscriptionId": "00000000-0000-0000-0000-000000000000",
+              "resourceGroupName": "my-resource-group",
+              "api-version": "2021-04-01",
+              "parameters": {
+                "location": "eastus"
+              }
+            },
+            "responses": {
+              "200": {
+                "body": {
+                  "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/my-resource-group",
+                  "name": "my-resource-group",
+                  "location": "eastus",
+                  "properties": {
+                    "provisioningState": "Succeeded"
+                  }
+                }
+              },
+              "201": {
+                "body": {
+                  "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/my-resource-group",
+                  "name": "my-resource-group",
+                  "location": "eastus",
+                  "properties": {
+                    "provisioningState": "Succeeded"
+                  }
+                }
+              }
+            }
           }
         },
         "operationId": "ResourceGroups_CreateOrUpdate",
@@ -2606,10 +4459,36 @@
         ],
         "x-ms-examples": {
           "Force delete all the Virtual Machines in a resource group": {
-            "$ref": "./examples/ForceDeleteVMsInResourceGroup.json"
+            "parameters": {
+              "subscriptionId": "00000000-0000-0000-0000-000000000000",
+              "resourceGroupName": "my-resource-group",
+              "forceDeletionTypes": "Microsoft.Compute/virtualMachines",
+              "api-version": "2020-06-01"
+            },
+            "responses": {
+              "200": {
+                "description": "OK"
+              },
+              "202": {
+                "description": "Accepted"
+              }
+            }
           },
           "Force delete all the Virtual Machines and Virtual Machine Scale Sets in a resource group": {
-            "$ref": "./examples/ForceDeleteVMsAndVMSSInResourceGroup.json"
+            "parameters": {
+              "subscriptionId": "00000000-0000-0000-0000-000000000000",
+              "resourceGroupName": "my-resource-group",
+              "forceDeletionTypes": "Microsoft.Compute/virtualMachines,Microsoft.Compute/virtualMachineScaleSets",
+              "api-version": "2020-06-01"
+            },
+            "responses": {
+              "200": {
+                "description": "OK"
+              },
+              "202": {
+                "description": "Accepted"
+              }
+            }
           }
         },
         "responses": {
@@ -2726,13 +4605,30 @@
         "description": "Captures the specified resource group as a template.",
         "parameters": [
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "name": "subscriptionId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The ID of the target subscription.",
+            "minLength": 1
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ResourceGroupNameParameter"
+            "name": "resourceGroupName",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The name of the resource group. The name is case insensitive.",
+            "minLength": 1,
+            "maxLength": 90,
+            "x-ms-parameter-location": "method"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "The API version to use for this operation.",
+            "minLength": 1
           },
           {
             "name": "parameters",
@@ -2746,10 +4642,118 @@
         ],
         "x-ms-examples": {
           "Export a resource group": {
-            "$ref": "./examples/ExportResourceGroup.json"
+            "parameters": {
+              "subscriptionId": "00000000-0000-0000-0000-000000000000",
+              "resourceGroupName": "my-resource-group",
+              "api-version": "2021-04-01",
+              "parameters": {
+                "resources": [
+                  "*"
+                ],
+                "options": "IncludeParameterDefaultValue,IncludeComments"
+              }
+            },
+            "responses": {
+              "200": {
+                "body": {
+                  "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {
+                      "myResourceType_myFirstResource_name": {
+                        "defaultValue": "myFirstResource",
+                        "type": "String"
+                      },
+                      "myResourceType_mySecondResource_name": {
+                        "defaultValue": "mySecondResource",
+                        "type": "String"
+                      },
+                      "myResourceType_myFirstResource_secret": {
+                        "defaultValue": null,
+                        "type": "SecureString"
+                      }
+                    },
+                    "variables": {},
+                    "resources": [
+                      {
+                        "type": "My.RP/myResourceType",
+                        "apiVersion": "2019-01-01",
+                        "name": "[parameters('myResourceType_myFirstResource_name')]",
+                        "location": "West US",
+                        "properties": {
+                          "secret": "[parameters('myResourceType_myFirstResource_secret')]"
+                        }
+                      },
+                      {
+                        "type": "My.RP/myResourceType",
+                        "apiVersion": "2019-01-01",
+                        "name": "[parameters('myResourceType_mySecondResource_name')]",
+                        "location": "West US",
+                        "properties": {
+                          "customProperty": "hello!"
+                        }
+                      }
+                    ]
+                  },
+                  "error": {
+                    "code": "ExportTemplateCompletedWithErrors",
+                    "message": "Export template operation completed with errors. Some resources were not exported. Please see details for more information.",
+                    "details": []
+                  }
+                }
+              },
+              "202": {
+                "headers": {
+                  "location": "https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/operationresults/c9bbccf4-e16a-4eb7-befb-2e2e5195c347?api-version=2018-08-01"
+                }
+              }
+            }
           },
           "Export a resource group with filtering": {
-            "$ref": "./examples/ExportResourceGroupWithFiltering.json"
+            "parameters": {
+              "subscriptionId": "00000000-0000-0000-0000-000000000000",
+              "resourceGroupName": "my-resource-group",
+              "api-version": "2021-04-01",
+              "parameters": {
+                "resources": [
+                  "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/my-resource-group/providers/My.RP/myResourceType/myFirstResource"
+                ],
+                "options": "SkipResourceNameParameterization"
+              }
+            },
+            "responses": {
+              "200": {
+                "body": {
+                  "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {
+                      "myResourceType_myFirstResource_secret": {
+                        "defaultValue": null,
+                        "type": "SecureString"
+                      }
+                    },
+                    "variables": {},
+                    "resources": [
+                      {
+                        "type": "My.RP/myResourceType",
+                        "apiVersion": "2019-01-01",
+                        "name": "myFirstResource",
+                        "location": "West US",
+                        "properties": {
+                          "secret": "[parameters('myResourceType_myFirstResource_secret')]"
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              "202": {
+                "headers": {
+                  "location": "https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/operationresults/c9bbccf4-e16a-4eb7-befb-2e2e5195c347?api-version=2018-08-01"
+                }
+              }
+            }
           }
         },
         "responses": {
@@ -4307,7 +6311,50 @@
         ],
         "x-ms-examples": {
           "Calculate template hash": {
-            "$ref": "./examples/CalculateTemplateHash.json"
+            "parameters": {
+              "api-version": "2021-04-01",
+              "template": {
+                "$schema": "http://schemas.management.azure.com/deploymentTemplate?api-version=2014-04-01-preview",
+                "contentVersion": "1.0.0.0",
+                "parameters": {
+                  "string": {
+                    "type": "string"
+                  }
+                },
+                "variables": {
+                  "string": "string",
+                  "int": 42,
+                  "bool": true,
+                  "array": [
+                    1,
+                    2,
+                    3,
+                    4
+                  ],
+                  "object": {
+                    "object": {
+                      "vmSize": "Large",
+                      "location": "West US"
+                    }
+                  }
+                },
+                "resources": [],
+                "outputs": {
+                  "string": {
+                    "type": "string",
+                    "value": "myvalue"
+                  }
+                }
+              }
+            },
+            "responses": {
+              "200": {
+                "body": {
+                  "minifiedTemplate": "{\"$SCHEMA\":\"HTTP://SCHEMAS.MANAGEMENT.AZURE.COM/DEPLOYMENTTEMPLATE?API-VERSION=2014-04-01-PREVIEW\",\"CONTENTVERSION\":\"1.0.0.0\",\"PARAMETERS\":{\"STRING\":{\"TYPE\":\"STRING\"}},\"VARIABLES\":{\"STRING\":\"STRING\",\"INT\":42,\"BOOL\":TRUE,\"ARRAY\":[1,2,3,4],\"OBJECT\":{\"OBJECT\":{\"VMSIZE\":\"LARGE\",\"LOCATION\":\"WEST US\"}}},\"RESOURCES\":[],\"OUTPUTS\":{\"STRING\":{\"TYPE\":\"STRING\",\"VALUE\":\"MYVALUE\"}}}",
+                  "templateHash": "695440707931307747"
+                }
+              }
+            }
           }
         },
         "responses": {
@@ -4366,10 +6413,56 @@
         },
         "x-ms-examples": {
           "Update tags on a resource": {
-            "$ref": "./examples/PutTagsResource.json"
+            "parameters": {
+              "scope": "subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/my-resource-group/providers/myPRNameSpace/VM/myVm",
+              "api-version": "2021-04-01",
+              "parameters": {
+                "properties": {
+                  "tags": {
+                    "tagKey1": "tag-value-1",
+                    "tagKey2": "tag-value-2"
+                  }
+                }
+              }
+            },
+            "responses": {
+              "200": {
+                "body": {
+                  "properties": {
+                    "tags": {
+                      "tagKey1": "tag-value-1",
+                      "tagKey2": "tag-value-2"
+                    }
+                  }
+                }
+              }
+            }
           },
           "Update tags on a subscription": {
-            "$ref": "./examples/PutTagsSubscription.json"
+            "parameters": {
+              "scope": "subscriptions/00000000-0000-0000-0000-000000000000",
+              "api-version": "2021-04-01",
+              "parameters": {
+                "properties": {
+                  "tags": {
+                    "tagKey1": "tag-value-1",
+                    "tagKey2": "tag-value-2"
+                  }
+                }
+              }
+            },
+            "responses": {
+              "200": {
+                "body": {
+                  "properties": {
+                    "tags": {
+                      "tagKey1": "tag-value-1",
+                      "tagKey2": "tag-value-2"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       },
@@ -4441,10 +6534,40 @@
         },
         "x-ms-examples": {
           "Get tags on a resource": {
-            "$ref": "./examples/GetTagsResource.json"
+            "parameters": {
+              "scope": "subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/my-resource-group/providers/myPRNameSpace/VM/myVm",
+              "api-version": "2021-04-01"
+            },
+            "responses": {
+              "200": {
+                "body": {
+                  "properties": {
+                    "tags": {
+                      "tagKey1": "tag-value-1",
+                      "tagKey2": "tag-value-2"
+                    }
+                  }
+                }
+              }
+            }
           },
           "Get tags on a subscription": {
-            "$ref": "./examples/GetTagsSubscription.json"
+            "parameters": {
+              "scope": "subscriptions/00000000-0000-0000-0000-000000000000",
+              "api-version": "2021-04-01"
+            },
+            "responses": {
+              "200": {
+                "body": {
+                  "properties": {
+                    "tags": {
+                      "tagKey1": "tag-value-1",
+                      "tagKey2": "tag-value-2"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       },
@@ -4738,7 +6861,60 @@
       "x-ms-external": true,
       "properties": {
         "error": {
-          "$ref": "../../../../../common-types/resource-management/v1/types.json#/definitions/ErrorResponse"
+          "title": "Error Response",
+          "description": "Common error response for all Azure Resource Manager APIs to return error details for failed operations. (This also follows the OData error response format.)",
+          "type": "object",
+          "properties": {
+            "code": {
+              "readOnly": true,
+              "type": "string",
+              "description": "The error code."
+            },
+            "message": {
+              "readOnly": true,
+              "type": "string",
+              "description": "The error message."
+            },
+            "target": {
+              "readOnly": true,
+              "type": "string",
+              "description": "The error target."
+            },
+            "details": {
+              "readOnly": true,
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/CloudError/properties/error"
+              },
+              "x-ms-identifiers": [
+                "message",
+                "target"
+              ],
+              "description": "The error details."
+            },
+            "additionalInfo": {
+              "readOnly": true,
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "readOnly": true,
+                    "type": "string",
+                    "description": "The additional info type."
+                  },
+                  "info": {
+                    "readOnly": true,
+                    "type": "object",
+                    "description": "The additional info."
+                  }
+                },
+                "description": "The resource management error additional info."
+              },
+              "x-ms-identifiers": [],
+              "description": "The error additional info."
+            }
+          }
         }
       },
       "description": "An error response for a resource management request."
@@ -5253,7 +7429,7 @@
         },
         "error": {
           "readOnly": true,
-          "$ref": "../../../../../common-types/resource-management/v1/types.json#/definitions/ErrorResponse",
+          "$ref": "#/definitions/CloudError/properties/error",
           "description": "The deployment error."
         }
       },
@@ -5320,7 +7496,7 @@
       "properties": {
         "error": {
           "readOnly": true,
-          "$ref": "../../../../../common-types/resource-management/v1/types.json#/definitions/ErrorResponse",
+          "$ref": "#/definitions/CloudError/properties/error",
           "description": "The deployment validation error."
         },
         "properties": {
@@ -6081,7 +8257,7 @@
           "description": "The template content."
         },
         "error": {
-          "$ref": "../../../../../common-types/resource-management/v1/types.json#/definitions/ErrorResponse",
+          "$ref": "#/definitions/CloudError/properties/error",
           "description": "The template export error."
         }
       },
@@ -6316,7 +8492,7 @@
           "description": "What-If operation properties."
         },
         "error": {
-          "$ref": "../../../../../common-types/resource-management/v1/types.json#/definitions/ErrorResponse",
+          "$ref": "#/definitions/CloudError/properties/error",
           "description": "Error when What-If operation fails."
         }
       }
@@ -6544,7 +8720,7 @@
           "description": "Status of the deployment operation."
         },
         "error": {
-          "$ref": "../../../../../common-types/resource-management/v1/types.json#/definitions/ErrorResponse",
+          "$ref": "#/definitions/CloudError/properties/error",
           "description": "The error reported by the operation."
         }
       }

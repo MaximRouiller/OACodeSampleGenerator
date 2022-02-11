@@ -1,0 +1,10 @@
+class ResourceGroups_CreateOrUpdate {
+  String id;
+  String name;
+  String type;
+  Object properties;
+  String location;
+  String managedBy;
+  Object tags; 
+}
+

@@ -12,14 +12,3 @@ string responseStatus = httpResponseMessage.StatusCode.ToString();
 Console.WriteLine(responseString);
 Console.WriteLine(responseString);
 
------
-
-body.json:
-
-{
-  "properties": ...,
-  "location": ...,
-  "managedBy": ...,
-  "tags": ...
-}
-

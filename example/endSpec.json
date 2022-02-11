@@ -29915,6 +29915,10 @@
                 "items": {
                   "$ref": "#/components/schemas/CloudError/properties/error"
                 },
+                "x-ms-identifiers": [
+                  "message",
+                  "target"
+                ],
                 "description": "The error details."
               },
               "additionalInfo": {
@@ -29936,6 +29940,7 @@
                   },
                   "description": "The resource management error additional info."
                 },
+                "x-ms-identifiers": [],
                 "description": "The error additional info."
               }
             }
