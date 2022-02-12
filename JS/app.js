@@ -15,9 +15,16 @@ const converter = require('swagger2openapi');
     api = await converter.convertObj(api, {});
     fs.writeFileSync('../example/convertedSpec.json', JSON.stringify(api, null, 2));
 
-    // Validate and dereference
-    api = await SwaggerParser.validate(api.openapi, { dereference: { circular: 'ignore' } });
-    fs.writeFileSync('../example/endSpec.json', JSON.stringify(api, null, 2));
+    // Validate and dereference ('validate' calls 'dereference' internally)
+    // https://apitools.dev/swagger-parser/docs/swagger-parser.html#validateapi-options-callback
+    api = await SwaggerParser.validate(api.openapi);
+
+    // Circular references are not supported by JSON so use the version below instead of the version
+    // above to just partially dereference the spec and serialise it as JSON. This will significantly
+    // reduce the number of operations whose responses are able to be deserialised with the model
+    // generators later on, so only use this version if you need to more easily inspect the JSON.
+    // api = await SwaggerParser.validate(api.openapi, { dereference: { circular: 'ignore' } });
+    // fs.writeFileSync('../example/endSpec.json', JSON.stringify(api, null, 2));
 
     console.log(`API name: ${api.info.title}, Version: ${api.info.version}`);
 
