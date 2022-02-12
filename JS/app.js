@@ -7,6 +7,9 @@ const converter = require('swagger2openapi');
     const specURL =
       'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/resources/resource-manager/Microsoft.Resources/stable/2021-04-01/resources.json';
 
+    const singleOperation = 'ResourceGroups_CreateOrUpdate'; // a better one to test the model generators with is e.g. Deployments_CreateOrUpdateAtScope
+    // const singleOperation = '';
+
     // Bundle
     let api = await SwaggerParser.bundle(specURL);
     fs.writeFileSync('../example/bundledSpec.json', JSON.stringify(api, null, 2));
@@ -41,7 +44,7 @@ const converter = require('swagger2openapi');
     for (const operation of getOperations(api)) {
       const operationId = operation.operationId;
 
-      if (operationId !== 'ResourceGroups_CreateOrUpdate') continue;
+      if (singleOperation && operationId !== singleOperation) continue;
 
       const requestBodyProperties =
         operation.requestBody?.content['application/json'].schema.properties;
