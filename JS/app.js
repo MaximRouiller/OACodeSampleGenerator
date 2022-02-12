@@ -62,8 +62,8 @@ const converter = require('swagger2openapi');
 
       if (responseBodyProperties) {
         javaModel += getJavaResponseCode(operationId, Object.entries(responseBodyProperties));
-        // pythonModel += getPythonResponseCode(operationId, responseBodyProperties);
-        // csharpModel += getCSharpResponseCode(operationId, responseBodyProperties);
+        // pythonModel += getPythonResponseCode(operationId, Object.entries(responseBodyProperties));
+        // csharpModel += getCSharpResponseCode(operationId, Object.entries(responseBodyProperties));
       }
     }
 
