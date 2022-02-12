@@ -1,6 +1,7 @@
 const SwaggerParser = require('@apidevtools/swagger-parser');
 const fs = require('fs');
 const converter = require('swagger2openapi');
+const { singular } = require('pluralize');
 
 (async () => {
   try {
@@ -183,18 +184,54 @@ function getJSONRequestBody(operationId, properties) {
 `;
 }
 
-function getJavaResponseCode(operationId, properties) {
-  return `class ${operationId} {${properties
+// Response deserialiser model generator for Java
+function getJavaResponseCode(className, properties, isRootClass = true) {
+  return `class ${className} {${properties
     .map((prop) => {
       let type = prop[1].type;
-      if (type === 'array') type = 'List<Object>';
+      if (type === 'integer') {
+        type = 'int';
+      } else if (type === 'string') {
+        type = 'String';
+      } else if (type === 'object') {
+        type = 'Object';
+      } else if (type === 'array') {
+        type = `List<${
+          prop[1].items.type !== 'string' ? capitalise(singular(prop[0])) : 'String'
+        }>`;
+      } else {
+        type = capitalise(prop[0]);
+      }
       return `
-  ${capitalise(type || 'object')} ${prop[0]};`;
+  ${type} ${prop[0]};`;
     })
-    .join('')} 
-}
-
-`;
+    .join('')}${properties
+    .filter((prop) => !prop[1].type)
+    .map(
+      (prop) =>
+        '\n\n' +
+        indentString(
+          getJavaResponseCode(capitalise(prop[0]), Object.entries(prop[1].properties), false),
+          2
+        )
+    )
+    .join('')}${properties
+    .filter((prop) => prop[1].type === 'array' && prop[1].items.properties)
+    .map((prop) =>
+      capitalise(singular(prop[0])) === className // let's just say circular refs and recursion aren't a good mix
+        ? ''
+        : '\n\n' +
+          indentString(
+            getJavaResponseCode(
+              capitalise(singular(prop[0])),
+              Object.entries(prop[1].items.properties),
+              false
+            ),
+            2
+          )
+    )
+    .join('')}
+}${isRootClass ? '\n\n' : ''}`;
 }
 
 // TODO: Create response deserialiser model generator for Python
@@ -210,3 +247,6 @@ function getJavaResponseCode(operationId, properties) {
 // Utilities
 
 const capitalise = (s) => s.charAt(0).toUpperCase() + s.slice(1);
+
+// https://www.30secondsofcode.org/js/s/indent-string
+const indentString = (str, count, indent = ' ') => str.replace(/^/gm, indent.repeat(count));
