@@ -226,20 +226,24 @@ function getJavaOrCSharpResponseCode(language, className, properties, isRootClas
         )
     )
     .join('')}${properties
-    .filter((prop) => prop[1].type === 'array' && prop[1].items.properties)
-    .map((prop) =>
-      capitalise(singular(prop[0])) === className // let's just say circular refs and recursion aren't a good mix
-        ? ''
-        : '\n\n' +
-          indentString(
-            getJavaOrCSharpResponseCode(
-              language,
-              capitalise(singular(prop[0])),
-              Object.entries(prop[1].items.properties),
-              false
-            ),
-            2
-          )
+    .filter(
+      (prop) =>
+        prop[1].type === 'array' &&
+        prop[1].items.properties &&
+        capitalise(singular(prop[0])) !== className // let's just say circular refs and recursion aren't a good mix
+    )
+    .map(
+      (prop) =>
+        '\n\n' +
+        indentString(
+          getJavaOrCSharpResponseCode(
+            language,
+            capitalise(singular(prop[0])),
+            Object.entries(prop[1].items.properties),
+            false
+          ),
+          2
+        )
     )
     .join('')}
 }${isRootClass ? '\n\n' : ''}`;
