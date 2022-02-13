@@ -12,19 +12,42 @@ const generator = require('./index');
   try {
     const generated = await generator(specURL);
 
+    let javaSnippet = '';
+    let pythonSnippet = '';
+    let csharpSnippet = '';
+
+    let requestBody = '';
+
+    let javaModel = '';
+    // let pythonModel = '';
+    let csharpModel = '';
+
+    for (const operation of generated) {
+      if (singleOperation && operation.operationId !== singleOperation) continue;
+
+      javaSnippet += operation.javaSnippet;
+      pythonSnippet += operation.pythonSnippet;
+      csharpSnippet += operation.csharpSnippet;
+
+      requestBody += operation.requestBody || '';
+
+      javaModel += operation.javaModel || '';
+      // pythonModel += operation.pythonModel || '';
+      csharpModel += operation.csharpModel || '';
+    }
+
+    fs.writeFileSync('../example/javaSnippet.txt', javaSnippet);
+    fs.writeFileSync('../example/pythonSnippet.txt', pythonSnippet);
+    fs.writeFileSync('../example/csharpSnippet.txt', csharpSnippet);
+
+    fs.writeFileSync('../example/requestBody.txt', requestBody);
+
+    fs.writeFileSync('../example/javaModel.java', javaModel);
+    // fs.writeFileSync('../example/pythonModel.py', pythonModel);
+    fs.writeFileSync('../example/csharpModel.cs', csharpModel);
+
     if (singleOperation) {
       const operation = generated.find((op) => op.operationId === singleOperation);
-
-      fs.writeFileSync('../example/javaSnippet.txt', operation.javaSnippet);
-      fs.writeFileSync('../example/pythonSnippet.txt', operation.pythonSnippet);
-      fs.writeFileSync('../example/csharpSnippet.txt', operation.csharpSnippet);
-
-      fs.writeFileSync('../example/requestBody.txt', operation.requestBody);
-
-      fs.writeFileSync('../example/javaModel.java', operation.javaModel);
-      // fs.writeFileSync('../example/pythonModel.py', operation.pythonModel);
-      fs.writeFileSync('../example/csharpModel.cs', operation.csharpModel);
-
       fs.writeFileSync('../example/snippetsAndModels.json', JSON.stringify(operation, null, 2));
     } else {
       fs.writeFileSync('../example/snippetsAndModels.json', JSON.stringify(generated, null, 2));
