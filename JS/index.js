@@ -188,65 +188,77 @@ function getJSONRequestBody(operationId, properties) {
 
 // Response deserialiser model generator for both Java and C# (because these languages are very similar)
 function getJavaOrCSharpResponseCode(language, className, properties, isRootClass = true) {
-  return `class ${className} {${properties
-    .map((prop) => {
-      let type = prop[1].type;
-      if (type === 'integer') {
-        type = 'int';
-      } else if (type === 'string') {
-        type = 'String';
-      } else if (type === 'object') {
-        type = 'Object';
-      } else if (type === 'array') {
-        type = `List<${
-          prop[1].items.type !== 'string' ? capitalise(singular(prop[0])) : 'String'
-        }>`;
-      } else {
-        type = capitalise(prop[0]);
-      }
-      let variableName = prop[0];
-      // 'namespace' is a C# keyword
-      if (variableName === 'namespace' && language === 'csharp') variableName = '@namespace';
-      return `
-  ${type} ${variableName};`;
-    })
-    .join('')}${properties
-    .filter((prop) => !prop[1].type)
-    .map(
-      (prop) =>
-        '\n\n' +
-        indentString(
-          getJavaOrCSharpResponseCode(
-            language,
-            capitalise(prop[0]),
-            Object.entries(prop[1].properties),
-            false
-          ),
-          2
-        )
-    )
-    .join('')}${properties
-    .filter(
-      (prop) =>
-        prop[1].type === 'array' &&
-        prop[1].items.properties &&
-        capitalise(singular(prop[0])) !== className // let's just say circular refs and recursion aren't a good mix
-    )
-    .map(
-      (prop) =>
-        '\n\n' +
-        indentString(
-          getJavaOrCSharpResponseCode(
-            language,
-            capitalise(singular(prop[0])),
-            Object.entries(prop[1].items.properties),
-            false
-          ),
-          2
-        )
-    )
-    .join('')}
+  return `class ${className} {${getFields()}${getClasses()}${getArrayElementClasses()}
 }${isRootClass ? '\n\n' : ''}`;
+
+  function getFields() {
+    return properties
+      .map((prop) => {
+        let type = prop[1].type;
+        if (type === 'integer') {
+          type = 'int';
+        } else if (type === 'string') {
+          type = 'String';
+        } else if (type === 'object') {
+          type = 'Object';
+        } else if (type === 'array') {
+          type = `List<${
+            prop[1].items.type !== 'string' ? capitalise(singular(prop[0])) : 'String'
+          }>`;
+        } else {
+          type = capitalise(prop[0]);
+        }
+        let variableName = prop[0];
+        // 'namespace' is a C# keyword
+        if (variableName === 'namespace' && language === 'csharp') variableName = '@namespace';
+        return `
+  ${type} ${variableName};`;
+      })
+      .join('');
+  }
+
+  function getClasses() {
+    return properties
+      .filter((prop) => !prop[1].type)
+      .map(
+        (prop) =>
+          '\n\n' +
+          indentString(
+            getJavaOrCSharpResponseCode(
+              language,
+              capitalise(prop[0]),
+              Object.entries(prop[1].properties),
+              false
+            ),
+            2
+          )
+      )
+      .join('');
+  }
+
+  function getArrayElementClasses() {
+    return properties
+      .filter(
+        (prop) =>
+          prop[1].type === 'array' &&
+          prop[1].items.properties &&
+          capitalise(singular(prop[0])) !== className // let's just say circular refs and recursion aren't a good mix
+      )
+      .map(
+        (prop) =>
+          '\n\n' +
+          indentString(
+            getJavaOrCSharpResponseCode(
+              language,
+              capitalise(singular(prop[0])),
+              Object.entries(prop[1].items.properties),
+              false
+            ),
+            2
+          )
+      )
+      .join('');
+  }
 }
 
 // TODO: Create response deserialiser model generator for Python
