@@ -220,8 +220,7 @@ function getJavaOrCSharpResponseCode(language, className, properties, isRootClas
               capitalise(prop[0]),
               Object.entries(prop[1].properties),
               false
-            ),
-            2
+            )
           )
       )
       .join('');
@@ -244,8 +243,7 @@ function getJavaOrCSharpResponseCode(language, className, properties, isRootClas
               capitalise(singular(prop[0])),
               Object.entries(prop[1].items.properties),
               false
-            ),
-            2
+            )
           )
       )
       .join('');
@@ -262,4 +260,4 @@ function getJavaOrCSharpResponseCode(language, className, properties, isRootClas
 const capitalise = (s) => s.charAt(0).toUpperCase() + s.slice(1);
 
 // https://www.30secondsofcode.org/js/s/indent-string
-const indentString = (str, count, indent = ' ') => str.replace(/^/gm, indent.repeat(count));
+const indentString = (str, count = 2, indent = ' ') => str.replace(/^/gm, indent.repeat(count));
