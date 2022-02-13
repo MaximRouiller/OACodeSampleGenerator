@@ -1,23 +1,17 @@
 const SwaggerParser = require('@apidevtools/swagger-parser');
-const fs = require('fs');
 const converter = require('swagger2openapi');
 const { singular } = require('pluralize');
+// const fs = require('fs');
 
-(async () => {
+module.exports = async (specURL, singleOperation) => {
   try {
-    const specURL =
-      'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/resources/resource-manager/Microsoft.Resources/stable/2021-04-01/resources.json';
-
-    const singleOperation = 'ResourceGroups_CreateOrUpdate'; // a better one to test the model generators with is e.g. Deployments_CreateOrUpdateAtScope
-    // const singleOperation = '';
-
     // Bundle
     let api = await SwaggerParser.bundle(specURL);
-    fs.writeFileSync('../example/bundledSpec.json', JSON.stringify(api, null, 2));
+    // fs.writeFileSync('../example/bundledSpec.json', JSON.stringify(api, null, 2));
 
     // Convert
     api = (await converter.convertObj(api, {})).openapi;
-    fs.writeFileSync('../example/convertedSpec.json', JSON.stringify(api, null, 2));
+    // fs.writeFileSync('../example/convertedSpec.json', JSON.stringify(api, null, 2));
 
     // Validate and dereference ('validate' calls 'dereference' internally)
     // https://apitools.dev/swagger-parser/docs/swagger-parser.html#validateapi-options-callback
@@ -71,19 +65,19 @@ const { singular } = require('pluralize');
       }
     }
 
-    fs.writeFileSync('../example/javaSnippet.txt', javaSnippet);
-    fs.writeFileSync('../example/pythonSnippet.txt', pythonSnippet);
-    fs.writeFileSync('../example/csharpSnippet.txt', csharpSnippet);
-
-    fs.writeFileSync('../example/requestBody.txt', requestBody);
-
-    fs.writeFileSync('../example/javaModel.txt', javaModel);
-    // fs.writeFileSync('../example/pythonModel.txt', pythonModel);
-    // fs.writeFileSync('../example/csharpModel.txt', csharpModel);
+    return {
+      javaSnippet,
+      pythonSnippet,
+      csharpSnippet,
+      requestBody,
+      javaModel,
+      // pythonModel,
+      // csharpModel,
+    };
   } catch (err) {
     console.error(err);
   }
-})();
+};
 
 // Split spec into operations
 function getOperations(spec) {
