@@ -10,25 +10,19 @@ const generator = require('./index');
   // const singleOperation = ''; // to get snippets/models for all operations in spec
 
   try {
-    const {
-      javaSnippet,
-      pythonSnippet,
-      csharpSnippet,
-      requestBody,
-      javaModel,
-      // pythonModel,
-      // csharpModel,
-    } = await generator(specURL, singleOperation);
+    const generated = await generator(specURL, singleOperation);
 
-    fs.writeFileSync('../example/javaSnippet.txt', javaSnippet);
-    fs.writeFileSync('../example/pythonSnippet.txt', pythonSnippet);
-    fs.writeFileSync('../example/csharpSnippet.txt', csharpSnippet);
+    fs.writeFileSync('../example/javaSnippet.txt', generated.javaSnippet);
+    fs.writeFileSync('../example/pythonSnippet.txt', generated.pythonSnippet);
+    fs.writeFileSync('../example/csharpSnippet.txt', generated.csharpSnippet);
 
-    fs.writeFileSync('../example/requestBody.txt', requestBody);
+    fs.writeFileSync('../example/requestBody.txt', generated.requestBody);
 
-    fs.writeFileSync('../example/javaModel.txt', javaModel);
-    // fs.writeFileSync('../example/pythonModel.txt', pythonModel);
-    // fs.writeFileSync('../example/csharpModel.txt', csharpModel);
+    fs.writeFileSync('../example/javaModel.txt', generated.javaModel);
+    // fs.writeFileSync('../example/pythonModel.txt', generated.pythonModel);
+    // fs.writeFileSync('../example/csharpModel.txt', generated.csharpModel);
+
+    fs.writeFileSync('../example/snippetsAndModels.json', JSON.stringify(generated, null, 2));
   } catch (err) {
     console.error(err);
   }
