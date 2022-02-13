@@ -34,7 +34,7 @@ module.exports = async (specURL, singleOperation) => {
 
     let javaModel = '';
     // let pythonModel = '';
-    // let csharpModel = '';
+    let csharpModel = '';
 
     for (const operation of getOperations(api)) {
       const operationId = operation.operationId;
@@ -59,9 +59,17 @@ module.exports = async (specURL, singleOperation) => {
         operation.responses[200]?.content?.['application/json'].schema.properties;
 
       if (responseBodyProperties) {
-        javaModel += getJavaResponseCode(operationId, Object.entries(responseBodyProperties));
+        javaModel += getJavaOrCSharpResponseCode(
+          'java',
+          operationId,
+          Object.entries(responseBodyProperties)
+        );
         // pythonModel += getPythonResponseCode(operationId, Object.entries(responseBodyProperties));
-        // csharpModel += getCSharpResponseCode(operationId, Object.entries(responseBodyProperties));
+        csharpModel += getJavaOrCSharpResponseCode(
+          'csharp',
+          operationId,
+          Object.entries(responseBodyProperties)
+        );
       }
     }
 
@@ -72,7 +80,7 @@ module.exports = async (specURL, singleOperation) => {
       requestBody,
       javaModel,
       // pythonModel,
-      // csharpModel,
+      csharpModel,
     };
   } catch (err) {
     console.error(err);
@@ -178,8 +186,8 @@ function getJSONRequestBody(operationId, properties) {
 `;
 }
 
-// Response deserialiser model generator for Java
-function getJavaResponseCode(className, properties, isRootClass = true) {
+// Response deserialiser model generator for both Java and C# (because these languages are very similar)
+function getJavaOrCSharpResponseCode(language, className, properties, isRootClass = true) {
   return `class ${className} {${properties
     .map((prop) => {
       let type = prop[1].type;
@@ -196,8 +204,11 @@ function getJavaResponseCode(className, properties, isRootClass = true) {
       } else {
         type = capitalise(prop[0]);
       }
+      let variableName = prop[0];
+      // 'namespace' is a C# keyword
+      if (variableName === 'namespace' && language === 'csharp') variableName = '@namespace';
       return `
-  ${type} ${prop[0]};`;
+  ${type} ${variableName};`;
     })
     .join('')}${properties
     .filter((prop) => !prop[1].type)
@@ -205,7 +216,12 @@ function getJavaResponseCode(className, properties, isRootClass = true) {
       (prop) =>
         '\n\n' +
         indentString(
-          getJavaResponseCode(capitalise(prop[0]), Object.entries(prop[1].properties), false),
+          getJavaOrCSharpResponseCode(
+            language,
+            capitalise(prop[0]),
+            Object.entries(prop[1].properties),
+            false
+          ),
           2
         )
     )
@@ -216,7 +232,8 @@ function getJavaResponseCode(className, properties, isRootClass = true) {
         ? ''
         : '\n\n' +
           indentString(
-            getJavaResponseCode(
+            getJavaOrCSharpResponseCode(
+              language,
               capitalise(singular(prop[0])),
               Object.entries(prop[1].items.properties),
               false
@@ -230,11 +247,6 @@ function getJavaResponseCode(className, properties, isRootClass = true) {
 
 // TODO: Create response deserialiser model generator for Python
 // function getPythonResponseCode(operationId, properties) {
-//   return ``;
-// }
-
-// TODO: Create response deserialiser model generator for C#
-// function getCSharpResponseCode(operationId, properties) {
 //   return ``;
 // }
 

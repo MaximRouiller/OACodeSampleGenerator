@@ -18,9 +18,9 @@ const generator = require('./index');
 
     fs.writeFileSync('../example/requestBody.txt', generated.requestBody);
 
-    fs.writeFileSync('../example/javaModel.txt', generated.javaModel);
-    // fs.writeFileSync('../example/pythonModel.txt', generated.pythonModel);
-    // fs.writeFileSync('../example/csharpModel.txt', generated.csharpModel);
+    fs.writeFileSync('../example/javaModel.java', generated.javaModel);
+    // fs.writeFileSync('../example/pythonModel.py', generated.pythonModel);
+    fs.writeFileSync('../example/csharpModel.cs', generated.csharpModel);
 
     fs.writeFileSync('../example/snippetsAndModels.json', JSON.stringify(generated, null, 2));
   } catch (err) {
