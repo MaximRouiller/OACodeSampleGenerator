@@ -3,7 +3,7 @@ const converter = require('swagger2openapi');
 const { singular } = require('pluralize');
 // const fs = require('fs');
 
-module.exports = async (specURL, singleOperation) => {
+module.exports = async (specURL) => {
   try {
     // Bundle
     let api = await SwaggerParser.bundle(specURL);
@@ -26,30 +26,24 @@ module.exports = async (specURL, singleOperation) => {
 
     console.log(`API name: ${api.info.title}, Version: ${api.info.version}`);
 
-    let javaSnippet = '';
-    let pythonSnippet = '';
-    let csharpSnippet = '';
-
-    let requestBody = '';
-
-    let javaModel = '';
-    // let pythonModel = '';
-    let csharpModel = '';
+    const output = [];
 
     for (const operation of getOperations(api)) {
       const operationId = operation.operationId;
 
-      if (singleOperation && operationId !== singleOperation) continue;
+      const operationOutput = { operationId };
 
       const requestBodyProperties =
         operation.requestBody?.content['application/json'].schema.properties;
 
-      javaSnippet += getJavaRequestCode(operation, api.info.version, requestBodyProperties);
-      pythonSnippet += getPythonRequestCode(operation, api.info.version, requestBodyProperties);
-      csharpSnippet += getCSharpRequestCode(operation, api.info.version, requestBodyProperties);
+      const hasBody = requestBodyProperties !== undefined;
 
-      if (requestBodyProperties) {
-        requestBody += getJSONRequestBody(
+      operationOutput.javaSnippet = getJavaRequestCode(operation, api.info.version, hasBody);
+      operationOutput.pythonSnippet = getPythonRequestCode(operation, api.info.version, hasBody);
+      operationOutput.csharpSnippet = getCSharpRequestCode(operation, api.info.version, hasBody);
+
+      if (hasBody) {
+        operationOutput.requestBody = getJSONRequestBody(
           operationId,
           Object.entries(requestBodyProperties).filter((prop) => !prop[1].readOnly)
         );
@@ -58,30 +52,27 @@ module.exports = async (specURL, singleOperation) => {
       const responseBodyProperties =
         operation.responses[200]?.content?.['application/json'].schema.properties;
 
-      if (responseBodyProperties) {
-        javaModel += getJavaOrCSharpResponseCode(
+      if (responseBodyProperties !== undefined) {
+        operationOutput.javaModel = getJavaOrCSharpResponseCode(
           'java',
           operationId,
           Object.entries(responseBodyProperties)
         );
-        // pythonModel += getPythonResponseCode(operationId, Object.entries(responseBodyProperties));
-        csharpModel += getJavaOrCSharpResponseCode(
+        // operationOutput.pythonModel = getPythonResponseCode(
+        //   operationId,
+        //   Object.entries(responseBodyProperties)
+        // );
+        operationOutput.csharpModel = getJavaOrCSharpResponseCode(
           'csharp',
           operationId,
           Object.entries(responseBodyProperties)
         );
       }
+
+      output.push(operationOutput);
     }
 
-    return {
-      javaSnippet,
-      pythonSnippet,
-      csharpSnippet,
-      requestBody,
-      javaModel,
-      // pythonModel,
-      csharpModel,
-    };
+    return output;
   } catch (err) {
     console.error(err);
   }
