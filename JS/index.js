@@ -184,18 +184,14 @@ function getJavaOrCSharpResponseCode(language, className, properties, isRootClas
     return properties
       .map((prop) => {
         let type = prop[1].type;
-        if (type === 'integer') {
-          type = 'int';
-        } else if (type === 'string') {
-          type = 'String';
-        } else if (type === 'object') {
-          type = 'Object';
-        } else if (type === 'array') {
+        if (type === 'array') {
           type = `List<${
             prop[1].items.type !== 'string' ? capitalise(singular(prop[0])) : 'String'
           }>`;
-        } else {
+        } else if (type === undefined) {
           type = capitalise(prop[0]);
+        } else {
+          type = capitalise(type);
         }
         let variableName = prop[0];
         // 'namespace' is a C# keyword
