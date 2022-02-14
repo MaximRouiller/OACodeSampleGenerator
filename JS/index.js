@@ -143,7 +143,7 @@ function getCSharpRequestCode(
   hasBody
 ) {
   return `// ${operationId}
-    
+
 HttpClient client = new HttpClient();
 HttpRequestMessage req = new HttpRequestMessage(HttpMethod.${capitalise(
     operationType
