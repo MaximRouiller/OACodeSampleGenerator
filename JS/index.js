@@ -24,9 +24,7 @@ module.exports = async (specURL) => {
     // api = await SwaggerParser.validate(api, { dereference: { circular: 'ignore' } });
     // fs.writeFileSync('../example/endSpec.json', JSON.stringify(api, null, 2));
 
-    console.log(`API name: ${api.info.title}, Version: ${api.info.version}`);
-
-    const output = [];
+    const generated = [];
 
     for (const operation of getOperations(api)) {
       const operationId = operation.operationId;
@@ -69,10 +67,10 @@ module.exports = async (specURL) => {
         );
       }
 
-      output.push(operationOutput);
+      generated.push(operationOutput);
     }
 
-    return output;
+    return { apiInfo: api.info, generated };
   } catch (err) {
     console.error(err);
   }

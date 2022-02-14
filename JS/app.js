@@ -10,7 +10,10 @@ const generator = require('./index');
   // const singleOperation = ''; // to get snippets/models for all operations in spec
 
   try {
-    const generated = await generator(specURL);
+    const output = await generator(specURL);
+    const { apiInfo, generated } = output;
+
+    console.log(`API name: ${apiInfo.title}, Version: ${apiInfo.version}`);
 
     let javaSnippet = '';
     let pythonSnippet = '';
@@ -50,7 +53,7 @@ const generator = require('./index');
       const operation = generated.find((op) => op.operationId === singleOperation);
       fs.writeFileSync('../example/snippetsAndModels.json', JSON.stringify(operation, null, 2));
     } else {
-      fs.writeFileSync('../example/snippetsAndModels.json', JSON.stringify(generated, null, 2));
+      fs.writeFileSync('../example/snippetsAndModels.json', JSON.stringify(output, null, 2));
     }
   } catch (err) {
     console.error(err);
