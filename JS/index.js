@@ -185,8 +185,9 @@ function getJavaOrCSharpResponseCode(language, className, properties, isRootClas
       .map((prop) => {
         let type = prop[1].type;
         if (type === 'array') {
+          const items = prop[1].items;
           type = `List<${
-            prop[1].items.type !== 'string' ? capitalise(singular(prop[0])) : 'String'
+            items.properties !== undefined ? capitalise(singular(prop[0])) : capitalise(items.type)
           }>`;
         } else if (type === undefined) {
           type = capitalise(prop[0]);
