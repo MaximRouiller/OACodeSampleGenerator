@@ -1,7 +1,7 @@
-// ResourceGroups_CreateOrUpdate
+// Deployments_CreateOrUpdateAtScope
 
 HttpClient client = new HttpClient();
-HttpRequestMessage req = new HttpRequestMessage(HttpMethod.Put, "https://managemement.azure.com/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}?api-version=2021-04-01");
+HttpRequestMessage req = new HttpRequestMessage(HttpMethod.Put, "https://managemement.azure.com/{scope}/providers/Microsoft.Resources/deployments/{deploymentName}?api-version=2021-04-01");
 req.Content = new StringContent(System.IO.File.ReadAllText(@"body.json"), Encoding.UTF8, "application/json");
 
 HttpResponseMessage httpResponseMessage = await client.SendAsync(req);

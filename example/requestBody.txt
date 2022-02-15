@@ -1,9 +1,8 @@
-ResourceGroups_CreateOrUpdate - body.json:
+Deployments_CreateOrUpdateAtScope - body.json:
 
 {
-  "properties": ...,
   "location": ...,
-  "managedBy": ...,
+  "properties": ...,
   "tags": ...
 }
 

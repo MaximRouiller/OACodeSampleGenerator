@@ -56,10 +56,10 @@ module.exports = async (specURL) => {
           operationId,
           Object.entries(responseBodyProperties)
         );
-        // operationOutput.pythonModel = getPythonResponseCode(
-        //   operationId,
-        //   Object.entries(responseBodyProperties)
-        // );
+        operationOutput.pythonModel = getPythonResponseCode(
+          operationId,
+          Object.entries(responseBodyProperties)
+        );
         operationOutput.csharpModel = getJavaOrCSharpResponseCode(
           'csharp',
           operationId,
@@ -245,10 +245,67 @@ function getJavaOrCSharpResponseCode(language, className, properties, isRootClas
   }
 }
 
-// TODO: Create response deserialiser model generator for Python
-// function getPythonResponseCode(operationId, properties) {
-//   return ``;
-// }
+// Response deserialiser model generator for Python
+function getPythonResponseCode(className, properties) {
+  return `${getClasses()}${getArrayElementClasses()}\nclass ${className}:${getFields()}
+`;
+
+  function getFields() {
+    return properties
+      .map((prop) => {
+        let type = prop[1].type;
+        if (type === 'integer') {
+          defaultValue = 0;
+        } else if (type === 'string') {
+          defaultValue = '""';
+        } else if (type === 'object') {
+          defaultValue = '{}';
+        } else if (type === 'array') {
+          defaultValue = `[${
+            prop[1].items.type !== 'string' ? '_' + capitalise(singular(prop[0])) + '()' : '""'
+          }]`;
+          defaultValue = prop[1].items.type !== 'string' ? '\n\t' + capitalise(prop[0]) + ' = ' + '_' + capitalise(prop[0]) : '';
+        } else {
+          defaultValue = '_' + capitalise(prop[0]) + '()' + '\n\t' + capitalise(prop[0]) + ' = ' + '_' + capitalise(prop[0]);
+        }
+        let variableName = prop[0];
+        return `
+\t${variableName} = ${defaultValue}`;
+      })
+      .join('');
+  }
+
+  function getClasses() {
+    return properties
+      .filter((prop) => !prop[1].type)
+      .map(
+        (prop) =>
+          getPythonResponseCode(
+          '_' + capitalise(prop[0]),
+          Object.entries(prop[1].properties)
+          )
+      )
+      .join('');
+  }
+
+  function getArrayElementClasses() {
+    return properties
+      .filter(
+        (prop) =>
+          prop[1].type === 'array' &&
+          prop[1].items.properties &&
+          capitalise(singular(prop[0])) !== className // let's just say circular refs and recursion aren't a good mix
+      )
+      .map(
+        (prop) =>
+          getPythonResponseCode(
+            '_' + capitalise(singular(prop[0])),
+            Object.entries(prop[1].items.properties)
+          )
+      )
+      .join('');
+  }
+}
 
 // Utilities
 

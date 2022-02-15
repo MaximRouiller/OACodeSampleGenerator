@@ -12,8 +12,8 @@ const generator = require('./index');
   // Optionally pass in a single operation ID as a fourth command line argument -> node app url operationId
   // This will get snippets/models for just that one operation
 
-  const singleOperation = process.argv[2] ? process.argv[3] : 'ResourceGroups_CreateOrUpdate';
-  // const singleOperation = 'Deployments_CreateOrUpdateAtScope'; // this is a better one to test the model generators with
+  // const singleOperation = process.argv[2] ? process.argv[3] : 'ResourceGroups_CreateOrUpdate';
+  const singleOperation = 'Deployments_CreateOrUpdateAtScope'; // this is a better one to test the model generators with
   // const singleOperation = ''; // to get snippets/models for all operations in spec
 
   try {
@@ -29,7 +29,7 @@ const generator = require('./index');
     let requestBody = '';
 
     let javaModel = '';
-    // let pythonModel = '';
+    let pythonModel = '';
     let csharpModel = '';
 
     for (const operation of generated) {
@@ -42,7 +42,7 @@ const generator = require('./index');
       requestBody += operation.requestBody || '';
 
       javaModel += operation.javaModel || '';
-      // pythonModel += operation.pythonModel || '';
+      pythonModel += operation.pythonModel || '';
       csharpModel += operation.csharpModel || '';
     }
 
@@ -53,7 +53,7 @@ const generator = require('./index');
     fs.writeFileSync('../example/requestBody.txt', requestBody);
 
     fs.writeFileSync('../example/javaModel.java', javaModel);
-    // fs.writeFileSync('../example/pythonModel.py', pythonModel);
+    fs.writeFileSync('../example/pythonModel.py', pythonModel);
     fs.writeFileSync('../example/csharpModel.cs', csharpModel);
 
     if (singleOperation) {
