@@ -2,10 +2,17 @@ const fs = require('fs');
 const generator = require('./index');
 
 (async () => {
+  // Optionally pass in a specification URL as a third command line argument -> node app url
+  // This will get snippets/models for all operations in spec
+
   const specURL =
+    process.argv[2] ||
     'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/resources/resource-manager/Microsoft.Resources/stable/2021-04-01/resources.json';
 
-  const singleOperation = 'ResourceGroups_CreateOrUpdate';
+  // Optionally pass in a single operation ID as a fourth command line argument -> node app url operationId
+  // This will get snippets/models for just that one operation
+
+  const singleOperation = process.argv[2] ? process.argv[3] : 'ResourceGroups_CreateOrUpdate';
   // const singleOperation = 'Deployments_CreateOrUpdateAtScope'; // this is a better one to test the model generators with
   // const singleOperation = ''; // to get snippets/models for all operations in spec
 
