@@ -1,6 +1,6 @@
 import React from 'react';
-import { Link } from 'gatsby';
-import { Box, Flex, Divider } from '@chakra-ui/react';
+import { Link as GatsbyLink } from 'gatsby';
+import { Box, Flex, Divider, Link } from '@chakra-ui/react';
 
 import Layout from '../components/layout';
 
@@ -12,7 +12,9 @@ const VersionPage = ({ pageContext }) => {
       <Flex direction='column'>
         {generated.map(({ operationId }) => (
           <Box key={operationId}>
-            <Link to={`./${operationId}`}>{operationId}</Link>
+            <Link as={GatsbyLink} to={`./${operationId}`}>
+              {operationId}
+            </Link>
             <Divider my={2} />
           </Box>
         ))}
