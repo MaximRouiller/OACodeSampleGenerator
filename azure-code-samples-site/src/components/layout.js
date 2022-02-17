@@ -48,22 +48,19 @@ const Layout = ({ pageTitle, children }) => {
           <Heading fontSize={20} mb={5}>
             Services
           </Heading>
-          {services.map((service) => {
-            const { title, versions } = service;
-            return (
-              <Box key={title}>
-                <Text>{title}</Text>
-                <Flex direction='column'>
-                  {versions.map((version) => (
-                    <Link to={`/service/${title}/${version}`} key={title + version}>
-                      {version}
-                    </Link>
-                  ))}
-                </Flex>
-                <Divider my={2} />
-              </Box>
-            );
-          })}
+          {services.map(({ title, versions }) => (
+            <Box key={title}>
+              <Text>{title}</Text>
+              <Flex direction='column'>
+                {versions.map((version) => (
+                  <Link to={`/service/${title}/${version}`} key={title + version}>
+                    {version}
+                  </Link>
+                ))}
+              </Flex>
+              <Divider my={2} />
+            </Box>
+          ))}
         </Flex>
         <Flex direction='column' ml={5}>
           <Heading fontSize={20} mb={5}>

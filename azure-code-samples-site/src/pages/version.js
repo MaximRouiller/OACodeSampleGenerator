@@ -10,15 +10,12 @@ const VersionPage = ({ pageContext }) => {
   return (
     <Layout pageTitle={service + ' - ' + version}>
       <Flex direction='column'>
-        {generated.map((operation) => {
-          const operationId = operation.operationId;
-          return (
-            <Box key={operationId}>
-              <Link to={`./${operationId}`}>{operationId}</Link>
-              <Divider my={2} />
-            </Box>
-          );
-        })}
+        {generated.map(({ operationId }) => (
+          <Box key={operationId}>
+            <Link to={`./${operationId}`}>{operationId}</Link>
+            <Divider my={2} />
+          </Box>
+        ))}
       </Flex>
     </Layout>
   );
