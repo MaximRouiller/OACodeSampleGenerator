@@ -262,11 +262,15 @@ function getPythonResponseCode(className, properties) {
           defaultValue = '{}';
         } else if (type === 'array') {
           defaultValue = `[${
-            prop[1].items.type !== 'string' ? '_' + capitalise(singular(prop[0])) + '()' : '""'
-          }]`;
-          defaultValue = prop[1].items.type !== 'string' ? '\n\t' + capitalise(prop[0]) + ' = ' + '_' + capitalise(prop[0]) : '';
+            prop[1].items.type !== 'string'
+              ? `_${capitalise(singular(prop[0]))}()]
+\t${capitalise(singular(prop[0]))} = _${capitalise(singular(prop[0]))}`
+              : '""]'
+          }`;
         } else {
-          defaultValue = '_' + capitalise(prop[0]) + '()' + '\n\t' + capitalise(prop[0]) + ' = ' + '_' + capitalise(prop[0]);
+          defaultValue = `_${capitalise(prop[0])}()\n\t${capitalise(prop[0])} = _${capitalise(
+            prop[0]
+          )}`;
         }
         let variableName = prop[0];
         return `
@@ -278,12 +282,8 @@ function getPythonResponseCode(className, properties) {
   function getClasses() {
     return properties
       .filter((prop) => !prop[1].type)
-      .map(
-        (prop) =>
-          getPythonResponseCode(
-          '_' + capitalise(prop[0]),
-          Object.entries(prop[1].properties)
-          )
+      .map((prop) =>
+        getPythonResponseCode('_' + capitalise(prop[0]), Object.entries(prop[1].properties))
       )
       .join('');
   }
@@ -294,14 +294,13 @@ function getPythonResponseCode(className, properties) {
         (prop) =>
           prop[1].type === 'array' &&
           prop[1].items.properties &&
-          capitalise(singular(prop[0])) !== className // let's just say circular refs and recursion aren't a good mix
+          '_' + capitalise(singular(prop[0])) !== className // let's just say circular refs and recursion aren't a good mix
       )
-      .map(
-        (prop) =>
-          getPythonResponseCode(
-            '_' + capitalise(singular(prop[0])),
-            Object.entries(prop[1].items.properties)
-          )
+      .map((prop) =>
+        getPythonResponseCode(
+          '_' + capitalise(singular(prop[0])),
+          Object.entries(prop[1].items.properties)
+        )
       )
       .join('');
   }

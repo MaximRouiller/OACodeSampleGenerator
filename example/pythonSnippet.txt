@@ -1,11 +1,11 @@
-# Deployments_CreateOrUpdateAtScope
+# ResourceGroups_CreateOrUpdate
 
 # import requests
 
 headers = {"Content-Type": "application/json"}
 
 response = requests.put(
-  "https://managemement.azure.com/{scope}/providers/Microsoft.Resources/deployments/{deploymentName}? \
+  "https://managemement.azure.com/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}? \
   api-version=2021-04-01",
   headers=headers, files={"file": open("body.json", "r")})
 

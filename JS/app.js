@@ -12,8 +12,8 @@ const generator = require('./index');
   // Optionally pass in a single operation ID as a fourth command line argument -> node app url operationId
   // This will get snippets/models for just that one operation
 
-  // const singleOperation = process.argv[2] ? process.argv[3] : 'ResourceGroups_CreateOrUpdate';
-  const singleOperation = 'Deployments_CreateOrUpdateAtScope'; // this is a better one to test the model generators with
+  const singleOperation = process.argv[2] ? process.argv[3] : 'ResourceGroups_CreateOrUpdate';
+  // singleOperation = 'Deployments_CreateOrUpdateAtScope'; // this is a better one to test the model generators with
   // const singleOperation = ''; // to get snippets/models for all operations in spec
 
   try {
