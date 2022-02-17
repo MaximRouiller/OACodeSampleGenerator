@@ -29,7 +29,7 @@ const generator = require('./index');
     let requestBody = '';
 
     let javaModel = '';
-    // let pythonModel = '';
+    let pythonModel = '';
     let csharpModel = '';
 
     for (const operation of generated) {
@@ -42,7 +42,7 @@ const generator = require('./index');
       requestBody += operation.requestBody || '';
 
       javaModel += operation.javaModel || '';
-      // pythonModel += operation.pythonModel || '';
+      pythonModel += operation.pythonModel || '';
       csharpModel += operation.csharpModel || '';
     }
 
@@ -53,7 +53,7 @@ const generator = require('./index');
     fs.writeFileSync('../example/requestBody.txt', requestBody);
 
     fs.writeFileSync('../example/javaModel.java', javaModel);
-    // fs.writeFileSync('../example/pythonModel.py', pythonModel);
+    fs.writeFileSync('../example/pythonModel.py', pythonModel);
     fs.writeFileSync('../example/csharpModel.cs', csharpModel);
 
     if (singleOperation) {
