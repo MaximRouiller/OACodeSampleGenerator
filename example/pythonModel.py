@@ -1,4 +1,3 @@
-
 class _Properties:
 	provisioningState = ""
 
@@ -11,3 +10,4 @@ class ResourceGroups_CreateOrUpdate:
 	location = ""
 	managedBy = ""
 	tags = {}
+
