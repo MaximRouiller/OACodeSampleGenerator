@@ -13,7 +13,7 @@ const generator = require('./index');
   // This will get snippets/models for just that one operation
 
   const singleOperation = process.argv[2] ? process.argv[3] : 'ResourceGroups_CreateOrUpdate';
-  // singleOperation = 'Deployments_CreateOrUpdateAtScope'; // this is a better one to test the model generators with
+  // const singleOperation = 'Deployments_CreateOrUpdateAtScope'; // this is a better one to test the model generators with
   // const singleOperation = ''; // to get snippets/models for all operations in spec
 
   try {
