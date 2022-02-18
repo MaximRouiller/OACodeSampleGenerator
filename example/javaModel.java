@@ -1,3 +1,7 @@
+class Properties {
+  String provisioningState;
+}
+
 class ResourceGroups_CreateOrUpdate {
   String id;
   String name;
@@ -6,9 +10,5 @@ class ResourceGroups_CreateOrUpdate {
   String location;
   String managedBy;
   Object tags;
-
-  class Properties {
-    String provisioningState;
-  }
 }
 

@@ -176,9 +176,11 @@ function getJSONRequestBody(operationId, properties) {
 }
 
 // Response deserialiser model generator for both Java and C# (because these languages are very similar)
-function getJavaOrCSharpResponseCode(language, className, properties, isRootClass = true) {
-  return `class ${className} {${getFields()}${getClasses()}${getArrayElementClasses()}
-}${isRootClass ? '\n\n' : ''}`;
+function getJavaOrCSharpResponseCode(language, className, properties) {
+  return `${getClasses()}${getArrayElementClasses()}class ${className} {${getFields()}
+}
+
+`;
 
   function getFields() {
     return properties
@@ -206,17 +208,12 @@ function getJavaOrCSharpResponseCode(language, className, properties, isRootClas
   function getClasses() {
     return properties
       .filter((prop) => !prop[1].type)
-      .map(
-        (prop) =>
-          '\n\n' +
-          indentString(
-            getJavaOrCSharpResponseCode(
-              language,
-              capitalise(prop[0]),
-              Object.entries(prop[1].properties),
-              false
-            )
-          )
+      .map((prop) =>
+        getJavaOrCSharpResponseCode(
+          language,
+          capitalise(prop[0]),
+          Object.entries(prop[1].properties)
+        )
       )
       .join('');
   }
@@ -229,17 +226,12 @@ function getJavaOrCSharpResponseCode(language, className, properties, isRootClas
           prop[1].items.properties &&
           capitalise(singular(prop[0])) !== className // let's just say circular refs and recursion aren't a good mix
       )
-      .map(
-        (prop) =>
-          '\n\n' +
-          indentString(
-            getJavaOrCSharpResponseCode(
-              language,
-              capitalise(singular(prop[0])),
-              Object.entries(prop[1].items.properties),
-              false
-            )
-          )
+      .map((prop) =>
+        getJavaOrCSharpResponseCode(
+          language,
+          capitalise(singular(prop[0])),
+          Object.entries(prop[1].items.properties)
+        )
       )
       .join('');
   }
@@ -309,6 +301,3 @@ function getPythonResponseCode(className, properties) {
 // Utilities
 
 const capitalise = (s) => s.charAt(0).toUpperCase() + s.slice(1);
-
-// https://www.30secondsofcode.org/js/s/indent-string
-const indentString = (str, count = 2, indent = ' ') => str.replace(/^/gm, indent.repeat(count));
