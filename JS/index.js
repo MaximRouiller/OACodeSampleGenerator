@@ -239,7 +239,8 @@ function getJavaOrCSharpResponseCode(language, className, properties) {
 
 // Response deserialiser model generator for Python
 function getPythonResponseCode(className, properties) {
-  return `${getClasses()}${getArrayElementClasses()}class ${className}:${getFields()}\n
+  return `${getClasses()}${getArrayElementClasses()}class ${className}:${getFields()}
+
 `;
 
   function getFields() {
