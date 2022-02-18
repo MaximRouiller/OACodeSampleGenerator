@@ -21,6 +21,7 @@ exports.createPages = ({ graphql, actions }) => {
               csharpSnippet
               javaModel
               javaSnippet
+              pythonModel
               pythonSnippet
               requestBody
             }

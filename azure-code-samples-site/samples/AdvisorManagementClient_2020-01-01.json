@@ -11,6 +11,7 @@
       "pythonSnippet": "# RecommendationMetadata_Get\n\n# import requests\n\nheaders = {\"Content-Type\": \"application/json\"}\n\nresponse = requests.get(\n  \"https://managemement.azure.com/providers/Microsoft.Advisor/metadata/{name}? \\\n  api-version=2020-01-01\",\n  headers=headers)\n\nprint(response.status_code)\nprint(response.content)\n\n",
       "csharpSnippet": "// RecommendationMetadata_Get\n\nHttpClient client = new HttpClient();\nHttpRequestMessage req = new HttpRequestMessage(HttpMethod.Get, \"https://managemement.azure.com/providers/Microsoft.Advisor/metadata/{name}?api-version=2020-01-01\");\nreq.Content = new StringContent();\n\nHttpResponseMessage httpResponseMessage = await client.SendAsync(req);\nhttpResponseMessage.EnsureSuccessStatusCode();\nHttpContent httpContent = httpResponseMessage.Content;\nstring responseString = await httpContent.ReadAsStringAsync();\nstring responseStatus = httpResponseMessage.StatusCode.ToString();\nConsole.WriteLine(responseString);\nConsole.WriteLine(responseString);\n\n",
       "javaModel": "class RecommendationMetadata_Get {\n  String id;\n  String type;\n  String name;\n  Object properties;\n}\n\n",
+      "pythonModel": "class RecommendationMetadata_Get:\n\tid = \"\"\n\ttype = \"\"\n\tname = \"\"\n\tproperties = {}\n\n",
       "csharpModel": "class RecommendationMetadata_Get {\n  String id;\n  String type;\n  String name;\n  Object properties;\n}\n\n"
     },
     {
@@ -18,16 +19,18 @@
       "javaSnippet": "// RecommendationMetadata_List\n\nHttpClient client = HttpClient.newHttpClient();\n\nHttpRequest request = HttpRequest.newBuilder()\n  .uri(URI.create(\"https://managemement.azure.com/providers/Microsoft.Advisor/metadata?api-version=2020-01-01\"))\n  .header(\"Content-Type\", \"application/json\")\n  .GET()\n  .build();\n\nHttpResponse<String> response = client.send(request, BodyHandlers.ofString());\nSystem.out.println(response.statusCode());\nSystem.out.println(response.body());\n\n",
       "pythonSnippet": "# RecommendationMetadata_List\n\n# import requests\n\nheaders = {\"Content-Type\": \"application/json\"}\n\nresponse = requests.get(\n  \"https://managemement.azure.com/providers/Microsoft.Advisor/metadata? \\\n  api-version=2020-01-01\",\n  headers=headers)\n\nprint(response.status_code)\nprint(response.content)\n\n",
       "csharpSnippet": "// RecommendationMetadata_List\n\nHttpClient client = new HttpClient();\nHttpRequestMessage req = new HttpRequestMessage(HttpMethod.Get, \"https://managemement.azure.com/providers/Microsoft.Advisor/metadata?api-version=2020-01-01\");\nreq.Content = new StringContent();\n\nHttpResponseMessage httpResponseMessage = await client.SendAsync(req);\nhttpResponseMessage.EnsureSuccessStatusCode();\nHttpContent httpContent = httpResponseMessage.Content;\nstring responseString = await httpContent.ReadAsStringAsync();\nstring responseStatus = httpResponseMessage.StatusCode.ToString();\nConsole.WriteLine(responseString);\nConsole.WriteLine(responseString);\n\n",
-      "javaModel": "class RecommendationMetadata_List {\n  List<Value> value;\n  String nextLink;\n\n  class Value {\n    String id;\n    String type;\n    String name;\n    Object properties;\n  }\n}\n\n",
-      "csharpModel": "class RecommendationMetadata_List {\n  List<Value> value;\n  String nextLink;\n\n  class Value {\n    String id;\n    String type;\n    String name;\n    Object properties;\n  }\n}\n\n"
+      "javaModel": "class Value {\n  String id;\n  String type;\n  String name;\n  Object properties;\n}\n\nclass RecommendationMetadata_List {\n  List<Value> value;\n  String nextLink;\n}\n\n",
+      "pythonModel": "class _Value:\n\tid = \"\"\n\ttype = \"\"\n\tname = \"\"\n\tproperties = {}\n\nclass RecommendationMetadata_List:\n\tvalue = [_Value()]\n\tValue = _Value\n\tnextLink = \"\"\n\n",
+      "csharpModel": "class Value {\n  String id;\n  String type;\n  String name;\n  Object properties;\n}\n\nclass RecommendationMetadata_List {\n  List<Value> value;\n  String nextLink;\n}\n\n"
     },
     {
       "operationId": "Configurations_ListBySubscription",
       "javaSnippet": "// Configurations_ListBySubscription\n\nHttpClient client = HttpClient.newHttpClient();\n\nHttpRequest request = HttpRequest.newBuilder()\n  .uri(URI.create(\"https://managemement.azure.com/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/configurations?api-version=2020-01-01\"))\n  .header(\"Content-Type\", \"application/json\")\n  .GET()\n  .build();\n\nHttpResponse<String> response = client.send(request, BodyHandlers.ofString());\nSystem.out.println(response.statusCode());\nSystem.out.println(response.body());\n\n",
       "pythonSnippet": "# Configurations_ListBySubscription\n\n# import requests\n\nheaders = {\"Content-Type\": \"application/json\"}\n\nresponse = requests.get(\n  \"https://managemement.azure.com/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/configurations? \\\n  api-version=2020-01-01\",\n  headers=headers)\n\nprint(response.status_code)\nprint(response.content)\n\n",
       "csharpSnippet": "// Configurations_ListBySubscription\n\nHttpClient client = new HttpClient();\nHttpRequestMessage req = new HttpRequestMessage(HttpMethod.Get, \"https://managemement.azure.com/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/configurations?api-version=2020-01-01\");\nreq.Content = new StringContent();\n\nHttpResponseMessage httpResponseMessage = await client.SendAsync(req);\nhttpResponseMessage.EnsureSuccessStatusCode();\nHttpContent httpContent = httpResponseMessage.Content;\nstring responseString = await httpContent.ReadAsStringAsync();\nstring responseStatus = httpResponseMessage.StatusCode.ToString();\nConsole.WriteLine(responseString);\nConsole.WriteLine(responseString);\n\n",
-      "javaModel": "class Configurations_ListBySubscription {\n  List<Value> value;\n  String nextLink;\n\n  class Value {\n    Object properties;\n  }\n}\n\n",
-      "csharpModel": "class Configurations_ListBySubscription {\n  List<Value> value;\n  String nextLink;\n\n  class Value {\n    Object properties;\n  }\n}\n\n"
+      "javaModel": "class Value {\n  Object properties;\n}\n\nclass Configurations_ListBySubscription {\n  List<Value> value;\n  String nextLink;\n}\n\n",
+      "pythonModel": "class _Value:\n\tproperties = {}\n\nclass Configurations_ListBySubscription:\n\tvalue = [_Value()]\n\tValue = _Value\n\tnextLink = \"\"\n\n",
+      "csharpModel": "class Value {\n  Object properties;\n}\n\nclass Configurations_ListBySubscription {\n  List<Value> value;\n  String nextLink;\n}\n\n"
     },
     {
       "operationId": "Configurations_CreateInSubscription",
@@ -36,6 +39,7 @@
       "csharpSnippet": "// Configurations_CreateInSubscription\n\nHttpClient client = new HttpClient();\nHttpRequestMessage req = new HttpRequestMessage(HttpMethod.Put, \"https://managemement.azure.com/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/configurations/{configurationName}?api-version=2020-01-01\");\nreq.Content = new StringContent(System.IO.File.ReadAllText(@\"body.json\"), Encoding.UTF8, \"application/json\");\n\nHttpResponseMessage httpResponseMessage = await client.SendAsync(req);\nhttpResponseMessage.EnsureSuccessStatusCode();\nHttpContent httpContent = httpResponseMessage.Content;\nstring responseString = await httpContent.ReadAsStringAsync();\nstring responseStatus = httpResponseMessage.StatusCode.ToString();\nConsole.WriteLine(responseString);\nConsole.WriteLine(responseString);\n\n",
       "requestBody": "Configurations_CreateInSubscription - body.json:\n\n{\n  \"properties\": ...\n}\n\n",
       "javaModel": "class Configurations_CreateInSubscription {\n  Object properties;\n}\n\n",
+      "pythonModel": "class Configurations_CreateInSubscription:\n\tproperties = {}\n\n",
       "csharpModel": "class Configurations_CreateInSubscription {\n  Object properties;\n}\n\n"
     },
     {
@@ -43,8 +47,9 @@
       "javaSnippet": "// Configurations_ListByResourceGroup\n\nHttpClient client = HttpClient.newHttpClient();\n\nHttpRequest request = HttpRequest.newBuilder()\n  .uri(URI.create(\"https://managemement.azure.com/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Advisor/configurations?api-version=2020-01-01\"))\n  .header(\"Content-Type\", \"application/json\")\n  .GET()\n  .build();\n\nHttpResponse<String> response = client.send(request, BodyHandlers.ofString());\nSystem.out.println(response.statusCode());\nSystem.out.println(response.body());\n\n",
       "pythonSnippet": "# Configurations_ListByResourceGroup\n\n# import requests\n\nheaders = {\"Content-Type\": \"application/json\"}\n\nresponse = requests.get(\n  \"https://managemement.azure.com/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Advisor/configurations? \\\n  api-version=2020-01-01\",\n  headers=headers)\n\nprint(response.status_code)\nprint(response.content)\n\n",
       "csharpSnippet": "// Configurations_ListByResourceGroup\n\nHttpClient client = new HttpClient();\nHttpRequestMessage req = new HttpRequestMessage(HttpMethod.Get, \"https://managemement.azure.com/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Advisor/configurations?api-version=2020-01-01\");\nreq.Content = new StringContent();\n\nHttpResponseMessage httpResponseMessage = await client.SendAsync(req);\nhttpResponseMessage.EnsureSuccessStatusCode();\nHttpContent httpContent = httpResponseMessage.Content;\nstring responseString = await httpContent.ReadAsStringAsync();\nstring responseStatus = httpResponseMessage.StatusCode.ToString();\nConsole.WriteLine(responseString);\nConsole.WriteLine(responseString);\n\n",
-      "javaModel": "class Configurations_ListByResourceGroup {\n  List<Value> value;\n  String nextLink;\n\n  class Value {\n    Object properties;\n  }\n}\n\n",
-      "csharpModel": "class Configurations_ListByResourceGroup {\n  List<Value> value;\n  String nextLink;\n\n  class Value {\n    Object properties;\n  }\n}\n\n"
+      "javaModel": "class Value {\n  Object properties;\n}\n\nclass Configurations_ListByResourceGroup {\n  List<Value> value;\n  String nextLink;\n}\n\n",
+      "pythonModel": "class _Value:\n\tproperties = {}\n\nclass Configurations_ListByResourceGroup:\n\tvalue = [_Value()]\n\tValue = _Value\n\tnextLink = \"\"\n\n",
+      "csharpModel": "class Value {\n  Object properties;\n}\n\nclass Configurations_ListByResourceGroup {\n  List<Value> value;\n  String nextLink;\n}\n\n"
     },
     {
       "operationId": "Configurations_CreateInResourceGroup",
@@ -53,6 +58,7 @@
       "csharpSnippet": "// Configurations_CreateInResourceGroup\n\nHttpClient client = new HttpClient();\nHttpRequestMessage req = new HttpRequestMessage(HttpMethod.Put, \"https://managemement.azure.com/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Advisor/configurations/{configurationName}?api-version=2020-01-01\");\nreq.Content = new StringContent(System.IO.File.ReadAllText(@\"body.json\"), Encoding.UTF8, \"application/json\");\n\nHttpResponseMessage httpResponseMessage = await client.SendAsync(req);\nhttpResponseMessage.EnsureSuccessStatusCode();\nHttpContent httpContent = httpResponseMessage.Content;\nstring responseString = await httpContent.ReadAsStringAsync();\nstring responseStatus = httpResponseMessage.StatusCode.ToString();\nConsole.WriteLine(responseString);\nConsole.WriteLine(responseString);\n\n",
       "requestBody": "Configurations_CreateInResourceGroup - body.json:\n\n{\n  \"properties\": ...\n}\n\n",
       "javaModel": "class Configurations_CreateInResourceGroup {\n  Object properties;\n}\n\n",
+      "pythonModel": "class Configurations_CreateInResourceGroup:\n\tproperties = {}\n\n",
       "csharpModel": "class Configurations_CreateInResourceGroup {\n  Object properties;\n}\n\n"
     },
     {
@@ -72,16 +78,18 @@
       "javaSnippet": "// Recommendations_List\n\nHttpClient client = HttpClient.newHttpClient();\n\nHttpRequest request = HttpRequest.newBuilder()\n  .uri(URI.create(\"https://managemement.azure.com/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/recommendations?api-version=2020-01-01\"))\n  .header(\"Content-Type\", \"application/json\")\n  .GET()\n  .build();\n\nHttpResponse<String> response = client.send(request, BodyHandlers.ofString());\nSystem.out.println(response.statusCode());\nSystem.out.println(response.body());\n\n",
       "pythonSnippet": "# Recommendations_List\n\n# import requests\n\nheaders = {\"Content-Type\": \"application/json\"}\n\nresponse = requests.get(\n  \"https://managemement.azure.com/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/recommendations? \\\n  api-version=2020-01-01\",\n  headers=headers)\n\nprint(response.status_code)\nprint(response.content)\n\n",
       "csharpSnippet": "// Recommendations_List\n\nHttpClient client = new HttpClient();\nHttpRequestMessage req = new HttpRequestMessage(HttpMethod.Get, \"https://managemement.azure.com/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/recommendations?api-version=2020-01-01\");\nreq.Content = new StringContent();\n\nHttpResponseMessage httpResponseMessage = await client.SendAsync(req);\nhttpResponseMessage.EnsureSuccessStatusCode();\nHttpContent httpContent = httpResponseMessage.Content;\nstring responseString = await httpContent.ReadAsStringAsync();\nstring responseStatus = httpResponseMessage.StatusCode.ToString();\nConsole.WriteLine(responseString);\nConsole.WriteLine(responseString);\n\n",
-      "javaModel": "class Recommendations_List {\n  String nextLink;\n  List<Value> value;\n\n  class Value {\n    Object properties;\n  }\n}\n\n",
-      "csharpModel": "class Recommendations_List {\n  String nextLink;\n  List<Value> value;\n\n  class Value {\n    Object properties;\n  }\n}\n\n"
+      "javaModel": "class Value {\n  Object properties;\n}\n\nclass Recommendations_List {\n  String nextLink;\n  List<Value> value;\n}\n\n",
+      "pythonModel": "class _Value:\n\tproperties = {}\n\nclass Recommendations_List:\n\tnextLink = \"\"\n\tvalue = [_Value()]\n\tValue = _Value\n\n",
+      "csharpModel": "class Value {\n  Object properties;\n}\n\nclass Recommendations_List {\n  String nextLink;\n  List<Value> value;\n}\n\n"
     },
     {
       "operationId": "Operations_List",
       "javaSnippet": "// Operations_List\n\nHttpClient client = HttpClient.newHttpClient();\n\nHttpRequest request = HttpRequest.newBuilder()\n  .uri(URI.create(\"https://managemement.azure.com/providers/Microsoft.Advisor/operations?api-version=2020-01-01\"))\n  .header(\"Content-Type\", \"application/json\")\n  .GET()\n  .build();\n\nHttpResponse<String> response = client.send(request, BodyHandlers.ofString());\nSystem.out.println(response.statusCode());\nSystem.out.println(response.body());\n\n",
       "pythonSnippet": "# Operations_List\n\n# import requests\n\nheaders = {\"Content-Type\": \"application/json\"}\n\nresponse = requests.get(\n  \"https://managemement.azure.com/providers/Microsoft.Advisor/operations? \\\n  api-version=2020-01-01\",\n  headers=headers)\n\nprint(response.status_code)\nprint(response.content)\n\n",
       "csharpSnippet": "// Operations_List\n\nHttpClient client = new HttpClient();\nHttpRequestMessage req = new HttpRequestMessage(HttpMethod.Get, \"https://managemement.azure.com/providers/Microsoft.Advisor/operations?api-version=2020-01-01\");\nreq.Content = new StringContent();\n\nHttpResponseMessage httpResponseMessage = await client.SendAsync(req);\nhttpResponseMessage.EnsureSuccessStatusCode();\nHttpContent httpContent = httpResponseMessage.Content;\nstring responseString = await httpContent.ReadAsStringAsync();\nstring responseStatus = httpResponseMessage.StatusCode.ToString();\nConsole.WriteLine(responseString);\nConsole.WriteLine(responseString);\n\n",
-      "javaModel": "class Operations_List {\n  String nextLink;\n  List<Value> value;\n\n  class Value {\n    String name;\n    Object display;\n  }\n}\n\n",
-      "csharpModel": "class Operations_List {\n  String nextLink;\n  List<Value> value;\n\n  class Value {\n    String name;\n    Object display;\n  }\n}\n\n"
+      "javaModel": "class Value {\n  String name;\n  Object display;\n}\n\nclass Operations_List {\n  String nextLink;\n  List<Value> value;\n}\n\n",
+      "pythonModel": "class _Value:\n\tname = \"\"\n\tdisplay = {}\n\nclass Operations_List:\n\tnextLink = \"\"\n\tvalue = [_Value()]\n\tValue = _Value\n\n",
+      "csharpModel": "class Value {\n  String name;\n  Object display;\n}\n\nclass Operations_List {\n  String nextLink;\n  List<Value> value;\n}\n\n"
     },
     {
       "operationId": "Recommendations_Get",
@@ -89,6 +97,7 @@
       "pythonSnippet": "# Recommendations_Get\n\n# import requests\n\nheaders = {\"Content-Type\": \"application/json\"}\n\nresponse = requests.get(\n  \"https://managemement.azure.com/{resourceUri}/providers/Microsoft.Advisor/recommendations/{recommendationId}? \\\n  api-version=2020-01-01\",\n  headers=headers)\n\nprint(response.status_code)\nprint(response.content)\n\n",
       "csharpSnippet": "// Recommendations_Get\n\nHttpClient client = new HttpClient();\nHttpRequestMessage req = new HttpRequestMessage(HttpMethod.Get, \"https://managemement.azure.com/{resourceUri}/providers/Microsoft.Advisor/recommendations/{recommendationId}?api-version=2020-01-01\");\nreq.Content = new StringContent();\n\nHttpResponseMessage httpResponseMessage = await client.SendAsync(req);\nhttpResponseMessage.EnsureSuccessStatusCode();\nHttpContent httpContent = httpResponseMessage.Content;\nstring responseString = await httpContent.ReadAsStringAsync();\nstring responseStatus = httpResponseMessage.StatusCode.ToString();\nConsole.WriteLine(responseString);\nConsole.WriteLine(responseString);\n\n",
       "javaModel": "class Recommendations_Get {\n  Object properties;\n}\n\n",
+      "pythonModel": "class Recommendations_Get:\n\tproperties = {}\n\n",
       "csharpModel": "class Recommendations_Get {\n  Object properties;\n}\n\n"
     },
     {
@@ -97,6 +106,7 @@
       "pythonSnippet": "# Suppressions_Get\n\n# import requests\n\nheaders = {\"Content-Type\": \"application/json\"}\n\nresponse = requests.get(\n  \"https://managemement.azure.com/{resourceUri}/providers/Microsoft.Advisor/recommendations/{recommendationId}/suppressions/{name}? \\\n  api-version=2020-01-01\",\n  headers=headers)\n\nprint(response.status_code)\nprint(response.content)\n\n",
       "csharpSnippet": "// Suppressions_Get\n\nHttpClient client = new HttpClient();\nHttpRequestMessage req = new HttpRequestMessage(HttpMethod.Get, \"https://managemement.azure.com/{resourceUri}/providers/Microsoft.Advisor/recommendations/{recommendationId}/suppressions/{name}?api-version=2020-01-01\");\nreq.Content = new StringContent();\n\nHttpResponseMessage httpResponseMessage = await client.SendAsync(req);\nhttpResponseMessage.EnsureSuccessStatusCode();\nHttpContent httpContent = httpResponseMessage.Content;\nstring responseString = await httpContent.ReadAsStringAsync();\nstring responseStatus = httpResponseMessage.StatusCode.ToString();\nConsole.WriteLine(responseString);\nConsole.WriteLine(responseString);\n\n",
       "javaModel": "class Suppressions_Get {\n  Object properties;\n}\n\n",
+      "pythonModel": "class Suppressions_Get:\n\tproperties = {}\n\n",
       "csharpModel": "class Suppressions_Get {\n  Object properties;\n}\n\n"
     },
     {
@@ -106,6 +116,7 @@
       "csharpSnippet": "// Suppressions_Create\n\nHttpClient client = new HttpClient();\nHttpRequestMessage req = new HttpRequestMessage(HttpMethod.Put, \"https://managemement.azure.com/{resourceUri}/providers/Microsoft.Advisor/recommendations/{recommendationId}/suppressions/{name}?api-version=2020-01-01\");\nreq.Content = new StringContent(System.IO.File.ReadAllText(@\"body.json\"), Encoding.UTF8, \"application/json\");\n\nHttpResponseMessage httpResponseMessage = await client.SendAsync(req);\nhttpResponseMessage.EnsureSuccessStatusCode();\nHttpContent httpContent = httpResponseMessage.Content;\nstring responseString = await httpContent.ReadAsStringAsync();\nstring responseStatus = httpResponseMessage.StatusCode.ToString();\nConsole.WriteLine(responseString);\nConsole.WriteLine(responseString);\n\n",
       "requestBody": "Suppressions_Create - body.json:\n\n{\n  \"properties\": ...\n}\n\n",
       "javaModel": "class Suppressions_Create {\n  Object properties;\n}\n\n",
+      "pythonModel": "class Suppressions_Create:\n\tproperties = {}\n\n",
       "csharpModel": "class Suppressions_Create {\n  Object properties;\n}\n\n"
     },
     {
@@ -119,8 +130,9 @@
       "javaSnippet": "// Suppressions_List\n\nHttpClient client = HttpClient.newHttpClient();\n\nHttpRequest request = HttpRequest.newBuilder()\n  .uri(URI.create(\"https://managemement.azure.com/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/suppressions?api-version=2020-01-01\"))\n  .header(\"Content-Type\", \"application/json\")\n  .GET()\n  .build();\n\nHttpResponse<String> response = client.send(request, BodyHandlers.ofString());\nSystem.out.println(response.statusCode());\nSystem.out.println(response.body());\n\n",
       "pythonSnippet": "# Suppressions_List\n\n# import requests\n\nheaders = {\"Content-Type\": \"application/json\"}\n\nresponse = requests.get(\n  \"https://managemement.azure.com/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/suppressions? \\\n  api-version=2020-01-01\",\n  headers=headers)\n\nprint(response.status_code)\nprint(response.content)\n\n",
       "csharpSnippet": "// Suppressions_List\n\nHttpClient client = new HttpClient();\nHttpRequestMessage req = new HttpRequestMessage(HttpMethod.Get, \"https://managemement.azure.com/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/suppressions?api-version=2020-01-01\");\nreq.Content = new StringContent();\n\nHttpResponseMessage httpResponseMessage = await client.SendAsync(req);\nhttpResponseMessage.EnsureSuccessStatusCode();\nHttpContent httpContent = httpResponseMessage.Content;\nstring responseString = await httpContent.ReadAsStringAsync();\nstring responseStatus = httpResponseMessage.StatusCode.ToString();\nConsole.WriteLine(responseString);\nConsole.WriteLine(responseString);\n\n",
-      "javaModel": "class Suppressions_List {\n  String nextLink;\n  List<Value> value;\n\n  class Value {\n    Object properties;\n  }\n}\n\n",
-      "csharpModel": "class Suppressions_List {\n  String nextLink;\n  List<Value> value;\n\n  class Value {\n    Object properties;\n  }\n}\n\n"
+      "javaModel": "class Value {\n  Object properties;\n}\n\nclass Suppressions_List {\n  String nextLink;\n  List<Value> value;\n}\n\n",
+      "pythonModel": "class _Value:\n\tproperties = {}\n\nclass Suppressions_List:\n\tnextLink = \"\"\n\tvalue = [_Value()]\n\tValue = _Value\n\n",
+      "csharpModel": "class Value {\n  Object properties;\n}\n\nclass Suppressions_List {\n  String nextLink;\n  List<Value> value;\n}\n\n"
     }
   ]
 }
