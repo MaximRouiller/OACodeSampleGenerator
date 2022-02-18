@@ -61,6 +61,11 @@ const generator = require('./index');
       fs.writeFileSync('../example/snippetsAndModels.json', JSON.stringify(operation, null, 2));
     } else {
       fs.writeFileSync('../example/snippetsAndModels.json', JSON.stringify(output, null, 2));
+      
+      fs.writeFileSync(
+        `../azure-code-samples-site/samples/${apiInfo.title}_${apiInfo.version}.json`,
+        JSON.stringify(output, null, 2)
+      );
     }
   } catch (err) {
     console.error(err);
