@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Flex, Heading, Button } from '@chakra-ui/react';
+import { Box, Flex, Heading, Button } from '@chakra-ui/react';
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
@@ -82,14 +82,14 @@ const SamplePanel = ({ sample }) => {
   };
 
   return (
-    <>
+    <Box w='64rem'>
       <CopyToClipboard text={sample} onCopy={onCopy}>
-        <Button size='sm' colorScheme='blue' mt={2} mb={5}>
+        <Button size='sm' colorScheme='blue' position='absolute' left='76rem'>
           {showCopied ? 'Copied' : 'Copy'}
         </Button>
       </CopyToClipboard>
-      <pre>{sample}</pre>
-    </>
+      <pre style={{ whiteSpace: 'pre-wrap' }}>{sample}</pre>
+    </Box>
   );
 };
 
