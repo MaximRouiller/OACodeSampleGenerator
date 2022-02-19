@@ -2,7 +2,7 @@ const fs = require('fs');
 const generator = require('./index');
 
 (async () => {
-  // Pass in a specification URL as a third command line argument -> node app url
+  // Pass in a specification URL as a third command line argument -> node writeSiteSample url
 
   try {
     const output = await generator(process.argv[2]);
