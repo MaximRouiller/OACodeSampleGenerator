@@ -82,12 +82,14 @@ const SamplePanel = ({ sample }) => {
   };
 
   return (
-    <Box w='64rem'>
-      <CopyToClipboard text={sample} onCopy={onCopy}>
-        <Button size='sm' colorScheme='blue' position='absolute' left='76rem'>
-          {showCopied ? 'Copied' : 'Copy'}
-        </Button>
-      </CopyToClipboard>
+    <Box position='relative' w='50rem'>
+      {sample && (
+        <CopyToClipboard text={sample} onCopy={onCopy}>
+          <Button size='sm' colorScheme='blue' position='absolute' right={0}>
+            {showCopied ? 'Copied' : 'Copy'}
+          </Button>
+        </CopyToClipboard>
+      )}
       <pre style={{ whiteSpace: 'pre-wrap' }}>{sample}</pre>
     </Box>
   );
