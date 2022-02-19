@@ -1,6 +1,7 @@
-import React from 'react';
-import { Flex, Heading } from '@chakra-ui/react';
+import React, { useState } from 'react';
+import { Flex, Heading, Button } from '@chakra-ui/react';
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 import Layout from '../components/layout';
 
@@ -21,13 +22,13 @@ const OperationPage = ({ pageContext }) => {
           </TabList>
           <TabPanels>
             <TabPanel>
-              <pre>{operation.javaSnippet}</pre>
+              <SamplePanel sample={operation.javaSnippet} />
             </TabPanel>
             <TabPanel>
-              <pre>{operation.pythonSnippet}</pre>
+              <SamplePanel sample={operation.pythonSnippet} />
             </TabPanel>
             <TabPanel>
-              <pre>{operation.csharpSnippet}</pre>
+              <SamplePanel sample={operation.csharpSnippet} />
             </TabPanel>
           </TabPanels>
         </Tabs>
@@ -41,7 +42,7 @@ const OperationPage = ({ pageContext }) => {
           </TabList>
           <TabPanels>
             <TabPanel>
-              <pre>{operation.requestBody}</pre>
+              <SamplePanel sample={operation.requestBody} />
             </TabPanel>
           </TabPanels>
         </Tabs>
@@ -57,18 +58,38 @@ const OperationPage = ({ pageContext }) => {
           </TabList>
           <TabPanels>
             <TabPanel>
-              <pre>{operation.javaModel}</pre>
+              <SamplePanel sample={operation.javaModel} />
             </TabPanel>
             <TabPanel>
-              <pre>{operation.pythonModel}</pre>
+              <SamplePanel sample={operation.pythonModel} />
             </TabPanel>
             <TabPanel>
-              <pre>{operation.csharpModel}</pre>
+              <SamplePanel sample={operation.csharpModel} />
             </TabPanel>
           </TabPanels>
         </Tabs>
       </Flex>
     </Layout>
+  );
+};
+
+const SamplePanel = ({ sample }) => {
+  const [showCopied, setShowCopied] = useState(false);
+
+  const onCopy = () => {
+    setShowCopied(true);
+    setTimeout(() => setShowCopied(false), 2000);
+  };
+
+  return (
+    <>
+      <CopyToClipboard text={sample} onCopy={onCopy}>
+        <Button size='sm' colorScheme='blue' mt={2} mb={5}>
+          {showCopied ? 'Copied' : 'Copy'}
+        </Button>
+      </CopyToClipboard>
+      <pre>{sample}</pre>
+    </>
   );
 };
 
