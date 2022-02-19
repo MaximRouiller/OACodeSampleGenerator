@@ -36,7 +36,7 @@ const Layout = ({ pageTitle, children }) => {
   }
 
   return (
-    <Box m={5}>
+    <Box m='auto' w='fit-content' p={5}>
       <title>
         {pageTitle} | {data.site.siteMetadata.title}
       </title>
@@ -62,7 +62,7 @@ const Layout = ({ pageTitle, children }) => {
             </Box>
           ))}
         </Flex>
-        <Flex direction='column' ml={5}>
+        <Flex direction='column' ml={5} w='50rem'>
           <Heading fontSize={20} mb={5}>
             {pageTitle}
           </Heading>

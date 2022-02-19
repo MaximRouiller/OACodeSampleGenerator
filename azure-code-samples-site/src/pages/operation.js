@@ -82,7 +82,7 @@ const SamplePanel = ({ sample }) => {
   };
 
   return (
-    <Box position='relative' w='50rem'>
+    <Box position='relative'>
       {sample && (
         <CopyToClipboard text={sample} onCopy={onCopy}>
           <Button size='sm' colorScheme='blue' position='absolute' right={0}>
