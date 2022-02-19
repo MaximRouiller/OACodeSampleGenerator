@@ -44,7 +44,7 @@ const Layout = ({ pageTitle, children }) => {
         <Heading fontSize={25}>Azure REST API Code Samples</Heading>
       </GatsbyLink>
       <Flex mt={5}>
-        <Flex direction='column' width='fit-content'>
+        <Flex direction='column'>
           <Heading fontSize={20} mb={5}>
             Services
           </Heading>
