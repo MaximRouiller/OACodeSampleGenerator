@@ -1,5 +1,5 @@
 const fs = require('fs');
-const generator = require('./index');
+const generator = require('../JS/index');
 
 (async () => {
   // Pass in a specification URL as a third command line argument -> node writeSiteSample url
