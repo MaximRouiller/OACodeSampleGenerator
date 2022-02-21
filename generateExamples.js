@@ -1,5 +1,5 @@
 const fs = require('fs');
-const generator = require('./index');
+const generator = require('.');
 
 (async () => {
   // Optionally pass in a specification URL as a third command line argument -> node app url
@@ -46,22 +46,22 @@ const generator = require('./index');
       csharpModel += operation.csharpModel || '';
     }
 
-    fs.writeFileSync('../example/javaSnippet.txt', javaSnippet);
-    fs.writeFileSync('../example/pythonSnippet.txt', pythonSnippet);
-    fs.writeFileSync('../example/csharpSnippet.txt', csharpSnippet);
+    fs.writeFileSync('./example/javaSnippet.txt', javaSnippet);
+    fs.writeFileSync('./example/pythonSnippet.txt', pythonSnippet);
+    fs.writeFileSync('./example/csharpSnippet.txt', csharpSnippet);
 
-    fs.writeFileSync('../example/requestBody.txt', requestBody);
+    fs.writeFileSync('./example/requestBody.txt', requestBody);
 
-    fs.writeFileSync('../example/javaModel.java', javaModel);
-    fs.writeFileSync('../example/pythonModel.py', pythonModel);
-    fs.writeFileSync('../example/csharpModel.cs', csharpModel);
+    fs.writeFileSync('./example/javaModel.java', javaModel);
+    fs.writeFileSync('./example/pythonModel.py', pythonModel);
+    fs.writeFileSync('./example/csharpModel.cs', csharpModel);
 
     if (singleOperation) {
       const operation = generated.find((op) => op.operationId === singleOperation);
-      fs.writeFileSync('../example/snippetsAndModels.json', JSON.stringify(operation, null, 2));
-    } else {
-      fs.writeFileSync('../example/snippetsAndModels.json', JSON.stringify(output, null, 2));
+      fs.writeFileSync('./example/samples.json', JSON.stringify(operation, null, 2));
     }
+
+    fs.writeFileSync('./example/output.json', JSON.stringify(output, null, 2));
   } catch (err) {
     console.error(err);
   }

@@ -1,4 +1,0 @@
-test.js shows the usage of swagger2openapi in NodeJS
-
-traverse.js attempts to do the convertion for all JSON files in azure specifications but currently limits to resources.json files only due to the limitination of swagger2openai.
-It also cannot resolve some external refs and internal refs now due to the limination of swagger2openai.

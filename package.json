@@ -7,7 +7,7 @@
     "test": "test"
   },
   "scripts": {
-    "start": "node JS/app.js",
+    "generateExamples": "node generateExamples.js",
     "test": "mocha"
   },
   "repository": {

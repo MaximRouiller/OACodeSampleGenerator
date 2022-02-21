@@ -7,11 +7,11 @@ module.exports = async (specURL) => {
   try {
     // Bundle
     let api = await SwaggerParser.bundle(specURL);
-    // fs.writeFileSync('../example/bundledSpec.json', JSON.stringify(api, null, 2));
+    // fs.writeFileSync('./processed-specifications/bundledSpec.json', JSON.stringify(api, null, 2));
 
     // Convert
     api = (await converter.convertObj(api, {})).openapi;
-    // fs.writeFileSync('../example/convertedSpec.json', JSON.stringify(api, null, 2));
+    // fs.writeFileSync('./processed-specifications/convertedSpec.json', JSON.stringify(api, null, 2));
 
     // Validate and dereference ('validate' calls 'dereference' internally)
     // https://apitools.dev/swagger-parser/docs/swagger-parser.html#validateapi-options-callback
@@ -22,7 +22,7 @@ module.exports = async (specURL) => {
     // reduce the number of operations whose responses are able to be deserialised with the model
     // generators later on, so only use this version if you need to more easily inspect the JSON.
     // api = await SwaggerParser.validate(api, { dereference: { circular: 'ignore' } });
-    // fs.writeFileSync('../example/endSpec.json', JSON.stringify(api, null, 2));
+    // fs.writeFileSync('./processed-specifications/endSpec.json', JSON.stringify(api, null, 2));
 
     const generated = [];
 
@@ -78,7 +78,7 @@ module.exports = async (specURL) => {
 
 // Split spec into operations
 function getOperations(spec) {
-  let operations = [];
+  const operations = [];
   for (const [operationGroupPath, operationGroup] of Object.entries(spec.paths)) {
     for (const [operationType, operation] of Object.entries(operationGroup)) {
       operations.push({ operationGroupPath, operationType, ...operation });
