@@ -59,6 +59,8 @@ const generator = require('.');
     if (singleOperation) {
       const operation = generated.find((op) => op.operationId === singleOperation);
       fs.writeFileSync('./example/samples.json', JSON.stringify(operation, null, 2));
+    } else {
+      fs.writeFileSync('./example/samples.json', JSON.stringify(generated, null, 2));
     }
 
     fs.writeFileSync('./example/output.json', JSON.stringify(output, null, 2));
