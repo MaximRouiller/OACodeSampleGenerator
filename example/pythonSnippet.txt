@@ -5,8 +5,7 @@
 headers = {"Content-Type": "application/json"}
 
 response = requests.put(
-  "https://managemement.azure.com/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}? \
-  api-version=2021-04-01",
+  "https://managemement.azure.com/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}?api-version=2021-04-01",
   headers=headers, files={"file": open("body.json", "r")})
 
 print(response.status_code)

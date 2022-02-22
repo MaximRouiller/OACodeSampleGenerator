@@ -125,8 +125,7 @@ function getPythonRequestCode(
 headers = {"Content-Type": "application/json"}
 
 response = requests.${operationType}(
-  "https://managemement.azure.com${operationGroupPath}? \\
-  api-version=${apiVersion}",
+  "https://managemement.azure.com${operationGroupPath}?api-version=${apiVersion}",
   headers=headers${hasBody ? ', files={"file": open("body.json", "r")}' : ''})
 
 print(response.status_code)
