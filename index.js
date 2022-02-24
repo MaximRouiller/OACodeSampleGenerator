@@ -157,7 +157,7 @@ HttpContent httpContent = httpResponseMessage.Content;
 string responseString = await httpContent.ReadAsStringAsync();
 string responseStatus = httpResponseMessage.StatusCode.ToString();
 Console.WriteLine(responseString);
-Console.WriteLine(responseString);
+Console.WriteLine(responseStatus);
 
 `;
 }
