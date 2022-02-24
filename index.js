@@ -1,6 +1,7 @@
 const SwaggerParser = require('@apidevtools/swagger-parser');
 const converter = require('swagger2openapi');
 const { singular } = require('pluralize');
+const path = require('path');
 // const fs = require('fs');
 
 module.exports = async (spec) => {
@@ -70,7 +71,7 @@ module.exports = async (spec) => {
       generated.push(operationOutput);
     }
 
-    return { apiInfo: api.info, generated };
+    return { apiInfo: api.info, specName: path.basename(spec).split('.')[0], generated };
   } catch (err) {
     console.error(err);
   }

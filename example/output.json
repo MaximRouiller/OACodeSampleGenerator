@@ -4,6 +4,7 @@
     "version": "2021-04-01",
     "description": "Provides operations for working with resources and resource groups."
   },
+  "specName": "resources",
   "generated": [
     {
       "operationId": "Operations_List",
