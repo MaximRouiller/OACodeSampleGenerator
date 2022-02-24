@@ -7,7 +7,7 @@
     "test": "test"
   },
   "scripts": {
-    "generateExeamples": "node generateExamples.js",
+    "generateExamples": "node generateExamples.js",
     "test": "mocha"
   },
   "repository": {

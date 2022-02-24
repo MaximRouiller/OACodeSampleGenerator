@@ -30,4 +30,8 @@ describe('Tests for deserialised models', function () {
   it('Test for C# response model', function () {});
 });
 
-describe('Tests for utility functions', function () {});
+describe('Tests for utility functions', function () {
+    it('Test for capitalise utility', function() {
+        expect(index.capitalise("post")).to.equal("Post");
+    })
+});

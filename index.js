@@ -301,7 +301,6 @@ function getPythonResponseCode(className, properties) {
 // Utilities
 
 const capitalise = (s) => s.charAt(0).toUpperCase() + s.slice(1);
-
 //exports 
 
 exports.getJavaRequestCode = getJavaRequestCode;
