@@ -4,6 +4,12 @@ const { singular } = require('pluralize');
 const path = require('path');
 // const fs = require('fs');
 
+/**
+ * The main generator function which is the default export of this module
+ *
+ * @param {string} spec - The file path or url of the Swagger/OpenAPI specification
+ * @returns {object} - The generated output, with API information and the specification file name.
+ */
 module.exports = async (spec) => {
   try {
     // Bundle
