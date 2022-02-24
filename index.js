@@ -3,10 +3,10 @@ const converter = require('swagger2openapi');
 const { singular } = require('pluralize');
 // const fs = require('fs');
 
-module.exports = async (specURL) => {
+module.exports = async (spec) => {
   try {
     // Bundle
-    let api = await SwaggerParser.bundle(specURL);
+    let api = await SwaggerParser.bundle(spec);
     // fs.writeFileSync('./processed-specifications/bundledSpec.json', JSON.stringify(api, null, 2));
 
     // Convert
