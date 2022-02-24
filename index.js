@@ -39,7 +39,7 @@ module.exports = async (spec) => {
       const operationOutput = { operationId };
 
       const requestBodyProperties =
-        operation.requestBody?.content['application/json'].schema.properties;
+        operation.requestBody?.content?.['application/json']?.schema?.properties;
 
       const hasBody = requestBodyProperties !== undefined;
 
@@ -55,7 +55,7 @@ module.exports = async (spec) => {
       }
 
       const responseBodyProperties =
-        operation.responses[200]?.content?.['application/json'].schema.properties;
+        operation.responses[200]?.content?.['application/json']?.schema?.properties;
 
       if (responseBodyProperties !== undefined) {
         operationOutput.javaModel = getJavaOrCSharpResponseCode(
