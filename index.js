@@ -2,6 +2,7 @@ const SwaggerParser = require('@apidevtools/swagger-parser');
 const converter = require('swagger2openapi');
 const { singular } = require('pluralize');
 const path = require('path');
+const { PassThrough } = require('stream');
 // const fs = require('fs');
 
 /**
@@ -169,16 +170,67 @@ Console.WriteLine(responseString);
 `;
 }
 
-function getJSONRequestBody(operationId, properties) {
-  return `${operationId} - body.json:
+//  JSON Request Body Generator
+function getJSONRequestBody(operationId, properties, isRootClass = true) {
+  return `${isRootClass ? `${operationId} - body.json:\n\n{` : ''}${properties
+    .filter(
+      (prop) => !prop[1].readOnly)
+    .map((prop) => {
+      let type = prop[1].type;
+      if (type === 'integer') {
+        defaultValue = 0;
+      } else if (type === 'string') {
+        defaultValue = '""';
+      } else if (type === 'object') {
+        defaultValue = '{}';
+      } else if (type === 'array') {
+        defaultValue = `[${
+          prop[1].items.type !== 'string'
+            ? `${getArrayElementObeject(prop)}]`
+            : '""]'
+        }`;
+      } else {
+        defaultValue = `${getObeject(prop)}`;
+      }
+      let key = prop[0];
+      return `${defaultValue === '{\n}' || defaultValue === '{  \n  }' ? '' : `
+  "${key}": ${defaultValue}`}`;
+    })
+    .filter(
+      (prop) => prop !== '')
+    .join(',')
+  }
+}${isRootClass ? '\n\n' : ''}`;
 
-{${properties.map(
-    (prop) => `
-  "${prop[0]}": ...`
-  )}
-}
+  function getArrayElementObeject(prop){
+    if (prop[1].type === 'array' &&
+        prop[1].items.properties &&
+        prop[0] !== className) {
+          return '{'+
+          indentString(
+            getJSONRequestBody(
+                prop[0],
+                Object.entries(prop[1].items.properties,
+                false
+              )
+            )
+          )
+        }
+  }
 
-`;
+  function getObeject(prop){
+    if (!prop[1].type) {
+      return '{'+ 
+        indentString(
+          getJSONRequestBody(
+            prop[0],
+            Object.entries(prop[1].properties),
+            false
+          )
+        )
+    }
+  }
+
 }
 
 // Response deserialiser model generator for both Java and C# (because these languages are very similar)
@@ -308,3 +360,6 @@ function getPythonResponseCode(className, properties) {
 // Utilities
 
 const capitalise = (s) => s.charAt(0).toUpperCase() + s.slice(1);
+
+// https://www.30secondsofcode.org/js/s/indent-string
+const indentString = (str, count = 2, indent = ' ') => str.replace(/^/gm, indent.repeat(count));
