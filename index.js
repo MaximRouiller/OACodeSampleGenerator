@@ -10,80 +10,76 @@ const { singular } = require('pluralize');
  * @returns {object} - The generated output, with API information
  */
 module.exports = async (api) => {
-  try {
-    // Bundle
-    api = await SwaggerParser.bundle(api);
-    // fs.writeFileSync('./processed-specifications/bundledSpec.json', JSON.stringify(api, null, 2));
+  // Bundle
+  api = await SwaggerParser.bundle(api);
+  // fs.writeFileSync('./processed-specifications/bundledSpec.json', JSON.stringify(api, null, 2));
 
-    // Convert
-    api = (await converter.convertObj(api, {})).openapi;
-    // fs.writeFileSync('./processed-specifications/convertedSpec.json', JSON.stringify(api, null, 2));
+  // Convert
+  api = (await converter.convertObj(api, {})).openapi;
+  // fs.writeFileSync('./processed-specifications/convertedSpec.json', JSON.stringify(api, null, 2));
 
-    // Validate and dereference ('validate' calls 'dereference' internally)
-    // https://apitools.dev/swagger-parser/docs/swagger-parser.html#validateapi-options-callback
-    api = await SwaggerParser.validate(api);
+  // Validate and dereference ('validate' calls 'dereference' internally)
+  // https://apitools.dev/swagger-parser/docs/swagger-parser.html#validateapi-options-callback
+  api = await SwaggerParser.validate(api);
 
-    // Circular references are not supported by JSON so use the version below instead of the version
-    // above to just partially dereference the spec and serialise it as JSON. This will significantly
-    // reduce the number of operations whose responses are able to be deserialised with the model
-    // generators later on, so only use this version if you need to more easily inspect the JSON.
-    // api = await SwaggerParser.validate(api, { dereference: { circular: 'ignore' } });
-    // fs.writeFileSync('./processed-specifications/endSpec.json', JSON.stringify(api, null, 2));
+  // Circular references are not supported by JSON so use the version below instead of the version
+  // above to just partially dereference the spec and serialise it as JSON. This will significantly
+  // reduce the number of operations whose responses are able to be deserialised with the model
+  // generators later on, so only use this version if you need to more easily inspect the JSON.
+  // api = await SwaggerParser.validate(api, { dereference: { circular: 'ignore' } });
+  // fs.writeFileSync('./processed-specifications/endSpec.json', JSON.stringify(api, null, 2));
 
-    const baseRequestURL = api.servers[0].url;
+  const baseRequestURL = api.servers[0].url;
 
-    const generated = [];
+  const generated = [];
 
-    for (const operation of getOperations(api)) {
-      const { operationGroupPath, operationId } = operation;
+  for (const operation of getOperations(api)) {
+    const { operationGroupPath, operationId } = operation;
 
-      const operationOutput = { operationId };
+    const operationOutput = { operationId };
 
-      const requestURL = `${baseRequestURL}${operationGroupPath}?api-version=${api.info.version}`;
+    const requestURL = `${baseRequestURL}${operationGroupPath}?api-version=${api.info.version}`;
 
-      const requestBodyProperties =
-        operation.requestBody?.content?.['application/json']?.schema?.properties;
+    const requestBodyProperties =
+      operation.requestBody?.content?.['application/json']?.schema?.properties;
 
-      const hasBody = requestBodyProperties !== undefined;
+    const hasBody = requestBodyProperties !== undefined;
 
-      operationOutput.javaSnippet = getJavaRequestCode(operation, requestURL, hasBody);
-      operationOutput.pythonSnippet = getPythonRequestCode(operation, requestURL, hasBody);
-      operationOutput.csharpSnippet = getCSharpRequestCode(operation, requestURL, hasBody);
+    operationOutput.javaSnippet = getJavaRequestCode(operation, requestURL, hasBody);
+    operationOutput.pythonSnippet = getPythonRequestCode(operation, requestURL, hasBody);
+    operationOutput.csharpSnippet = getCSharpRequestCode(operation, requestURL, hasBody);
 
-      if (hasBody) {
-        operationOutput.requestBody = getJSONRequestBody(
-          operationId,
-          Object.entries(requestBodyProperties).filter((prop) => !prop[1].readOnly)
-        );
-      }
-
-      const responseBodyProperties =
-        operation.responses[200]?.content?.['application/json']?.schema?.properties;
-
-      if (responseBodyProperties !== undefined) {
-        operationOutput.javaModel = getJavaOrCSharpResponseCode(
-          'java',
-          operationId,
-          Object.entries(responseBodyProperties)
-        );
-        operationOutput.pythonModel = getPythonResponseCode(
-          operationId,
-          Object.entries(responseBodyProperties)
-        );
-        operationOutput.csharpModel = getJavaOrCSharpResponseCode(
-          'csharp',
-          operationId,
-          Object.entries(responseBodyProperties)
-        );
-      }
-
-      generated.push(operationOutput);
+    if (hasBody) {
+      operationOutput.requestBody = getJSONRequestBody(
+        operationId,
+        Object.entries(requestBodyProperties).filter((prop) => !prop[1].readOnly)
+      );
     }
 
-    return { apiInfo: api.info, generated };
-  } catch (err) {
-    console.error(err);
+    const responseBodyProperties =
+      operation.responses[200]?.content?.['application/json']?.schema?.properties;
+
+    if (responseBodyProperties !== undefined) {
+      operationOutput.javaModel = getJavaOrCSharpResponseCode(
+        'java',
+        operationId,
+        Object.entries(responseBodyProperties)
+      );
+      operationOutput.pythonModel = getPythonResponseCode(
+        operationId,
+        Object.entries(responseBodyProperties)
+      );
+      operationOutput.csharpModel = getJavaOrCSharpResponseCode(
+        'csharp',
+        operationId,
+        Object.entries(responseBodyProperties)
+      );
+    }
+
+    generated.push(operationOutput);
   }
+
+  return { apiInfo: api.info, generated };
 };
 
 // Split spec into operations
