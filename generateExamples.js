@@ -22,39 +22,21 @@ const generator = require('.');
 
     console.log(`API name: ${apiInfo.title}, Version: ${apiInfo.version}`);
 
-    let javaSnippet = '';
-    let pythonSnippet = '';
-    let csharpSnippet = '';
+    fs.writeFileSync('./example/javaSnippet.txt', getAllSamples('javaSnippet'));
+    fs.writeFileSync('./example/pythonSnippet.txt', getAllSamples('pythonSnippet'));
+    fs.writeFileSync('./example/csharpSnippet.txt', getAllSamples('csharpSnippet'));
 
-    let requestBody = '';
+    fs.writeFileSync('./example/requestBody.txt', getAllSamples('requestBody'));
 
-    let javaModel = '';
-    let pythonModel = '';
-    let csharpModel = '';
-
-    for (const operation of generated) {
-      javaSnippet += operation.javaSnippet;
-      pythonSnippet += operation.pythonSnippet;
-      csharpSnippet += operation.csharpSnippet;
-
-      requestBody += operation.requestBody || '';
-
-      javaModel += operation.javaModel || '';
-      pythonModel += operation.pythonModel || '';
-      csharpModel += operation.csharpModel || '';
-    }
-
-    fs.writeFileSync('./example/javaSnippet.txt', javaSnippet);
-    fs.writeFileSync('./example/pythonSnippet.txt', pythonSnippet);
-    fs.writeFileSync('./example/csharpSnippet.txt', csharpSnippet);
-
-    fs.writeFileSync('./example/requestBody.txt', requestBody);
-
-    fs.writeFileSync('./example/javaModel.java', javaModel);
-    fs.writeFileSync('./example/pythonModel.py', pythonModel);
-    fs.writeFileSync('./example/csharpModel.cs', csharpModel);
+    fs.writeFileSync('./example/javaModel.java', getAllSamples('javaModel'));
+    fs.writeFileSync('./example/pythonModel.py', getAllSamples('pythonModel'));
+    fs.writeFileSync('./example/csharpModel.cs', getAllSamples('csharpModel'));
 
     fs.writeFileSync('./example/output.json', JSON.stringify(output, null, 2));
+
+    function getAllSamples(sample) {
+      return generated.map((operation) => operation[sample]).join('');
+    }
   } catch (err) {
     console.error(err);
   }
