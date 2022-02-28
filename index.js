@@ -1,19 +1,18 @@
 const SwaggerParser = require('@apidevtools/swagger-parser');
 const converter = require('swagger2openapi');
 const { singular } = require('pluralize');
-const path = require('path');
 // const fs = require('fs');
 
 /**
  * The main generator function which is the default export of this module
  *
- * @param {string} spec - The file path or url of the Swagger/OpenAPI specification
- * @returns {object} - The generated output, with API information and the specification file name.
+ * @param {string} api - A Swagger/OpenAPI object, or the file path or url of the specification
+ * @returns {object} - The generated output, with API information
  */
-module.exports = async (spec) => {
+module.exports = async (api) => {
   try {
     // Bundle
-    let api = await SwaggerParser.bundle(spec);
+    api = await SwaggerParser.bundle(api);
     // fs.writeFileSync('./processed-specifications/bundledSpec.json', JSON.stringify(api, null, 2));
 
     // Convert
@@ -81,7 +80,7 @@ module.exports = async (spec) => {
       generated.push(operationOutput);
     }
 
-    return { apiInfo: api.info, specName: path.basename(spec).split('.')[0], generated };
+    return { apiInfo: api.info, generated };
   } catch (err) {
     console.error(err);
   }
