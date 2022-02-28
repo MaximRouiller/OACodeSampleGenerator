@@ -170,7 +170,7 @@ HttpContent httpContent = httpResponseMessage.Content;
 string responseString = await httpContent.ReadAsStringAsync();
 string responseStatus = httpResponseMessage.StatusCode.ToString();
 Console.WriteLine(responseString);
-Console.WriteLine(responseString);
+Console.WriteLine(responseStatus);
 
 `;
 }
@@ -355,3 +355,10 @@ const capitalise = (s) => s.charAt(0).toUpperCase() + s.slice(1);
 
 // https://www.30secondsofcode.org/js/s/indent-string
 const indentString = (str, count = 2, indent = ' ') => str.replace(/^/gm, indent.repeat(count));
+
+// Exports
+
+exports.getJavaRequestCode = getJavaRequestCode;
+exports.getPythonRequestCode = getPythonRequestCode;
+exports.getCSharpRequestCode = getCSharpRequestCode;
+exports.getOperations = getOperations;
