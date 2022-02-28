@@ -30,25 +30,25 @@ module.exports = async (api) => {
     // api = await SwaggerParser.validate(api, { dereference: { circular: 'ignore' } });
     // fs.writeFileSync('./processed-specifications/endSpec.json', JSON.stringify(api, null, 2));
 
-    const version = api.info.version;
-
-    const requestURL = api.servers[0].url;
+    const baseRequestURL = api.servers[0].url;
 
     const generated = [];
 
     for (const operation of getOperations(api)) {
-      const operationId = operation.operationId;
+      const { operationGroupPath, operationId } = operation;
 
       const operationOutput = { operationId };
+
+      const requestURL = `${baseRequestURL}${operationGroupPath}?api-version=${api.info.version}`;
 
       const requestBodyProperties =
         operation.requestBody?.content?.['application/json']?.schema?.properties;
 
       const hasBody = requestBodyProperties !== undefined;
 
-      operationOutput.javaSnippet = getJavaRequestCode(operation, requestURL, version, hasBody);
-      operationOutput.pythonSnippet = getPythonRequestCode(operation, requestURL, version, hasBody);
-      operationOutput.csharpSnippet = getCSharpRequestCode(operation, requestURL, version, hasBody);
+      operationOutput.javaSnippet = getJavaRequestCode(operation, requestURL, hasBody);
+      operationOutput.pythonSnippet = getPythonRequestCode(operation, requestURL, hasBody);
+      operationOutput.csharpSnippet = getCSharpRequestCode(operation, requestURL, hasBody);
 
       if (hasBody) {
         operationOutput.requestBody = getJSONRequestBody(
@@ -99,18 +99,13 @@ function getOperations(spec) {
 
 // With HTTPClient for Java 11+ https://openjdk.java.net/groups/net/httpclient/intro.html
 // Request is synchronous
-function getJavaRequestCode(
-  { operationGroupPath, operationType, operationId },
-  requestURL,
-  apiVersion,
-  hasBody
-) {
+function getJavaRequestCode({ operationId, operationType }, requestURL, hasBody) {
   return `// ${operationId}
 
 HttpClient client = HttpClient.newHttpClient();
 
 HttpRequest request = HttpRequest.newBuilder()
-  .uri(URI.create("${requestURL}${operationGroupPath}?api-version=${apiVersion}"))
+  .uri(URI.create("${requestURL}"))
   .header("Content-Type", "application/json")
   .${operationType.toUpperCase()}(${hasBody ? 'BodyPublishers.ofFile(Paths.get("body.json"))' : ''})
   .build();
@@ -124,12 +119,7 @@ System.out.println(response.body());
 
 // With Requests for python 2.7 & 3.6+ https://docs.python-requests.org/en/latest/
 // Request is synchronous
-function getPythonRequestCode(
-  { operationGroupPath, operationType, operationId },
-  requestURL,
-  apiVersion,
-  hasBody
-) {
+function getPythonRequestCode({ operationId, operationType }, requestURL, hasBody) {
   return `# ${operationId}
 
 # import requests
@@ -137,7 +127,7 @@ function getPythonRequestCode(
 headers = {"Content-Type": "application/json"}
 
 response = requests.${operationType}(
-  "${requestURL}${operationGroupPath}?api-version=${apiVersion}",
+  "${requestURL}",
   headers=headers${hasBody ? ', files={"file": open("body.json", "r")}' : ''})
 
 print(response.status_code)
@@ -148,18 +138,13 @@ print(response.content)
 
 // With HTTPClient for C# https://docs.microsoft.com/en-us/dotnet/api/system.net.http.httpclient?view=net-6.0
 // Request is Asynchronous
-function getCSharpRequestCode(
-  { operationGroupPath, operationType, operationId },
-  requestURL,
-  apiVersion,
-  hasBody
-) {
+function getCSharpRequestCode({ operationId, operationType }, requestURL, hasBody) {
   return `// ${operationId}
 
 HttpClient client = new HttpClient();
 HttpRequestMessage req = new HttpRequestMessage(HttpMethod.${capitalise(
     operationType
-  )}, "${requestURL}${operationGroupPath}?api-version=${apiVersion}");
+  )}, "${requestURL}");
 req.Content = new StringContent(${
     hasBody ? 'System.IO.File.ReadAllText(@"body.json"), Encoding.UTF8, "application/json"' : ''
   });
