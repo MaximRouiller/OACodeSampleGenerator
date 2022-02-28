@@ -208,19 +208,19 @@ function getJSONRequestBody(key, properties, isRootClass = true) {
     .join(',')}
 }${isRootClass ? '\n\n' : ''}`;
 
+  function getObject(prop) {
+    if (!prop[1].type) {
+      return (
+        '{' + indentString(getJSONRequestBody(prop[0], Object.entries(prop[1].properties), false))
+      );
+    }
+  }
+
   function getArrayElementObject(prop) {
     if (prop[1].type === 'array' && prop[1].items.properties && prop[0] !== key) {
       return (
         '{' +
         indentString(getJSONRequestBody(prop[0], Object.entries(prop[1].items.properties), false))
-      );
-    }
-  }
-
-  function getObject(prop) {
-    if (!prop[1].type) {
-      return (
-        '{' + indentString(getJSONRequestBody(prop[0], Object.entries(prop[1].properties), false))
       );
     }
   }
