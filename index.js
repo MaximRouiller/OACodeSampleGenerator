@@ -2,7 +2,6 @@ const SwaggerParser = require('@apidevtools/swagger-parser');
 const converter = require('swagger2openapi');
 const { singular } = require('pluralize');
 const path = require('path');
-const { PassThrough } = require('stream');
 // const fs = require('fs');
 
 /**
@@ -170,67 +169,54 @@ Console.WriteLine(responseString);
 `;
 }
 
-//  JSON Request Body Generator
-function getJSONRequestBody(operationId, properties, isRootClass = true) {
-  return `${isRootClass ? `${operationId} - body.json:\n\n{` : ''}${properties
-    .filter(
-      (prop) => !prop[1].readOnly)
+// JSON Request Body Generator
+function getJSONRequestBody(key, properties, isRootClass = true) {
+  return `${isRootClass ? `${key} - body.json:\n\n{` : ''}${properties
+    .filter((prop) => !prop[1].readOnly)
     .map((prop) => {
       let type = prop[1].type;
-      if (type === 'integer') {
-        defaultValue = 0;
+      if (type === 'boolean') {
+        defaultValue = 'true';
+      } else if (type === 'integer') {
+        defaultValue = '0';
       } else if (type === 'string') {
         defaultValue = '""';
       } else if (type === 'object') {
         defaultValue = '{}';
       } else if (type === 'array') {
         defaultValue = `[${
-          prop[1].items.type !== 'string'
-            ? `${getArrayElementObeject(prop)}]`
-            : '""]'
+          prop[1].items.type !== 'string' ? `${getArrayElementObject(prop)}]` : '""]'
         }`;
       } else {
-        defaultValue = `${getObeject(prop)}`;
+        defaultValue = `${getObject(prop)}`;
       }
-      let key = prop[0];
-      return `${defaultValue === '{\n}' || defaultValue === '{  \n  }' ? '' : `
-  "${key}": ${defaultValue}`}`;
+      return `${
+        defaultValue === '{\n}' || defaultValue === '{  \n  }'
+          ? ''
+          : `
+  "${prop[0]}": ${defaultValue}`
+      }`;
     })
-    .filter(
-      (prop) => prop !== '')
-    .join(',')
-  }
+    .filter((prop) => prop !== '')
+    .join(',')}
 }${isRootClass ? '\n\n' : ''}`;
 
-  function getArrayElementObeject(prop){
-    if (prop[1].type === 'array' &&
-        prop[1].items.properties &&
-        prop[0] !== className) {
-          return '{'+
-          indentString(
-            getJSONRequestBody(
-                prop[0],
-                Object.entries(prop[1].items.properties,
-                false
-              )
-            )
-          )
-        }
-  }
-
-  function getObeject(prop){
-    if (!prop[1].type) {
-      return '{'+ 
-        indentString(
-          getJSONRequestBody(
-            prop[0],
-            Object.entries(prop[1].properties),
-            false
-          )
-        )
+  function getArrayElementObject(prop) {
+    if (prop[1].type === 'array' && prop[1].items.properties && prop[0] !== key) {
+      return (
+        '{' +
+        indentString(getJSONRequestBody(prop[0], Object.entries(prop[1].items.properties), false))
+      );
     }
   }
 
+  function getObject(prop) {
+    if (!prop[1].type) {
+      return (
+        '{' + indentString(getJSONRequestBody(prop[0], Object.entries(prop[1].properties), false))
+      );
+    }
+  }
 }
 
 // Response deserialiser model generator for both Java and C# (because these languages are very similar)
