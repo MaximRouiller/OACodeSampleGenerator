@@ -169,16 +169,54 @@ Console.WriteLine(responseString);
 `;
 }
 
-function getJSONRequestBody(operationId, properties) {
-  return `${operationId} - body.json:
+// JSON request body generator
+function getJSONRequestBody(key, properties, isRootClass = true) {
+  return `${isRootClass ? `${key} - body.json:\n\n{` : ''}${properties
+    .filter((prop) => !prop[1].readOnly)
+    .map((prop) => {
+      let type = prop[1].type;
+      if (type === 'boolean') {
+        defaultValue = 'true';
+      } else if (type === 'integer') {
+        defaultValue = '0';
+      } else if (type === 'string') {
+        defaultValue = '""';
+      } else if (type === 'object') {
+        defaultValue = '{}';
+      } else if (type === 'array') {
+        defaultValue = `[${
+          prop[1].items.type !== 'string' ? `${getArrayElementObject(prop)}]` : '""]'
+        }`;
+      } else {
+        defaultValue = `${getObject(prop)}`;
+      }
+      return `${
+        defaultValue === '{\n}' || defaultValue === '{  \n  }'
+          ? ''
+          : `
+  "${prop[0]}": ${defaultValue}`
+      }`;
+    })
+    .filter((prop) => prop !== '')
+    .join(',')}
+}${isRootClass ? '\n\n' : ''}`;
 
-{${properties.map(
-    (prop) => `
-  "${prop[0]}": ...`
-  )}
-}
+  function getArrayElementObject(prop) {
+    if (prop[1].type === 'array' && prop[1].items.properties && prop[0] !== key) {
+      return (
+        '{' +
+        indentString(getJSONRequestBody(prop[0], Object.entries(prop[1].items.properties), false))
+      );
+    }
+  }
 
-`;
+  function getObject(prop) {
+    if (!prop[1].type) {
+      return (
+        '{' + indentString(getJSONRequestBody(prop[0], Object.entries(prop[1].properties), false))
+      );
+    }
+  }
 }
 
 // Response deserialiser model generator for both Java and C# (because these languages are very similar)
@@ -308,3 +346,6 @@ function getPythonResponseCode(className, properties) {
 // Utilities
 
 const capitalise = (s) => s.charAt(0).toUpperCase() + s.slice(1);
+
+// https://www.30secondsofcode.org/js/s/indent-string
+const indentString = (str, count = 2, indent = ' ') => str.replace(/^/gm, indent.repeat(count));

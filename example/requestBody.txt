@@ -1,9 +1,8 @@
 ResourceGroups_CreateOrUpdate - body.json:
 
 {
-  "properties": ...,
-  "location": ...,
-  "managedBy": ...,
-  "tags": ...
+  "location": "",
+  "managedBy": "",
+  "tags": {}
 }
 
