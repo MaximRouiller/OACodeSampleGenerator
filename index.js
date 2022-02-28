@@ -31,6 +31,10 @@ module.exports = async (spec) => {
     // api = await SwaggerParser.validate(api, { dereference: { circular: 'ignore' } });
     // fs.writeFileSync('./processed-specifications/endSpec.json', JSON.stringify(api, null, 2));
 
+    const version = api.info.version;
+
+    const requestURL = api.servers[0].url;
+
     const generated = [];
 
     for (const operation of getOperations(api)) {
@@ -43,9 +47,9 @@ module.exports = async (spec) => {
 
       const hasBody = requestBodyProperties !== undefined;
 
-      operationOutput.javaSnippet = getJavaRequestCode(operation, api.info.version, hasBody);
-      operationOutput.pythonSnippet = getPythonRequestCode(operation, api.info.version, hasBody);
-      operationOutput.csharpSnippet = getCSharpRequestCode(operation, api.info.version, hasBody);
+      operationOutput.javaSnippet = getJavaRequestCode(operation, requestURL, version, hasBody);
+      operationOutput.pythonSnippet = getPythonRequestCode(operation, requestURL, version, hasBody);
+      operationOutput.csharpSnippet = getCSharpRequestCode(operation, requestURL, version, hasBody);
 
       if (hasBody) {
         operationOutput.requestBody = getJSONRequestBody(
@@ -98,6 +102,7 @@ function getOperations(spec) {
 // Request is synchronous
 function getJavaRequestCode(
   { operationGroupPath, operationType, operationId },
+  requestURL,
   apiVersion,
   hasBody
 ) {
@@ -106,7 +111,7 @@ function getJavaRequestCode(
 HttpClient client = HttpClient.newHttpClient();
 
 HttpRequest request = HttpRequest.newBuilder()
-  .uri(URI.create("https://managemement.azure.com${operationGroupPath}?api-version=${apiVersion}"))
+  .uri(URI.create("${requestURL}${operationGroupPath}?api-version=${apiVersion}"))
   .header("Content-Type", "application/json")
   .${operationType.toUpperCase()}(${hasBody ? 'BodyPublishers.ofFile(Paths.get("body.json"))' : ''})
   .build();
@@ -122,6 +127,7 @@ System.out.println(response.body());
 // Request is synchronous
 function getPythonRequestCode(
   { operationGroupPath, operationType, operationId },
+  requestURL,
   apiVersion,
   hasBody
 ) {
@@ -132,7 +138,7 @@ function getPythonRequestCode(
 headers = {"Content-Type": "application/json"}
 
 response = requests.${operationType}(
-  "https://managemement.azure.com${operationGroupPath}?api-version=${apiVersion}",
+  "${requestURL}${operationGroupPath}?api-version=${apiVersion}",
   headers=headers${hasBody ? ', files={"file": open("body.json", "r")}' : ''})
 
 print(response.status_code)
@@ -145,6 +151,7 @@ print(response.content)
 // Request is Asynchronous
 function getCSharpRequestCode(
   { operationGroupPath, operationType, operationId },
+  requestURL,
   apiVersion,
   hasBody
 ) {
@@ -153,7 +160,7 @@ function getCSharpRequestCode(
 HttpClient client = new HttpClient();
 HttpRequestMessage req = new HttpRequestMessage(HttpMethod.${capitalise(
     operationType
-  )}, "https://managemement.azure.com${operationGroupPath}?api-version=${apiVersion}");
+  )}, "${requestURL}${operationGroupPath}?api-version=${apiVersion}");
 req.Content = new StringContent(${
     hasBody ? 'System.IO.File.ReadAllText(@"body.json"), Encoding.UTF8, "application/json"' : ''
   });
