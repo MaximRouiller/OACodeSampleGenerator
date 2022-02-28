@@ -17,7 +17,7 @@ const generator = require('.');
   // const singleOperation = ''; // to get snippets/models for all operations in spec
 
   try {
-    const output = await generator(spec);
+    const output = await generator(spec, singleOperation);
     const { apiInfo, generated } = output;
 
     console.log(`API name: ${apiInfo.title}, Version: ${apiInfo.version}`);
@@ -33,8 +33,6 @@ const generator = require('.');
     let csharpModel = '';
 
     for (const operation of generated) {
-      if (singleOperation && operation.operationId !== singleOperation) continue;
-
       javaSnippet += operation.javaSnippet;
       pythonSnippet += operation.pythonSnippet;
       csharpSnippet += operation.csharpSnippet;
@@ -55,13 +53,6 @@ const generator = require('.');
     fs.writeFileSync('./example/javaModel.java', javaModel);
     fs.writeFileSync('./example/pythonModel.py', pythonModel);
     fs.writeFileSync('./example/csharpModel.cs', csharpModel);
-
-    if (singleOperation) {
-      const operation = generated.find((op) => op.operationId === singleOperation);
-      fs.writeFileSync('./example/samples.json', JSON.stringify(operation, null, 2));
-    } else {
-      fs.writeFileSync('./example/samples.json', JSON.stringify(generated, null, 2));
-    }
 
     fs.writeFileSync('./example/output.json', JSON.stringify(output, null, 2));
   } catch (err) {

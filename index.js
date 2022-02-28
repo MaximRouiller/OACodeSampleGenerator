@@ -7,9 +7,10 @@ const { singular } = require('pluralize');
  * The main generator function which is the default export of this module
  *
  * @param {string} api - A Swagger/OpenAPI object, or the file path or url of the specification
+ * @param {string} singleOperation - (Optional) An operation ID, to get samples for just that one operation
  * @returns {object} - The generated output, with API information
  */
-module.exports = async (api) => {
+module.exports = async (api, singleOperation) => {
   // Bundle
   api = await SwaggerParser.bundle(api);
   // fs.writeFileSync('./processed-specifications/bundledSpec.json', JSON.stringify(api, null, 2));
@@ -33,7 +34,10 @@ module.exports = async (api) => {
 
   const generated = [];
 
-  for (const operation of getOperations(api)) {
+  let operations = getOperations(api);
+  if (singleOperation) operations = operations.filter((op) => op.operationId === singleOperation);
+
+  for (const operation of operations) {
     const { operationGroupPath, operationId } = operation;
 
     const operationOutput = { operationId };
