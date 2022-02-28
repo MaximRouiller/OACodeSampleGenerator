@@ -169,7 +169,7 @@ Console.WriteLine(responseString);
 `;
 }
 
-// JSON Request Body Generator
+// JSON request body generator
 function getJSONRequestBody(key, properties, isRootClass = true) {
   return `${isRootClass ? `${key} - body.json:\n\n{` : ''}${properties
     .filter((prop) => !prop[1].readOnly)
