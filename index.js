@@ -306,3 +306,4 @@ const capitalise = (s) => s.charAt(0).toUpperCase() + s.slice(1);
 exports.getJavaRequestCode = getJavaRequestCode;
 exports.getPythonRequestCode = getPythonRequestCode;
 exports.getCSharpRequestCode = getCSharpRequestCode;
+exports.getOperations = getOperations;
