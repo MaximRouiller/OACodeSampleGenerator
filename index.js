@@ -282,8 +282,11 @@ function getPythonResponseCode(className, properties) {
     return properties
       .map((prop) => {
         let type = prop[1].type;
-        if (type === 'integer') {
-          defaultValue = 0;
+        // https://swagger.io/docs/specification/data-models/data-types/
+        if (type === 'boolean') {
+          defaultValue = 'true';
+        } else if (type === 'integer' || type === 'number') {
+          defaultValue = '0';
         } else if (type === 'string') {
           defaultValue = '""';
         } else if (type === 'object') {
