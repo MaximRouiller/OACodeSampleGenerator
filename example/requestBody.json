@@ -1,8 +1,8 @@
-ResourceGroups_CreateOrUpdate - body.json:
-
 {
+  "properties": {
+    "provisioningState": ""
+  },
   "location": "",
   "managedBy": "",
   "tags": {}
 }
-

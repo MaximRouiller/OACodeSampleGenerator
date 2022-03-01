@@ -26,7 +26,7 @@ const generator = require('.');
     fs.writeFileSync('./example/pythonSnippet.txt', getAllSamples('pythonSnippet'));
     fs.writeFileSync('./example/csharpSnippet.txt', getAllSamples('csharpSnippet'));
 
-    fs.writeFileSync('./example/requestBody.txt', getAllSamples('requestBody'));
+    fs.writeFileSync('./example/requestBody.json', getAllSamples('requestBody'));
 
     fs.writeFileSync('./example/javaModel.java', getAllSamples('javaModel'));
     fs.writeFileSync('./example/pythonModel.py', getAllSamples('pythonModel'));

@@ -55,7 +55,6 @@ module.exports = async (api, singleOperation) => {
 
     if (hasBody) {
       operationOutput.requestBody = getJSONRequestBody(
-        operationId,
         Object.entries(requestBodyProperties).filter((prop) => !prop[1].readOnly)
       );
     }
@@ -161,53 +160,29 @@ Console.WriteLine(responseStatus);
 }
 
 // JSON request body generator
-function getJSONRequestBody(key, properties, isRootClass = true) {
-  return `${isRootClass ? `${key} - body.json:\n\n{` : ''}${properties
-    .filter((prop) => !prop[1].readOnly)
-    .map((prop) => {
-      let type = prop[1].type;
-      if (type === 'boolean') {
-        defaultValue = 'true';
-      } else if (type === 'integer') {
-        defaultValue = '0';
-      } else if (type === 'string') {
-        defaultValue = '""';
-      } else if (type === 'object') {
-        defaultValue = '{}';
-      } else if (type === 'array') {
-        defaultValue = `[${
-          prop[1].items.type !== 'string' ? `${getArrayElementObject(prop)}]` : '""]'
-        }`;
-      } else {
-        defaultValue = `${getObject(prop)}`;
-      }
-      return `${
-        defaultValue === '{\n}' || defaultValue === '{  \n  }'
-          ? ''
-          : `
-  "${prop[0]}": ${defaultValue}`
-      }`;
-    })
-    .filter((prop) => prop !== '')
-    .join(',')}
-}${isRootClass ? '\n\n' : ''}`;
-
-  function getObject(prop) {
-    if (!prop[1].type) {
-      return (
-        '{' + indentString(getJSONRequestBody(prop[0], Object.entries(prop[1].properties), false))
-      );
-    }
-  }
-
-  function getArrayElementObject(prop) {
-    if (prop[1].type === 'array' && prop[1].items.properties && prop[0] !== key) {
-      return (
-        '{' +
-        indentString(getJSONRequestBody(prop[0], Object.entries(prop[1].items.properties), false))
-      );
-    }
-  }
+function getJSONRequestBody(properties) {
+  return JSON.stringify(
+    JSON.parse(
+      `{${properties
+        .map((prop) => {
+          const type = prop[1].type;
+          if (typeDefaults[type]) {
+            defaultValue = typeDefaults[type];
+          } else if (type === 'array') {
+            defaultValue = `[${
+              typeDefaults[prop[1].items.type] ||
+              getJSONRequestBody(Object.entries(prop[1].items.properties))
+            }]`;
+          } else {
+            defaultValue = getJSONRequestBody(Object.entries(prop[1].properties));
+          }
+          return `"${prop[0]}": ${defaultValue}`;
+        })
+        .join(',')}}`
+    ),
+    null,
+    2
+  );
 }
 
 // Response deserialiser model generator for both Java and C# (because these languages are very similar)
@@ -332,9 +307,6 @@ function getPythonResponseCode(className, properties) {
 // Utilities
 
 const capitalise = (s) => s.charAt(0).toUpperCase() + s.slice(1);
-
-// https://www.30secondsofcode.org/js/s/indent-string
-const indentString = (str, count = 2, indent = ' ') => str.replace(/^/gm, indent.repeat(count));
 
 // https://swagger.io/docs/specification/data-models/data-types/
 // Does not include default for array type
