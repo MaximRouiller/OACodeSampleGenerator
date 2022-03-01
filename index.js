@@ -196,15 +196,15 @@ function getJavaOrCSharpResponseCode(language, className, properties) {
     return properties
       .map((prop) => {
         let type = prop[1].type;
-        if (type === 'array') {
+        if (typeDefaults[type]) {
+          type = capitalise(type);
+        } else if (type === 'array') {
           const items = prop[1].items;
           type = `List<${
             items.properties !== undefined ? capitalise(singular(prop[0])) : capitalise(items.type)
           }>`;
-        } else if (type === undefined) {
-          type = capitalise(prop[0]);
         } else {
-          type = capitalise(type);
+          type = capitalise(prop[0]);
         }
         let variableName = prop[0];
         // 'namespace' is a C# keyword
