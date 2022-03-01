@@ -30,8 +30,6 @@ module.exports = async (api, singleOperation) => {
   // api = await SwaggerParser.validate(api, { dereference: { circular: 'ignore' } });
   // fs.writeFileSync('./processed-specifications/endSpec.json', JSON.stringify(api, null, 2));
 
-  const baseRequestURL = api.servers[0].url;
-
   const generated = [];
 
   let operations = getOperations(api);
@@ -42,7 +40,7 @@ module.exports = async (api, singleOperation) => {
 
     const operationOutput = { operationId };
 
-    const requestURL = `${baseRequestURL}${operationGroupPath}?api-version=${api.info.version}`;
+    const requestURL = `${api.servers[0].url}${operationGroupPath}?api-version=${api.info.version}`;
 
     const requestBodyProperties =
       operation.requestBody?.content?.['application/json']?.schema?.properties;
