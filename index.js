@@ -281,16 +281,9 @@ function getPythonResponseCode(className, properties) {
   function getFields() {
     return properties
       .map((prop) => {
-        let type = prop[1].type;
-        // https://swagger.io/docs/specification/data-models/data-types/
-        if (type === 'boolean') {
-          defaultValue = 'true';
-        } else if (type === 'integer' || type === 'number') {
-          defaultValue = '0';
-        } else if (type === 'string') {
-          defaultValue = '""';
-        } else if (type === 'object') {
-          defaultValue = '{}';
+        const type = prop[1].type;
+        if (typeDefaults[type]) {
+          defaultValue = typeDefaults[type];
         } else if (type === 'array') {
           defaultValue = `[${
             prop[1].items.type !== 'string'
@@ -303,9 +296,8 @@ function getPythonResponseCode(className, properties) {
             prop[0]
           )}`;
         }
-        let variableName = prop[0];
         return `
-\t${variableName} = ${defaultValue}`;
+\t${prop[0]} = ${defaultValue}`;
       })
       .join('');
   }
@@ -343,6 +335,10 @@ const capitalise = (s) => s.charAt(0).toUpperCase() + s.slice(1);
 
 // https://www.30secondsofcode.org/js/s/indent-string
 const indentString = (str, count = 2, indent = ' ') => str.replace(/^/gm, indent.repeat(count));
+
+// https://swagger.io/docs/specification/data-models/data-types/
+// Does not include default for array type
+const typeDefaults = { boolean: 'true', integer: '0', number: '0', string: '""', object: '{}' };
 
 // Exports
 
