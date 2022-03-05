@@ -58,7 +58,7 @@ module.exports = async (api, singleOperation) => {
     }
 
     const responseBodyProperties =
-      operation.responses[200]?.content?.['application/json']?.schema?.properties;
+      operation.responses?.[200]?.content?.['application/json']?.schema?.properties;
 
     if (responseBodyProperties !== undefined) {
       operationOutput.javaModel = getJavaOrCSharpResponseCode(
