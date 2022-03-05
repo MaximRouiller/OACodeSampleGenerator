@@ -259,10 +259,10 @@ function getPythonResponseCode(className, properties) {
           defaultValue = typeDefaults[type];
         } else if (type === 'array') {
           defaultValue = `[${
-            prop[1].items.type !== 'string'
+            !typeDefaults[prop[1].items.type]
               ? `_${capitalise(singular(prop[0]))}()]
 \t${capitalise(singular(prop[0]))} = _${capitalise(singular(prop[0]))}`
-              : '""]'
+              : `${typeDefaults[prop[1].items.type]}]`
           }`;
         } else {
           defaultValue = `_${capitalise(prop[0])}()\n\t${capitalise(prop[0])} = _${capitalise(
