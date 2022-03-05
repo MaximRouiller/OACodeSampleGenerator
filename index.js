@@ -161,22 +161,24 @@ Console.WriteLine(responseStatus);
 function getJSONRequestBody(properties) {
   return JSON.stringify(
     JSON.parse(
-      `{${properties
-        .map((prop) => {
-          const type = prop[1].type;
-          if (typeDefaults[type]) {
-            defaultValue = typeDefaults[type];
-          } else if (type === 'array') {
-            defaultValue = `[${
-              typeDefaults[prop[1].items.type] ||
-              getJSONRequestBody(Object.entries(prop[1].items.properties))
-            }]`;
-          } else {
-            defaultValue = getJSONRequestBody(Object.entries(prop[1].properties));
-          }
-          return `"${prop[0]}": ${defaultValue}`;
-        })
-        .join(',')}}`
+      '{' +
+        properties
+          .map((prop) => {
+            const type = prop[1].type;
+            if (typeDefaults[type]) {
+              defaultValue = typeDefaults[type];
+            } else if (type === 'array') {
+              defaultValue = `[${
+                typeDefaults[prop[1].items.type] ||
+                getJSONRequestBody(Object.entries(prop[1].items.properties))
+              }]`;
+            } else {
+              defaultValue = getJSONRequestBody(Object.entries(prop[1].properties));
+            }
+            return `"${prop[0]}": ${defaultValue}`;
+          })
+          .join(',') +
+        '}'
     ),
     null,
     2
