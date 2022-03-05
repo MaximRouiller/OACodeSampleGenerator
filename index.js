@@ -16,7 +16,7 @@ module.exports = async (api, fullyDereference = true, singleOperation = '') => {
   // Validate and dereference ('validate' calls 'dereference' internally)
   // https://apitools.dev/swagger-parser/docs/swagger-parser.html#validateapi-options-callback
   api = await SwaggerParser.validate(api, {
-    dereference: { circular: fullyDereference === true || 'ignore' },
+    dereference: { circular: fullyDereference || 'ignore' },
   });
 
   const isSwagger = api.swagger; // else is OpenAPI
