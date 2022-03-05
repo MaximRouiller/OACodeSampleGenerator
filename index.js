@@ -1,34 +1,27 @@
 const SwaggerParser = require('@apidevtools/swagger-parser');
-const converter = require('swagger2openapi');
 const { singular } = require('pluralize');
-// const fs = require('fs');
 
 /**
  * The main generator function which is the default export of this module
+ * Note: Fully dereference the spec (that is to dereference circular references as well) to make sure
+ * that all of the request bodies and response models are able to be generated. Only partially
+ * dereference the spec if you need to serialise the api as JSON in order to more easily inspect it.
  *
  * @param {string} api - A Swagger/OpenAPI object, or the file path or url of the specification
- * @param {string} singleOperation - (Optional) An operation ID, to get samples for just that one operation
+ * @param {boolean} fullyDereference - If false, api will be limited but will be JSON-serialisable
+ * @param {string} singleOperation - An operation ID, to get samples for just that one operation
  * @returns {object} - The generated output, with API information
  */
-module.exports = async (api, singleOperation) => {
-  // Bundle
-  api = await SwaggerParser.bundle(api);
-  // fs.writeFileSync('./processed-specifications/bundledSpec.json', JSON.stringify(api, null, 2));
-
-  // Convert
-  api = (await converter.convertObj(api, {})).openapi;
-  // fs.writeFileSync('./processed-specifications/convertedSpec.json', JSON.stringify(api, null, 2));
-
+module.exports = async (api, fullyDereference = true, singleOperation = '') => {
   // Validate and dereference ('validate' calls 'dereference' internally)
   // https://apitools.dev/swagger-parser/docs/swagger-parser.html#validateapi-options-callback
-  api = await SwaggerParser.validate(api);
+  api = await SwaggerParser.validate(api, {
+    dereference: { circular: fullyDereference === true || 'ignore' },
+  });
 
-  // Circular references are not supported by JSON so use the version below instead of the version
-  // above to just partially dereference the spec and serialise it as JSON. This will significantly
-  // reduce the number of operations whose responses are able to be deserialised with the model
-  // generators later on, so only use this version if you need to more easily inspect the JSON.
-  // api = await SwaggerParser.validate(api, { dereference: { circular: 'ignore' } });
-  // fs.writeFileSync('./processed-specifications/endSpec.json', JSON.stringify(api, null, 2));
+  const isSwagger = api.swagger; // else is OpenAPI
+  const baseRequestURL = isSwagger ? api.host : api.servers[0].url;
+  const apiVersion = api.info.version;
 
   const generated = [];
 
@@ -40,10 +33,11 @@ module.exports = async (api, singleOperation) => {
 
     const operationOutput = { operationId };
 
-    const requestURL = `${api.servers[0].url}${operationGroupPath}?api-version=${api.info.version}`;
+    const requestURL = `https://${baseRequestURL}${operationGroupPath}?api-version=${apiVersion}`;
 
-    const requestBodyProperties =
-      operation.requestBody?.content?.['application/json']?.schema?.properties;
+    const requestBodyProperties = isSwagger
+      ? operation.parameters?.find((parameter) => parameter.in === 'body')?.schema?.properties
+      : operation.requestBody?.content?.['application/json']?.schema?.properties;
 
     const hasBody = requestBodyProperties !== undefined;
 
@@ -57,8 +51,9 @@ module.exports = async (api, singleOperation) => {
       );
     }
 
-    const responseBodyProperties =
-      operation.responses?.[200]?.content?.['application/json']?.schema?.properties;
+    const responseBodyProperties = isSwagger
+      ? operation.responses?.[200]?.schema?.properties
+      : operation.responses?.[200]?.content?.['application/json']?.schema?.properties;
 
     if (responseBodyProperties !== undefined) {
       operationOutput.javaModel = getJavaOrCSharpResponseCode(
@@ -80,7 +75,7 @@ module.exports = async (api, singleOperation) => {
     generated.push(operationOutput);
   }
 
-  return { apiInfo: api.info, generated };
+  return { api, generated };
 };
 
 // Split spec into operations
