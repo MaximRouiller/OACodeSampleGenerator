@@ -163,6 +163,7 @@ function getJSONRequestBody(properties) {
     JSON.parse(
       '{' +
         properties
+          .filter((prop) => prop[1].type || prop[1].items || prop[1].properties)
           .map((prop) => {
             const type = prop[1].type;
             if (typeDefaults[type]) {
@@ -200,9 +201,7 @@ function getJavaOrCSharpResponseCode(language, className, properties) {
           type = capitalise(type);
         } else if (type === 'array') {
           const items = prop[1].items;
-          type = `List<${
-            items.properties !== undefined ? capitalise(singular(prop[0])) : capitalise(items.type)
-          }>`;
+          type = `List<${!items.type ? capitalise(singular(prop[0])) : capitalise(items.type)}>`;
         } else {
           type = capitalise(prop[0]);
         }
@@ -217,7 +216,7 @@ function getJavaOrCSharpResponseCode(language, className, properties) {
 
   function getClasses() {
     return properties
-      .filter((prop) => !prop[1].type)
+      .filter((prop) => prop[1].properties)
       .map((prop) =>
         getJavaOrCSharpResponseCode(
           language,
@@ -279,7 +278,7 @@ function getPythonResponseCode(className, properties) {
 
   function getClasses() {
     return properties
-      .filter((prop) => !prop[1].type)
+      .filter((prop) => prop[1].properties)
       .map((prop) =>
         getPythonResponseCode('_' + capitalise(prop[0]), Object.entries(prop[1].properties))
       )
