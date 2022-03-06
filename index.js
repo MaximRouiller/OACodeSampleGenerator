@@ -254,11 +254,12 @@ function getPythonResponseCode(className, properties) {
         if (typeDefaults[type]) {
           defaultValue = typeDefaults[type];
         } else if (type === 'array') {
+          const items = prop[1].items;
           defaultValue = `[${
-            !typeDefaults[prop[1].items.type] || prop[1].items.type === 'object'
+            !typeDefaults[items.type] || items.type === 'object'
               ? `_${capitalise(singular(prop[0]))}()]
 \t${capitalise(singular(prop[0]))} = _${capitalise(singular(prop[0]))}`
-              : `${typeDefaults[prop[1].items.type]}]`
+              : `${typeDefaults[items.type]}]`
           }`;
         } else {
           defaultValue = `_${capitalise(prop[0])}()\n\t${capitalise(prop[0])} = _${capitalise(
