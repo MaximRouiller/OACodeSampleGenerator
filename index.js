@@ -20,7 +20,7 @@ module.exports = async (api, fullyDereference = true, singleOperation = '') => {
   });
 
   const isSwagger = api.swagger; // else is OpenAPI
-  const baseRequestURL = isSwagger ? api.host : api.servers[0].url;
+  const baseRequestURL = isSwagger ? 'https://' + api.host : api.servers[0].url;
   const apiVersion = api.info.version;
 
   const generated = [];
@@ -33,7 +33,7 @@ module.exports = async (api, fullyDereference = true, singleOperation = '') => {
 
     const operationOutput = { operationId };
 
-    const requestURL = `https://${baseRequestURL}${operationGroupPath}?api-version=${apiVersion}`;
+    const requestURL = `${baseRequestURL}${operationGroupPath}?api-version=${apiVersion}`;
 
     const requestBodyProperties = isSwagger
       ? operation.parameters?.find((parameter) => parameter.in === 'body')?.schema?.properties
