@@ -57,20 +57,10 @@ module.exports = async (api, fullyDereference = true, singleOperation = '') => {
       : operation.responses?.[200]?.content?.['application/json']?.schema?.properties;
 
     if (responseBodyProperties !== undefined) {
-      operationOutput.javaModel = getJavaOrCSharpResponseCode(
-        'java',
-        operationId,
-        Object.entries(responseBodyProperties)
-      );
-      operationOutput.pythonModel = getPythonResponseCode(
-        operationId,
-        Object.entries(responseBodyProperties)
-      );
-      operationOutput.csharpModel = getJavaOrCSharpResponseCode(
-        'csharp',
-        operationId,
-        Object.entries(responseBodyProperties)
-      );
+      const properties = Object.entries(responseBodyProperties);
+      operationOutput.javaModel = getJavaOrCSharpResponseCode('java', operationId, properties);
+      operationOutput.pythonModel = getPythonResponseCode(operationId, properties);
+      operationOutput.csharpModel = getJavaOrCSharpResponseCode('csharp', operationId, properties);
     }
 
     generated.push(operationOutput);
