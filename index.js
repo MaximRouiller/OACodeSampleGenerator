@@ -25,8 +25,9 @@ module.exports = async (api, fullyDereference = true, singleOperation = '') => {
 
   const generated = [];
 
-  let operations = getOperations(api);
-  if (singleOperation) operations = operations.filter((op) => op.operationId === singleOperation);
+  const operations = singleOperation
+    ? getOperations(api).filter((op) => op.operationId === singleOperation)
+    : getOperations(api);
 
   for (const operation of operations) {
     const { operationGroupPath, operationId } = operation;
