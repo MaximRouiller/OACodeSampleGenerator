@@ -196,7 +196,9 @@ function getJavaOrCSharpResponseCode(language, className, properties) {
           type = capitalise(type);
         } else if (type === 'array') {
           const items = prop[1].items;
-          type = `List<${!items.type ? capitalise(singular(prop[0])) : capitalise(items.type)}>`;
+          type = `List<${
+            items.properties ? capitalise(singular(prop[0])) : capitalise(items.type)
+          }>`;
         } else {
           type = capitalise(prop[0]);
         }
@@ -211,7 +213,7 @@ function getJavaOrCSharpResponseCode(language, className, properties) {
 
   function getClasses() {
     return properties
-      .filter((prop) => prop[1].properties)
+      .filter((prop) => prop[1].properties && !prop[1].type)
       .map((prop) =>
         getJavaOrCSharpResponseCode(
           language,
@@ -274,7 +276,7 @@ function getPythonResponseCode(className, properties) {
 
   function getClasses() {
     return properties
-      .filter((prop) => prop[1].properties)
+      .filter((prop) => prop[1].properties && !prop[1].type)
       .map((prop) =>
         getPythonResponseCode('_' + capitalise(prop[0]), Object.entries(prop[1].properties))
       )
