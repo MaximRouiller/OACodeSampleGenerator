@@ -231,7 +231,7 @@ function getJavaOrCSharpResponseCode(language, className, properties) {
         (prop) =>
           prop[1].type === 'array' &&
           prop[1].items.properties &&
-          capitalise(singular(prop[0])) !== className // let's just say circular refs and recursion aren't a good mix
+          capitalise(singular(prop[0])) !== className // circular refs and recursion aren't a good mix
       )
       .map((prop) =>
         getJavaOrCSharpResponseCode(
@@ -290,7 +290,7 @@ function getPythonResponseCode(className, properties) {
         (prop) =>
           prop[1].type === 'array' &&
           prop[1].items.properties &&
-          '_' + capitalise(singular(prop[0])) !== className // let's just say circular refs and recursion aren't a good mix
+          '_' + capitalise(singular(prop[0])) !== className // circular refs and recursion aren't a good mix
       )
       .map((prop) =>
         getPythonResponseCode(
