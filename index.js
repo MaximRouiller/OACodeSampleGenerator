@@ -255,7 +255,7 @@ function getPythonResponseCode(className, properties) {
           defaultValue = typeDefaults[type];
         } else if (type === 'array') {
           defaultValue = `[${
-            !typeDefaults[prop[1].items.type]
+            !typeDefaults[prop[1].items.type] || prop[1].items.type === 'object'
               ? `_${capitalise(singular(prop[0]))}()]
 \t${capitalise(singular(prop[0]))} = _${capitalise(singular(prop[0]))}`
               : `${typeDefaults[prop[1].items.type]}]`
