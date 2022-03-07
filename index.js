@@ -32,6 +32,8 @@ module.exports = async (api, fullyDereference = true, singleOperation = '') => {
   for (const operation of operations) {
     const { operationGroupPath, operationId } = operation;
 
+    if (!operationId) continue;
+
     const operationOutput = { operationId };
 
     const requestURL = `${baseRequestURL}${operationGroupPath}?api-version=${apiVersion}`;
