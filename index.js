@@ -32,8 +32,6 @@ module.exports = async (api, fullyDereference = true, singleOperation = '') => {
   for (const operation of operations) {
     const { operationGroupPath, operationId } = operation;
 
-    if (!operationId) continue;
-
     const operationOutput = { operationId };
 
     const requestURL = `${baseRequestURL}${operationGroupPath}?api-version=${apiVersion}`;
@@ -76,6 +74,7 @@ function getOperations(spec) {
   const operations = [];
   for (const [operationGroupPath, operationGroup] of Object.entries(spec.paths)) {
     for (const [operationType, operation] of Object.entries(operationGroup)) {
+      if (!operation.operationId) continue;
       operations.push({ operationGroupPath, operationType, ...operation });
     }
   }
