@@ -7,10 +7,10 @@ const { singular } = require('pluralize');
  * that all of the request bodies and response models are able to be generated. Only partially
  * dereference the spec if you need to serialise the api as JSON in order to more easily inspect it.
  *
- * @param {string} api - A Swagger/OpenAPI object, or the file path or url of the specification
+ * @param {object|string} api - A Swagger/OpenAPI object, or the file path or url of the specification
  * @param {boolean} fullyDereference - If false, api will be limited but will be JSON-serialisable
  * @param {string} singleOperation - An operation ID, to get samples for just that one operation
- * @returns {object} - The generated output, with API information
+ * @returns {object} - The validated/dereferenced API and the generated output
  */
 module.exports = async (api, fullyDereference = true, singleOperation = '') => {
   // Validate and dereference ('validate' calls 'dereference' internally)

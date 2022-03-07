@@ -89,6 +89,9 @@
                       }
                     }
                   },
+                  "x-ms-identifiers": [
+                    "name"
+                  ],
                   "description": "List of Microsoft.Resources operations."
                 },
                 "nextLink": {
@@ -6062,6 +6065,10 @@
                           },
                           "description": "The provider extended location. "
                         },
+                        "x-ms-identifiers": [
+                          "location",
+                          "type"
+                        ],
                         "description": "The location mappings that are supported by this resource type."
                       },
                       "aliases": {
@@ -6207,6 +6214,7 @@
                                 },
                                 "description": "The type of the paths for alias."
                               },
+                              "x-ms-identifiers": [],
                               "description": "The paths for an alias."
                             },
                             "type": {
@@ -6360,6 +6368,9 @@
                           },
                           "description": "The alias type. "
                         },
+                        "x-ms-identifiers": [
+                          "name"
+                        ],
                         "description": "The aliases that are supported by this resource type."
                       },
                       "apiVersions": {
@@ -6390,7 +6401,10 @@
                               }
                             }
                           }
-                        }
+                        },
+                        "x-ms-identifiers": [
+                          "location"
+                        ]
                       },
                       "apiProfiles": {
                         "type": "array",
@@ -6409,6 +6423,10 @@
                             }
                           }
                         },
+                        "x-ms-identifiers": [
+                          "apiVersion",
+                          "profileVersion"
+                        ],
                         "description": "The API profiles for the resource provider."
                       },
                       "capabilities": {
@@ -6426,6 +6444,9 @@
                     },
                     "description": "Resource type managed by the resource provider."
                   },
+                  "x-ms-identifiers": [
+                    "resourceType"
+                  ],
                   "description": "The collection of provider resource types."
                 },
                 "providerAuthorizationConsentState": {
@@ -6599,6 +6620,7 @@
                               },
                               "description": "Role definition permissions."
                             },
+                            "x-ms-identifiers": [],
                             "description": "Role definition permissions."
                           },
                           "scopes": {
@@ -6663,6 +6685,7 @@
                               },
                               "description": "Role definition permissions."
                             },
+                            "x-ms-identifiers": [],
                             "description": "Role definition permissions."
                           },
                           "scopes": {
@@ -6690,6 +6713,7 @@
                       }
                     }
                   },
+                  "x-ms-identifiers": [],
                   "description": "An array of provider permissions."
                 },
                 "nextLink": {
@@ -6863,6 +6887,10 @@
                           },
                           "description": "The provider extended location. "
                         },
+                        "x-ms-identifiers": [
+                          "location",
+                          "type"
+                        ],
                         "description": "The location mappings that are supported by this resource type."
                       },
                       "aliases": {
@@ -7008,6 +7036,7 @@
                                 },
                                 "description": "The type of the paths for alias."
                               },
+                              "x-ms-identifiers": [],
                               "description": "The paths for an alias."
                             },
                             "type": {
@@ -7161,6 +7190,9 @@
                           },
                           "description": "The alias type. "
                         },
+                        "x-ms-identifiers": [
+                          "name"
+                        ],
                         "description": "The aliases that are supported by this resource type."
                       },
                       "apiVersions": {
@@ -7191,7 +7223,10 @@
                               }
                             }
                           }
-                        }
+                        },
+                        "x-ms-identifiers": [
+                          "location"
+                        ]
                       },
                       "apiProfiles": {
                         "type": "array",
@@ -7210,6 +7245,10 @@
                             }
                           }
                         },
+                        "x-ms-identifiers": [
+                          "apiVersion",
+                          "profileVersion"
+                        ],
                         "description": "The API profiles for the resource provider."
                       },
                       "capabilities": {
@@ -7227,6 +7266,9 @@
                     },
                     "description": "Resource type managed by the resource provider."
                   },
+                  "x-ms-identifiers": [
+                    "resourceType"
+                  ],
                   "description": "The collection of provider resource types."
                 },
                 "providerAuthorizationConsentState": {
@@ -7352,6 +7394,10 @@
                                 },
                                 "description": "The provider extended location. "
                               },
+                              "x-ms-identifiers": [
+                                "location",
+                                "type"
+                              ],
                               "description": "The location mappings that are supported by this resource type."
                             },
                             "aliases": {
@@ -7497,6 +7543,7 @@
                                       },
                                       "description": "The type of the paths for alias."
                                     },
+                                    "x-ms-identifiers": [],
                                     "description": "The paths for an alias."
                                   },
                                   "type": {
@@ -7650,6 +7697,9 @@
                                 },
                                 "description": "The alias type. "
                               },
+                              "x-ms-identifiers": [
+                                "name"
+                              ],
                               "description": "The aliases that are supported by this resource type."
                             },
                             "apiVersions": {
@@ -7680,7 +7730,10 @@
                                     }
                                   }
                                 }
-                              }
+                              },
+                              "x-ms-identifiers": [
+                                "location"
+                              ]
                             },
                             "apiProfiles": {
                               "type": "array",
@@ -7699,6 +7752,10 @@
                                   }
                                 }
                               },
+                              "x-ms-identifiers": [
+                                "apiVersion",
+                                "profileVersion"
+                              ],
                               "description": "The API profiles for the resource provider."
                             },
                             "capabilities": {
@@ -7716,6 +7773,9 @@
                           },
                           "description": "Resource type managed by the resource provider."
                         },
+                        "x-ms-identifiers": [
+                          "resourceType"
+                        ],
                         "description": "The collection of provider resource types."
                       },
                       "providerAuthorizationConsentState": {
@@ -8024,6 +8084,10 @@
                                 },
                                 "description": "The provider extended location. "
                               },
+                              "x-ms-identifiers": [
+                                "location",
+                                "type"
+                              ],
                               "description": "The location mappings that are supported by this resource type."
                             },
                             "aliases": {
@@ -8169,6 +8233,7 @@
                                       },
                                       "description": "The type of the paths for alias."
                                     },
+                                    "x-ms-identifiers": [],
                                     "description": "The paths for an alias."
                                   },
                                   "type": {
@@ -8322,6 +8387,9 @@
                                 },
                                 "description": "The alias type. "
                               },
+                              "x-ms-identifiers": [
+                                "name"
+                              ],
                               "description": "The aliases that are supported by this resource type."
                             },
                             "apiVersions": {
@@ -8352,7 +8420,10 @@
                                     }
                                   }
                                 }
-                              }
+                              },
+                              "x-ms-identifiers": [
+                                "location"
+                              ]
                             },
                             "apiProfiles": {
                               "type": "array",
@@ -8371,6 +8442,10 @@
                                   }
                                 }
                               },
+                              "x-ms-identifiers": [
+                                "apiVersion",
+                                "profileVersion"
+                              ],
                               "description": "The API profiles for the resource provider."
                             },
                             "capabilities": {
@@ -8388,6 +8463,9 @@
                           },
                           "description": "Resource type managed by the resource provider."
                         },
+                        "x-ms-identifiers": [
+                          "resourceType"
+                        ],
                         "description": "The collection of provider resource types."
                       },
                       "providerAuthorizationConsentState": {
@@ -8529,6 +8607,10 @@
                           },
                           "description": "The provider extended location. "
                         },
+                        "x-ms-identifiers": [
+                          "location",
+                          "type"
+                        ],
                         "description": "The location mappings that are supported by this resource type."
                       },
                       "aliases": {
@@ -8674,6 +8756,7 @@
                                 },
                                 "description": "The type of the paths for alias."
                               },
+                              "x-ms-identifiers": [],
                               "description": "The paths for an alias."
                             },
                             "type": {
@@ -8827,6 +8910,9 @@
                           },
                           "description": "The alias type. "
                         },
+                        "x-ms-identifiers": [
+                          "name"
+                        ],
                         "description": "The aliases that are supported by this resource type."
                       },
                       "apiVersions": {
@@ -8857,7 +8943,10 @@
                               }
                             }
                           }
-                        }
+                        },
+                        "x-ms-identifiers": [
+                          "location"
+                        ]
                       },
                       "apiProfiles": {
                         "type": "array",
@@ -8876,6 +8965,10 @@
                             }
                           }
                         },
+                        "x-ms-identifiers": [
+                          "apiVersion",
+                          "profileVersion"
+                        ],
                         "description": "The API profiles for the resource provider."
                       },
                       "capabilities": {
@@ -8893,6 +8986,9 @@
                     },
                     "description": "Resource type managed by the resource provider."
                   },
+                  "x-ms-identifiers": [
+                    "resourceType"
+                  ],
                   "description": "The collection of provider resource types."
                 },
                 "providerAuthorizationConsentState": {
@@ -9054,6 +9150,10 @@
                           },
                           "description": "The provider extended location. "
                         },
+                        "x-ms-identifiers": [
+                          "location",
+                          "type"
+                        ],
                         "description": "The location mappings that are supported by this resource type."
                       },
                       "aliases": {
@@ -9199,6 +9299,7 @@
                                 },
                                 "description": "The type of the paths for alias."
                               },
+                              "x-ms-identifiers": [],
                               "description": "The paths for an alias."
                             },
                             "type": {
@@ -9352,6 +9453,9 @@
                           },
                           "description": "The alias type. "
                         },
+                        "x-ms-identifiers": [
+                          "name"
+                        ],
                         "description": "The aliases that are supported by this resource type."
                       },
                       "apiVersions": {
@@ -9382,7 +9486,10 @@
                               }
                             }
                           }
-                        }
+                        },
+                        "x-ms-identifiers": [
+                          "location"
+                        ]
                       },
                       "apiProfiles": {
                         "type": "array",
@@ -9401,6 +9508,10 @@
                             }
                           }
                         },
+                        "x-ms-identifiers": [
+                          "apiVersion",
+                          "profileVersion"
+                        ],
                         "description": "The API profiles for the resource provider."
                       },
                       "capabilities": {
@@ -9418,6 +9529,9 @@
                     },
                     "description": "Resource type managed by the resource provider."
                   },
+                  "x-ms-identifiers": [
+                    "resourceType"
+                  ],
                   "description": "An array of resource types."
                 },
                 "nextLink": {
@@ -9834,6 +9948,10 @@
                           },
                           "description": "The provider extended location. "
                         },
+                        "x-ms-identifiers": [
+                          "location",
+                          "type"
+                        ],
                         "description": "The location mappings that are supported by this resource type."
                       },
                       "aliases": {
@@ -9979,6 +10097,7 @@
                                 },
                                 "description": "The type of the paths for alias."
                               },
+                              "x-ms-identifiers": [],
                               "description": "The paths for an alias."
                             },
                             "type": {
@@ -10132,6 +10251,9 @@
                           },
                           "description": "The alias type. "
                         },
+                        "x-ms-identifiers": [
+                          "name"
+                        ],
                         "description": "The aliases that are supported by this resource type."
                       },
                       "apiVersions": {
@@ -10162,7 +10284,10 @@
                               }
                             }
                           }
-                        }
+                        },
+                        "x-ms-identifiers": [
+                          "location"
+                        ]
                       },
                       "apiProfiles": {
                         "type": "array",
@@ -10181,6 +10306,10 @@
                             }
                           }
                         },
+                        "x-ms-identifiers": [
+                          "apiVersion",
+                          "profileVersion"
+                        ],
                         "description": "The API profiles for the resource provider."
                       },
                       "capabilities": {
@@ -10198,6 +10327,9 @@
                     },
                     "description": "Resource type managed by the resource provider."
                   },
+                  "x-ms-identifiers": [
+                    "resourceType"
+                  ],
                   "description": "The collection of provider resource types."
                 },
                 "providerAuthorizationConsentState": {
@@ -17648,6 +17780,7 @@
             },
             "description": "The type of the paths for alias."
           },
+          "x-ms-identifiers": [],
           "description": "The paths for an alias."
         },
         "type": {
@@ -17856,6 +17989,10 @@
             },
             "description": "The provider extended location. "
           },
+          "x-ms-identifiers": [
+            "location",
+            "type"
+          ],
           "description": "The location mappings that are supported by this resource type."
         },
         "aliases": {
@@ -18001,6 +18138,7 @@
                   },
                   "description": "The type of the paths for alias."
                 },
+                "x-ms-identifiers": [],
                 "description": "The paths for an alias."
               },
               "type": {
@@ -18154,6 +18292,9 @@
             },
             "description": "The alias type. "
           },
+          "x-ms-identifiers": [
+            "name"
+          ],
           "description": "The aliases that are supported by this resource type."
         },
         "apiVersions": {
@@ -18184,7 +18325,10 @@
                 }
               }
             }
-          }
+          },
+          "x-ms-identifiers": [
+            "location"
+          ]
         },
         "apiProfiles": {
           "type": "array",
@@ -18203,6 +18347,10 @@
               }
             }
           },
+          "x-ms-identifiers": [
+            "apiVersion",
+            "profileVersion"
+          ],
           "description": "The API profiles for the resource provider."
         },
         "capabilities": {
@@ -18279,6 +18427,10 @@
                   },
                   "description": "The provider extended location. "
                 },
+                "x-ms-identifiers": [
+                  "location",
+                  "type"
+                ],
                 "description": "The location mappings that are supported by this resource type."
               },
               "aliases": {
@@ -18424,6 +18576,7 @@
                         },
                         "description": "The type of the paths for alias."
                       },
+                      "x-ms-identifiers": [],
                       "description": "The paths for an alias."
                     },
                     "type": {
@@ -18577,6 +18730,9 @@
                   },
                   "description": "The alias type. "
                 },
+                "x-ms-identifiers": [
+                  "name"
+                ],
                 "description": "The aliases that are supported by this resource type."
               },
               "apiVersions": {
@@ -18607,7 +18763,10 @@
                       }
                     }
                   }
-                }
+                },
+                "x-ms-identifiers": [
+                  "location"
+                ]
               },
               "apiProfiles": {
                 "type": "array",
@@ -18626,6 +18785,10 @@
                     }
                   }
                 },
+                "x-ms-identifiers": [
+                  "apiVersion",
+                  "profileVersion"
+                ],
                 "description": "The API profiles for the resource provider."
               },
               "capabilities": {
@@ -18643,6 +18806,9 @@
             },
             "description": "Resource type managed by the resource provider."
           },
+          "x-ms-identifiers": [
+            "resourceType"
+          ],
           "description": "The collection of provider resource types."
         },
         "providerAuthorizationConsentState": {
@@ -18825,6 +18991,10 @@
                         },
                         "description": "The provider extended location. "
                       },
+                      "x-ms-identifiers": [
+                        "location",
+                        "type"
+                      ],
                       "description": "The location mappings that are supported by this resource type."
                     },
                     "aliases": {
@@ -18970,6 +19140,7 @@
                               },
                               "description": "The type of the paths for alias."
                             },
+                            "x-ms-identifiers": [],
                             "description": "The paths for an alias."
                           },
                           "type": {
@@ -19123,6 +19294,9 @@
                         },
                         "description": "The alias type. "
                       },
+                      "x-ms-identifiers": [
+                        "name"
+                      ],
                       "description": "The aliases that are supported by this resource type."
                     },
                     "apiVersions": {
@@ -19153,7 +19327,10 @@
                             }
                           }
                         }
-                      }
+                      },
+                      "x-ms-identifiers": [
+                        "location"
+                      ]
                     },
                     "apiProfiles": {
                       "type": "array",
@@ -19172,6 +19349,10 @@
                           }
                         }
                       },
+                      "x-ms-identifiers": [
+                        "apiVersion",
+                        "profileVersion"
+                      ],
                       "description": "The API profiles for the resource provider."
                     },
                     "capabilities": {
@@ -19189,6 +19370,9 @@
                   },
                   "description": "Resource type managed by the resource provider."
                 },
+                "x-ms-identifiers": [
+                  "resourceType"
+                ],
                 "description": "The collection of provider resource types."
               },
               "providerAuthorizationConsentState": {
@@ -19581,6 +19765,10 @@
                         },
                         "description": "The provider extended location. "
                       },
+                      "x-ms-identifiers": [
+                        "location",
+                        "type"
+                      ],
                       "description": "The location mappings that are supported by this resource type."
                     },
                     "aliases": {
@@ -19726,6 +19914,7 @@
                               },
                               "description": "The type of the paths for alias."
                             },
+                            "x-ms-identifiers": [],
                             "description": "The paths for an alias."
                           },
                           "type": {
@@ -19879,6 +20068,9 @@
                         },
                         "description": "The alias type. "
                       },
+                      "x-ms-identifiers": [
+                        "name"
+                      ],
                       "description": "The aliases that are supported by this resource type."
                     },
                     "apiVersions": {
@@ -19909,7 +20101,10 @@
                             }
                           }
                         }
-                      }
+                      },
+                      "x-ms-identifiers": [
+                        "location"
+                      ]
                     },
                     "apiProfiles": {
                       "type": "array",
@@ -19928,6 +20123,10 @@
                           }
                         }
                       },
+                      "x-ms-identifiers": [
+                        "apiVersion",
+                        "profileVersion"
+                      ],
                       "description": "The API profiles for the resource provider."
                     },
                     "capabilities": {
@@ -19945,6 +20144,9 @@
                   },
                   "description": "Resource type managed by the resource provider."
                 },
+                "x-ms-identifiers": [
+                  "resourceType"
+                ],
                 "description": "The collection of provider resource types."
               },
               "providerAuthorizationConsentState": {
@@ -20013,6 +20215,10 @@
                   },
                   "description": "The provider extended location. "
                 },
+                "x-ms-identifiers": [
+                  "location",
+                  "type"
+                ],
                 "description": "The location mappings that are supported by this resource type."
               },
               "aliases": {
@@ -20158,6 +20364,7 @@
                         },
                         "description": "The type of the paths for alias."
                       },
+                      "x-ms-identifiers": [],
                       "description": "The paths for an alias."
                     },
                     "type": {
@@ -20311,6 +20518,9 @@
                   },
                   "description": "The alias type. "
                 },
+                "x-ms-identifiers": [
+                  "name"
+                ],
                 "description": "The aliases that are supported by this resource type."
               },
               "apiVersions": {
@@ -20341,7 +20551,10 @@
                       }
                     }
                   }
-                }
+                },
+                "x-ms-identifiers": [
+                  "location"
+                ]
               },
               "apiProfiles": {
                 "type": "array",
@@ -20360,6 +20573,10 @@
                     }
                   }
                 },
+                "x-ms-identifiers": [
+                  "apiVersion",
+                  "profileVersion"
+                ],
                 "description": "The API profiles for the resource provider."
               },
               "capabilities": {
@@ -20377,6 +20594,9 @@
             },
             "description": "Resource type managed by the resource provider."
           },
+          "x-ms-identifiers": [
+            "resourceType"
+          ],
           "description": "An array of resource types."
         },
         "nextLink": {
@@ -21845,6 +22065,9 @@
               }
             }
           },
+          "x-ms-identifiers": [
+            "name"
+          ],
           "description": "List of Microsoft.Resources operations."
         },
         "nextLink": {
@@ -21926,6 +22149,9 @@
           "items": {
             "$ref": "#/definitions/WhatIfPropertyChange"
           },
+          "x-ms-identifiers": [
+            "path"
+          ],
           "description": "Nested property changes."
         }
       },
@@ -22006,6 +22232,9 @@
           "items": {
             "$ref": "#/definitions/WhatIfPropertyChange"
           },
+          "x-ms-identifiers": [
+            "path"
+          ],
           "description": "The predicted changes to resource properties."
         }
       }
@@ -22018,6 +22247,10 @@
           "items": {
             "$ref": "#/definitions/WhatIfChange"
           },
+          "x-ms-identifiers": [
+            "resourceId",
+            "changeType"
+          ],
           "description": "List of resource changes predicted by What-If operation."
         }
       }
@@ -22221,6 +22454,7 @@
             },
             "description": "Role definition permissions."
           },
+          "x-ms-identifiers": [],
           "description": "Role definition permissions."
         },
         "scopes": {
@@ -22294,6 +22528,7 @@
                 },
                 "description": "Role definition permissions."
               },
+              "x-ms-identifiers": [],
               "description": "Role definition permissions."
             },
             "scopes": {
@@ -22358,6 +22593,7 @@
                 },
                 "description": "Role definition permissions."
               },
+              "x-ms-identifiers": [],
               "description": "Role definition permissions."
             },
             "scopes": {
@@ -22450,6 +22686,7 @@
                       },
                       "description": "Role definition permissions."
                     },
+                    "x-ms-identifiers": [],
                     "description": "Role definition permissions."
                   },
                   "scopes": {
@@ -22514,6 +22751,7 @@
                       },
                       "description": "Role definition permissions."
                     },
+                    "x-ms-identifiers": [],
                     "description": "Role definition permissions."
                   },
                   "scopes": {
@@ -22541,6 +22779,7 @@
               }
             }
           },
+          "x-ms-identifiers": [],
           "description": "An array of provider permissions."
         },
         "nextLink": {
