@@ -1,0 +1,44 @@
+const index = require('../index.js');
+
+async function getRequestCodeSnippet(specURL) {
+    const singleOperation = process.argv[2] ? process.argv[3] : 'ResourceGroups_CreateOrUpdate';
+    const output = await index(specURL);
+    const { apiInfo, generated } = output;
+  
+    console.log(`API name: ${apiInfo.title}, Version: ${apiInfo.version}`);
+  
+    let javaSnippet = '';
+    let pythonSnippet = '';
+    let csharpSnippet = '';
+  
+    let requestBody = '';
+  
+    for (const operation of generated) {
+      if (singleOperation && operation.operationId !== singleOperation) continue;
+  
+      javaSnippet += operation.javaSnippet;
+      pythonSnippet += operation.pythonSnippet;
+      csharpSnippet += operation.csharpSnippet;
+  
+      requestBody += operation.requestBody || '';
+      
+    }
+    return [javaSnippet, pythonSnippet, csharpSnippet];
+  };
+  
+  try { 
+    async function getCode() {
+      let javaCode = '';
+      specURL = 'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/resources/resource-manager/Microsoft.Resources/stable/2021-04-01/resources.json'
+      let snippet = getRequestCodeSnippet(specURL)
+      await snippet.then(function(result) {
+          javaCode = result[0];
+      })
+      return javaCode
+    }
+
+    console.log(getCode());
+  }
+  catch (err) {
+    console.log(err)
+  }
