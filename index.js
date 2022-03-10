@@ -145,7 +145,7 @@ Console.WriteLine(responseStatus);
 }
 
 // JSON request body generator
-function getJSONRequestBody(properties) {
+function getJSONRequestBody(properties, key = '') {
   return JSON.stringify(
     JSON.parse(
       '{' +
@@ -156,12 +156,14 @@ function getJSONRequestBody(properties) {
             if (typeDefaults[type]) {
               defaultValue = typeDefaults[type];
             } else if (type === 'array') {
+              const items = prop[1].items;
               defaultValue = `[${
-                typeDefaults[prop[1].items.type] ||
-                getJSONRequestBody(Object.entries(prop[1].items.properties))
+                (!typeDefaults[items.type] || items.type === 'object') && prop[0] !== key
+                  ? getJSONRequestBody(Object.entries(items.properties), prop[0])
+                  : typeDefaults[items.type] || '{}'
               }]`;
             } else {
-              defaultValue = getJSONRequestBody(Object.entries(prop[1].properties));
+              defaultValue = getJSONRequestBody(Object.entries(prop[1].properties), prop[0]);
             }
             return `"${prop[0]}": ${defaultValue}`;
           })
