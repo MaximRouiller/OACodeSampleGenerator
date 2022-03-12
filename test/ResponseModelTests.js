@@ -17,14 +17,12 @@ async function getResponseCodeModel(specURL) {
   let pythonModel = '';
   let csharpModel = '';
 
-
   for (const operation of generated) {
     if (singleOperation && operation.operationId !== singleOperation) continue;
 
     javaModel += operation.javaModel;
     pythonModel += operation.pythonModel;
     csharpModel += operation.csharpModel;
-
   }
   return [javaModel, pythonModel, csharpModel];
 }
