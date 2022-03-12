@@ -302,10 +302,3 @@ const capitalise = (s) => s.charAt(0).toUpperCase() + s.slice(1);
 // https://swagger.io/docs/specification/data-models/data-types/
 // Does not include default for array type
 const typeDefaults = { boolean: 'true', integer: '0', number: '0', string: '""', object: '{}' };
-
-// Exports
-
-exports.getJavaRequestCode = getJavaRequestCode;
-exports.getPythonRequestCode = getPythonRequestCode;
-exports.getCSharpRequestCode = getCSharpRequestCode;
-exports.getOperations = getOperations;
