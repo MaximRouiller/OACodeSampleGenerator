@@ -36,11 +36,11 @@ module.exports = async (api, fullyDereference = true, singleOperation = '') => {
 
     const requestURL = `${baseRequestURL}${operationGroupPath}?api-version=${apiVersion}`;
 
-    const requestBodyProperties = isSwagger
-      ? operation.parameters?.find((parameter) => parameter.in === 'body')?.schema?.properties
-      : operation.requestBody?.content?.['application/json']?.schema?.properties;
+    const requestBodySchema = isSwagger
+      ? operation.parameters?.find((parameter) => parameter.in === 'body')?.schema
+      : operation.requestBody?.content?.['application/json']?.schema;
 
-    const hasBody = requestBodyProperties !== undefined;
+    const hasBody = requestBodySchema?.properties !== undefined;
 
     operationOutput.javaSnippet = getJavaRequestCode(operation, requestURL, hasBody);
     operationOutput.pythonSnippet = getPythonRequestCode(operation, requestURL, hasBody);
@@ -48,16 +48,16 @@ module.exports = async (api, fullyDereference = true, singleOperation = '') => {
 
     if (hasBody) {
       operationOutput.requestBody = getJSONRequestBody(
-        Object.entries(requestBodyProperties).filter((prop) => !prop[1].readOnly)
+        getAllProperties(requestBodySchema).filter((prop) => !prop[1].readOnly)
       );
     }
 
-    const responseBodyProperties = isSwagger
-      ? operation.responses?.[200]?.schema?.properties
-      : operation.responses?.[200]?.content?.['application/json']?.schema?.properties;
+    const responseBodySchema = isSwagger
+      ? operation.responses?.[200]?.schema
+      : operation.responses?.[200]?.content?.['application/json']?.schema;
 
-    if (responseBodyProperties !== undefined) {
-      const properties = Object.entries(responseBodyProperties);
+    if (responseBodySchema?.properties !== undefined) {
+      const properties = getAllProperties(responseBodySchema);
       operationOutput.javaModel = getJavaOrCSharpResponseCode('java', operationId, properties);
       operationOutput.pythonModel = getPythonResponseCode(operationId, properties);
       operationOutput.csharpModel = getJavaOrCSharpResponseCode('csharp', operationId, properties);
@@ -159,11 +159,11 @@ function getJSONRequestBody(properties, key = '') {
               const items = prop[1].items;
               defaultValue = `[${
                 (!typeDefaults[items.type] || items.type === 'object') && prop[0] !== key
-                  ? getJSONRequestBody(Object.entries(items.properties), prop[0])
+                  ? getJSONRequestBody(getAllProperties(items), prop[0])
                   : typeDefaults[items.type] || '{}'
               }]`;
             } else {
-              defaultValue = getJSONRequestBody(Object.entries(prop[1].properties), prop[0]);
+              defaultValue = getJSONRequestBody(getAllProperties(prop[1]), prop[0]);
             }
             return `"${prop[0]}": ${defaultValue}`;
           })
@@ -209,11 +209,7 @@ function getJavaOrCSharpResponseCode(language, className, properties) {
     return properties
       .filter((prop) => prop[1].properties && !prop[1].type)
       .map((prop) =>
-        getJavaOrCSharpResponseCode(
-          language,
-          capitalise(prop[0]),
-          Object.entries(prop[1].properties)
-        )
+        getJavaOrCSharpResponseCode(language, capitalise(prop[0]), getAllProperties(prop[1]))
       )
       .join('');
   }
@@ -230,7 +226,7 @@ function getJavaOrCSharpResponseCode(language, className, properties) {
         getJavaOrCSharpResponseCode(
           language,
           capitalise(singular(prop[0])),
-          Object.entries(prop[1].items.properties)
+          getAllProperties(prop[1].items)
         )
       )
       .join('');
@@ -271,9 +267,7 @@ function getPythonResponseCode(className, properties) {
   function getClasses() {
     return properties
       .filter((prop) => prop[1].properties && !prop[1].type)
-      .map((prop) =>
-        getPythonResponseCode('_' + capitalise(prop[0]), Object.entries(prop[1].properties))
-      )
+      .map((prop) => getPythonResponseCode('_' + capitalise(prop[0]), getAllProperties(prop[1])))
       .join('');
   }
 
@@ -286,10 +280,7 @@ function getPythonResponseCode(className, properties) {
           '_' + capitalise(singular(prop[0])) !== className // circular refs and recursion aren't a good mix
       )
       .map((prop) =>
-        getPythonResponseCode(
-          '_' + capitalise(singular(prop[0])),
-          Object.entries(prop[1].items.properties)
-        )
+        getPythonResponseCode('_' + capitalise(singular(prop[0])), getAllProperties(prop[1].items))
       )
       .join('');
   }
@@ -302,3 +293,10 @@ const capitalise = (s) => s.charAt(0).toUpperCase() + s.slice(1);
 // https://swagger.io/docs/specification/data-models/data-types/
 // Does not include default for array type
 const typeDefaults = { boolean: 'true', integer: '0', number: '0', string: '""', object: '{}' };
+
+const getAllProperties = (obj) =>
+  Object.entries({
+    ...obj.properties,
+    ...obj.allOf?.[0].properties,
+    ...obj.allOf?.[0].allOf?.[0].properties,
+  });
