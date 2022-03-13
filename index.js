@@ -40,7 +40,7 @@ module.exports = async (api, fullyDereference = true, singleOperation = '') => {
       ? operation.parameters?.find((parameter) => parameter.in === 'body')?.schema
       : operation.requestBody?.content?.['application/json']?.schema;
 
-    const hasBody = requestBodySchema?.properties !== undefined;
+    const hasBody = requestBodySchema !== undefined && hasProperties(requestBodySchema);
 
     operationOutput.javaSnippet = getJavaRequestCode(operation, requestURL, hasBody);
     operationOutput.pythonSnippet = getPythonRequestCode(operation, requestURL, hasBody);
@@ -56,7 +56,7 @@ module.exports = async (api, fullyDereference = true, singleOperation = '') => {
       ? operation.responses?.[200]?.schema
       : operation.responses?.[200]?.content?.['application/json']?.schema;
 
-    if (responseBodySchema?.properties !== undefined) {
+    if (responseBodySchema !== undefined && hasProperties(responseBodySchema)) {
       const properties = getAllProperties(responseBodySchema);
       operationOutput.javaModel = getJavaOrCSharpResponseCode('java', operationId, properties);
       operationOutput.pythonModel = getPythonResponseCode(operationId, properties);
@@ -150,7 +150,7 @@ function getJSONRequestBody(properties, key = '') {
     JSON.parse(
       '{' +
         properties
-          .filter((prop) => prop[1].type || prop[1].items || prop[1].properties)
+          .filter((prop) => prop[1].type || prop[1].items || hasProperties(prop[1]))
           .map((prop) => {
             const type = prop[1].type;
             if (typeDefaults[type]) {
@@ -191,7 +191,7 @@ function getJavaOrCSharpResponseCode(language, className, properties) {
         } else if (type === 'array') {
           const items = prop[1].items;
           type = `List<${
-            items.properties ? capitalise(singular(prop[0])) : capitalise(items.type)
+            hasProperties(items) ? capitalise(singular(prop[0])) : capitalise(items.type)
           }>`;
         } else {
           type = capitalise(prop[0]);
@@ -207,7 +207,7 @@ function getJavaOrCSharpResponseCode(language, className, properties) {
 
   function getClasses() {
     return properties
-      .filter((prop) => prop[1].properties && !prop[1].type)
+      .filter((prop) => hasProperties(prop[1]) && !prop[1].type)
       .map((prop) =>
         getJavaOrCSharpResponseCode(language, capitalise(prop[0]), getAllProperties(prop[1]))
       )
@@ -219,7 +219,7 @@ function getJavaOrCSharpResponseCode(language, className, properties) {
       .filter(
         (prop) =>
           prop[1].type === 'array' &&
-          prop[1].items.properties &&
+          hasProperties(prop[1].items) &&
           capitalise(singular(prop[0])) !== className // circular refs and recursion aren't a good mix
       )
       .map((prop) =>
@@ -266,7 +266,7 @@ function getPythonResponseCode(className, properties) {
 
   function getClasses() {
     return properties
-      .filter((prop) => prop[1].properties && !prop[1].type)
+      .filter((prop) => hasProperties(prop[1]) && !prop[1].type)
       .map((prop) => getPythonResponseCode('_' + capitalise(prop[0]), getAllProperties(prop[1])))
       .join('');
   }
@@ -276,7 +276,7 @@ function getPythonResponseCode(className, properties) {
       .filter(
         (prop) =>
           prop[1].type === 'array' &&
-          prop[1].items.properties &&
+          hasProperties(prop[1].items) &&
           '_' + capitalise(singular(prop[0])) !== className // circular refs and recursion aren't a good mix
       )
       .map((prop) =>
@@ -299,3 +299,5 @@ const getAllProperties = (obj) =>
     ...obj.properties,
     ...(obj.allOf ? Object.fromEntries(getAllProperties(obj.allOf[0])) : {}),
   });
+
+const hasProperties = (obj) => getAllProperties(obj).length !== 0;
