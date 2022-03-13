@@ -105,7 +105,7 @@ describe('C# request code generation', function () {
   });
 
   it('Invalid args', function () {
-    let snippet = getRequestCodeSnippet(SPEC_URL);
+    let snippet = getRequestCodeSnippet('WRONG URL');
     snippet.then(function (result) {
       expect(result[0]).to.equal('');
       expect(result[0]).not.to.be.an('string');
@@ -121,12 +121,4 @@ describe('C# request code generation', function () {
       expect(result[0].length).not.to.be.at.least(300);
     });
   });
-});
-
-describe('Tests for deserialised models', function () {
-  it('Test for Java response model', function () {});
-
-  it('Test for Python response model', function () {});
-
-  it('Test for C# response model', function () {});
 });
