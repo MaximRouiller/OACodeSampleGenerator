@@ -297,6 +297,5 @@ const typeDefaults = { boolean: 'true', integer: '0', number: '0', string: '""',
 const getAllProperties = (obj) =>
   Object.entries({
     ...obj.properties,
-    ...obj.allOf?.[0].properties,
-    ...obj.allOf?.[0].allOf?.[0].properties,
+    ...(obj.allOf ? Object.fromEntries(getAllProperties(obj.allOf[0])) : {}),
   });
