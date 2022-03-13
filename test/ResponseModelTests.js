@@ -101,7 +101,7 @@ describe('C# response code generation', function () {
   });
 
   it('Invalid args', function () {
-    let model = getResponseCodeModel(SPEC_URL);
+    let model = getResponseCodeModel('WRONG URL');
     model.then(function (result) {
       expect(result[2]).to.equal('');
       expect(result[2]).not.to.be.an('string');
