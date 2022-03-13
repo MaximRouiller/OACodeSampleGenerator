@@ -15,8 +15,7 @@ const generator = require('.');
   // Optionally pass in a single operation ID as a fifth command line argument -> node generateExamples spec operationId
   // This will get snippets/models for just that one operation
   const singleOperation = process.argv[3] ? process.argv[4] : 'ResourceGroups_CreateOrUpdate';
-  // const singleOperation = 'Deployments_CreateOrUpdateAtScope'; // this is a better one to test the model generators with
-  // const singleOperation = ''; // to get snippets/models for all operations in spec
+  // 'Deployments_CreateOrUpdateAtScope' is a better one to test the body/model generators with (and needs full dereference to work)
 
   try {
     const { api, generated } = await generator(spec, fullyDereference, singleOperation);
