@@ -193,8 +193,7 @@ function getJavaOrCSharpResponseCode(language, className, properties) {
         let variableName = prop[0];
         // 'namespace' is a C# keyword
         if (variableName === 'namespace' && language === 'csharp') variableName = '@namespace';
-        return `
-  ${type} ${variableName};`;
+        return `\n  ${type} ${variableName};`;
       })
       .join('');
   }
@@ -241,19 +240,17 @@ function getPythonResponseCode(className, properties) {
           defaultValue = typeDefaults[type];
         } else if (type === 'array') {
           const items = prop[1].items;
+          const name = capitalise(singular(prop[0]));
           defaultValue = `[${
             !typeDefaults[items.type] || items.type === 'object'
-              ? `_${capitalise(singular(prop[0]))}()]
-\t${capitalise(singular(prop[0]))} = _${capitalise(singular(prop[0]))}`
+              ? `_${name}()]\n\t${name} = _${name}`
               : `${typeDefaults[items.type]}]`
           }`;
         } else {
-          defaultValue = `_${capitalise(prop[0])}()\n\t${capitalise(prop[0])} = _${capitalise(
-            prop[0]
-          )}`;
+          const name = capitalise(prop[0]);
+          defaultValue = `_${name}()\n\t${name} = _${name}`;
         }
-        return `
-\t${prop[0]} = ${defaultValue}`;
+        return `\n\t${prop[0]} = ${defaultValue}`;
       })
       .join('');
   }
