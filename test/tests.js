@@ -6,43 +6,43 @@ const SPEC_URL =
 
 const SINGLE_OPERATION = 'ResourceGroups_CreateOrUpdate';
 
-async function getGenerated(input) {
-  return (await generator(input, SINGLE_OPERATION)).generated[0];
+describe('Generator invocation', () => {
+  it('with a valid url parameter returns a non-null output', async () => {
+    expect(await generator(SPEC_URL)).not.to.equal(null);
+  });
+
+  it('with an invalid url parameter throws an error', async () => {
+    try {
+      await generator('WRONG_URL');
+    } catch (err) {
+      expect(err).not.to.equal(null);
+    }
+  });
+
+  it('with a null parameter throws an error', async () => {
+    try {
+      await generator(null);
+    } catch (err) {
+      expect(err).not.to.equal(null);
+    }
+  });
+});
+
+function testSample(sampleName) {
+  it('should be a non-empty string', async () => {
+    const sample = (await generator(SPEC_URL, SINGLE_OPERATION)).generated[0][sampleName];
+    expect(sample).not.to.equal(null);
+    expect(sample).not.to.equal('');
+    expect(sample).to.be.a('string');
+  });
 }
 
-function test(sampleName) {
-  it('Happy path (with args)', () => {
-    getGenerated(SPEC_URL).then((generated) => {
-      const sample = generated[sampleName];
-      expect(sample).not.to.equal(null);
-      expect(sample).not.to.equal('');
-      expect(sample).to.be.an('string');
-    });
-  });
+describe('Java request code', () => testSample('javaSnippet'));
+describe('Python request code', () => testSample('pythonSnippet'));
+describe('C# request code', () => testSample('csharpSnippet'));
 
-  it('Invalid args', () => {
-    getGenerated('WRONG_URL').then((generated) => {
-      const sample = generated[sampleName];
-      expect(sample).to.equal('');
-      expect(sample).not.to.be.an('string');
-    });
-  });
+describe('JSON request body', () => testSample('requestBody'));
 
-  it('Null args', () => {
-    getGenerated(null).then((generated) => {
-      const sample = generated[sampleName];
-      expect(sample).to.equal('');
-      expect(sample).not.to.be.an('string');
-    });
-  });
-}
-
-describe('Java request code generation', () => test('javaSnippet'));
-describe('Python request code generation', () => test('pythonSnippet'));
-describe('C# request code generation', () => test('csharpSnippet'));
-
-describe('JSON request body generation', () => test('requestBody'));
-
-describe('Java response code generation', () => test('javaModel'));
-describe('Python response code generation', () => test('pythonModel'));
-describe('C# response code generation', () => test('csharpModel'));
+describe('Java response code', () => testSample('javaModel'));
+describe('Python response code', () => testSample('pythonModel'));
+describe('C# response code', () => testSample('csharpModel'));
