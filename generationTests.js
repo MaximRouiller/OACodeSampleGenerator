@@ -1,5 +1,5 @@
 const { expect } = require('chai');
-const generator = require('..');
+const generator = require('.');
 
 const SPEC_URL =
   'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/resources/resource-manager/Microsoft.Resources/stable/2021-04-01/resources.json';
