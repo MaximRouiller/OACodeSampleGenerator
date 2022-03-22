@@ -30,10 +30,7 @@ const generator = require('.');
     fs.writeFileSync('./example/pythonModel.py', getAllSamples('pythonModel'));
     fs.writeFileSync('./example/csharpModel.cs', getAllSamples('csharpModel'));
 
-    fs.writeFileSync(
-      './example/output.json',
-      JSON.stringify({ apiInfo: api.info, generated }, null, 2)
-    );
+    fs.writeFileSync('./example/generated.json', JSON.stringify(generated, null, 2));
   } catch (err) {
     console.error(err);
   }
