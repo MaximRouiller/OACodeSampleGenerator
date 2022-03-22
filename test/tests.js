@@ -37,12 +37,12 @@ function testSample(sampleName) {
   });
 }
 
-describe('Java request code', () => testSample('javaSnippet'));
-describe('Python request code', () => testSample('pythonSnippet'));
-describe('C# request code', () => testSample('csharpSnippet'));
+describe('Java request snippet', () => testSample('javaSnippet'));
+describe('Python request snippet', () => testSample('pythonSnippet'));
+describe('C# request snippet', () => testSample('csharpSnippet'));
 
 describe('JSON request body', () => testSample('requestBody'));
 
-describe('Java response code', () => testSample('javaModel'));
-describe('Python response code', () => testSample('pythonModel'));
-describe('C# response code', () => testSample('csharpModel'));
+describe('Java response model', () => testSample('javaModel'));
+describe('Python response model', () => testSample('pythonModel'));
+describe('C# response model', () => testSample('csharpModel'));
