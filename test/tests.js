@@ -7,11 +7,11 @@ const SPEC_URL =
 const SINGLE_OPERATION = 'ResourceGroups_CreateOrUpdate';
 
 describe('Generator invocation', () => {
-  it('with a valid url parameter returns a non-null output', async () => {
+  it('with a valid url parameter should return a non-null output', async () => {
     expect(await generator(SPEC_URL)).not.to.equal(null);
   });
 
-  it('with an invalid url parameter throws an error', async () => {
+  it('with an invalid url parameter should throw an error', async () => {
     try {
       await generator('WRONG_URL');
     } catch (err) {
@@ -19,7 +19,7 @@ describe('Generator invocation', () => {
     }
   });
 
-  it('with a null parameter throws an error', async () => {
+  it('with a null parameter should throw an error', async () => {
     try {
       await generator(null);
     } catch (err) {
