@@ -28,21 +28,25 @@ describe('Generator invocation', () => {
   });
 });
 
-function testSample(sampleName) {
-  it('should be a non-empty string', async () => {
-    const sample = (await generator(SPEC_URL, SINGLE_OPERATION)).generated[0][sampleName];
-    expect(sample).not.to.equal(null);
-    expect(sample).not.to.equal('');
-    expect(sample).to.be.a('string');
-  });
-}
+(async function testSamples() {
+  const generated = (await generator(SPEC_URL, SINGLE_OPERATION)).generated;
 
-describe('Java request snippet', () => testSample('javaSnippet'));
-describe('Python request snippet', () => testSample('pythonSnippet'));
-describe('C# request snippet', () => testSample('csharpSnippet'));
+  const testSample = (sampleName) => {
+    it('should be a non-empty string', () => {
+      const sample = generated[0][sampleName];
+      expect(sample).not.to.equal(null);
+      expect(sample).not.to.equal('');
+      expect(sample).to.be.a('string');
+    });
+  };
 
-describe('JSON request body', () => testSample('requestBody'));
+  describe('Java request snippet', () => testSample('javaSnippet'));
+  describe('Python request snippet', () => testSample('pythonSnippet'));
+  describe('C# request snippet', () => testSample('csharpSnippet'));
 
-describe('Java response model', () => testSample('javaModel'));
-describe('Python response model', () => testSample('pythonModel'));
-describe('C# response model', () => testSample('csharpModel'));
+  describe('JSON request body', () => testSample('requestBody'));
+
+  describe('Java response model', () => testSample('javaModel'));
+  describe('Python response model', () => testSample('pythonModel'));
+  describe('C# response model', () => testSample('csharpModel'));
+})();
