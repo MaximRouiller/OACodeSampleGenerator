@@ -3,21 +3,15 @@ const { singular } = require('pluralize');
 
 /**
  * The main generator function which is the default export of this module
- * Note: Fully dereference the spec (that is to dereference circular references as well) to make sure
- * that all of the request bodies and response models are able to be generated. Only partially
- * dereference the spec if you need to serialise the api as JSON in order to more easily inspect it.
  *
  * @param {object|string} api - A Swagger/OpenAPI object, or the file path or url of the specification
- * @param {boolean} fullyDereference - If false, api will be limited but will be JSON-serialisable
  * @param {string} singleOperation - An operation ID, to get samples for just that one operation
  * @returns {object} - The validated/dereferenced API and the generated output
  */
-module.exports = async (api, fullyDereference = true, singleOperation = '') => {
+module.exports = async (api, singleOperation = '') => {
   // Validate and dereference ('validate' calls 'dereference' internally)
   // https://apitools.dev/swagger-parser/docs/swagger-parser.html#validateapi-options-callback
-  api = await SwaggerParser.validate(api, {
-    dereference: { circular: fullyDereference || 'ignore' },
-  });
+  api = await SwaggerParser.validate(api);
 
   const isSwagger = api.swagger; // else is OpenAPI
   const baseRequestURL = isSwagger ? 'https://' + api.host : api.servers[0].url;

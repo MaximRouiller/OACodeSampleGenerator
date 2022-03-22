@@ -8,19 +8,13 @@ const generator = require('.');
     process.argv[2] ||
     'https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/resources/resource-manager/Microsoft.Resources/stable/2021-04-01/resources.json';
 
-  // Optionally pass in a boolean as a fourth command line argument -> node generateExamples spec boolean
-  // If true, api may not be serialisable as JSON because of circular references
-  const fullyDereference = process.argv[2] ? process.argv[3] === 'true' : false;
-
-  // Optionally pass in a single operation ID as a fifth command line argument -> node generateExamples spec operationId
+  // Optionally pass in a single operation ID as a fourth command line argument -> node generateExamples spec operationId
   // This will get snippets/models for just that one operation
-  const singleOperation = process.argv[3] ? process.argv[4] : 'ResourceGroups_CreateOrUpdate';
-  // 'Deployments_CreateOrUpdateAtScope' is a better one to test the body/model generators with (and needs full dereference to work)
+  const singleOperation = process.argv[2] ? process.argv[3] : 'ResourceGroups_CreateOrUpdate';
+  // 'Deployments_CreateOrUpdateAtScope' is a better one to test the body/model generators with
 
   try {
-    const { api, generated } = await generator(spec, fullyDereference, singleOperation);
-
-    fs.writeFileSync('./example/api.json', JSON.stringify(api, null, 2));
+    const { api, generated } = await generator(spec, singleOperation);
 
     console.log(`API name: ${api.info.title}, Version: ${api.info.version}`);
 
