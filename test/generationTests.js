@@ -13,7 +13,7 @@ describe('Generator invocation', () => {
 
   it('with an invalid url parameter should throw an error', async () => {
     try {
-      await generator('WRONG_URL');
+      await generator('https://non-existent-url.com/non-existent-spec.json');
     } catch (err) {
       expect(err).not.to.equal(null);
     }
