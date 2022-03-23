@@ -17,13 +17,11 @@ module.exports = async (spec, singleOperation = '') => {
   const baseRequestURL = isSwagger ? 'https://' + api.host : api.servers[0].url;
   const apiVersion = api.info.version;
 
-  const generated = [];
-
   const operations = singleOperation
     ? getOperations(api).filter((op) => op.operationId === singleOperation)
     : getOperations(api);
 
-  for (const operation of operations) {
+  const generated = operations.map((operation) => {
     const { operationGroupPath, operationId } = operation;
 
     const operationOutput = { operationId };
@@ -57,8 +55,8 @@ module.exports = async (spec, singleOperation = '') => {
       operationOutput.csharpModel = getJavaOrCSharpResponseCode('csharp', operationId, properties);
     }
 
-    generated.push(operationOutput);
-  }
+    return operationOutput;
+  });
 
   return { api, generated };
 };
