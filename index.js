@@ -179,10 +179,10 @@ function getJavaOrCSharpResponseCode(language, className, properties) {
   function getFields() {
     return properties
       .map((prop) => {
-        let type = prop[1].type;
-        if (typeDefaults[type]) {
-          type = capitalise(type);
-        } else if (type === 'array') {
+        const initialType = prop[1].type;
+        if (typeDefaults[initialType]) {
+          type = capitalise(initialType);
+        } else if (initialType === 'array') {
           const items = prop[1].items;
           type = `List<${
             hasProperties(items) ? capitalise(singular(prop[0])) : capitalise(items.type)
@@ -190,9 +190,9 @@ function getJavaOrCSharpResponseCode(language, className, properties) {
         } else {
           type = capitalise(prop[0]);
         }
-        let variableName = prop[0];
+        const variableName =
+          prop[0] === 'namespace' && language === 'csharp' ? '@namespace' : prop[0];
         // 'namespace' is a C# keyword
-        if (variableName === 'namespace' && language === 'csharp') variableName = '@namespace';
         return `\n  ${type} ${variableName};`;
       })
       .join('');
