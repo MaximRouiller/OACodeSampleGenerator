@@ -4,14 +4,14 @@ const { singular } = require('pluralize');
 /**
  * The main generator function which is the default export of this module
  *
- * @param {object|string} api - A Swagger/OpenAPI object, or the file path or url of the specification
+ * @param {object|string} spec - A Swagger/OpenAPI object, or the file path or url of the specification
  * @param {string} singleOperation - An operation ID, to get samples for just that one operation
  * @returns {object} - The validated/dereferenced API and the generated output
  */
-module.exports = async (api, singleOperation = '') => {
+module.exports = async (spec, singleOperation = '') => {
   // Validate and dereference ('validate' calls 'dereference' internally)
   // https://apitools.dev/swagger-parser/docs/swagger-parser.html#validateapi-options-callback
-  api = await SwaggerParser.validate(api);
+  const api = await SwaggerParser.validate(spec);
 
   const isSwagger = api.swagger; // else is OpenAPI
   const baseRequestURL = isSwagger ? 'https://' + api.host : api.servers[0].url;
