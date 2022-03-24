@@ -37,6 +37,7 @@ module.exports = async (spec, singleOperation = '') => {
     operationOutput.javaSnippet = getJavaRequestCode(operation, requestURL, hasBody);
     operationOutput.pythonSnippet = getPythonRequestCode(operation, requestURL, hasBody);
     operationOutput.csharpSnippet = getCSharpRequestCode(operation, requestURL, hasBody);
+    operationOutput.phpSnippet = getPhpRequestCode(operation, requestURL, hasBody);
 
     if (hasBody) {
       operationOutput.requestBody = getJSONRequestBody(
@@ -53,6 +54,7 @@ module.exports = async (spec, singleOperation = '') => {
       operationOutput.javaModel = getJavaOrCSharpResponseCode('java', operationId, properties);
       operationOutput.pythonModel = getPythonResponseCode(operationId, properties);
       operationOutput.csharpModel = getJavaOrCSharpResponseCode('csharp', operationId, properties);
+      operationOutput.phpModel = getPhpResponseCode(operationId,properties)
     }
 
     return operationOutput;
@@ -134,6 +136,41 @@ Console.WriteLine(responseString);
 Console.WriteLine(responseStatus);
 
 `;
+}
+
+function getPhpRequestCode({ operationId, operationType }, requestURL, hasBody) {
+  return `<?php
+  
+// ${operationId}
+
+$url="${requestURL}";
+$ch = curl_init($url);
+
+$payload = json_decode(file_get_contents("body.json"),true);
+//var_dump ($payload);
+
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+curl_setopt($ch, CURLOPT_HEADER, FALSE);
+curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "${(
+    operationType.toUpperCase()
+  )}");
+curl_setopt( $ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
+curl_setopt( $ch, CURLOPT_POSTFIELDS,  json_decode(file_get_contents("body.json"),true));
+
+try
+{
+    $response = curl_exec($ch);
+    $responseCode = curl_getinfo($ch,CURLINFO_HTTP_CODE);
+    echo $responseCode;
+}catch (Exception $e)
+{
+    echo 'Error message: ' .$e->getMessage();
+}
+
+$decoded_resp = json_decode($response);
+echo $response;
+
+?>`;
 }
 
 // JSON request body generator
@@ -270,6 +307,66 @@ function getPythonResponseCode(className, properties) {
       )
       .map((prop) =>
         getPythonResponseCode('_' + capitalise(singular(prop[0])), getAllProperties(prop[1].items))
+      )
+      .join('');
+  }
+}
+
+// Response deserialiser model generator for Php
+function getPhpResponseCode(className, properties) {
+  return `${getClasses()}${getArrayElementClasses()}class ${className} {${getFields()}
+}
+
+`;
+
+  function getFields() {
+    return properties
+      .map((prop) => {
+        const propId = prop[0];
+        const propType = prop[1].type;
+
+        if (typeDefaults[propType]) {
+          defaultValue = typeDefaults[propType];
+        } else if (propType === 'array') {
+          const items = prop[1].items;
+          const name = capitalise(singular(propId));
+          defaultValue = `[${
+            !typeDefaults[items.type] || items.type === 'object' //if it is not bool/int/num
+              ? `${name}()]` 
+              : `${typeDefaults[items.type]}];`
+          }`;
+        } else {
+          const name = capitalise(propId);
+          defaultValue = `${name}()`;
+        }
+
+        return `\n\t$${propId} = ${defaultValue} ;`;
+      })
+      .join('');
+  }
+
+  function getClasses() {
+    return properties
+      .filter((prop) => hasProperties(prop[1]) && !prop[1].type) //if it is not a basic type object
+      .map((prop) =>
+        getPhpResponseCode(capitalise(prop[0]), getAllProperties(prop[1]))
+      )
+      .join('');
+  }
+
+  function getArrayElementClasses() {
+    return properties
+      .filter(
+        (prop) =>
+          prop[1].type === 'array' &&
+          hasProperties(prop[1].items) &&
+          capitalise(singular(prop[0])) !== className // circular refs and recursion aren't a good mix
+      )
+      .map((prop) =>
+        getPhpResponseCode(
+          capitalise(singular(prop[0])),
+          getAllProperties(prop[1].items)
+        )
       )
       .join('');
   }

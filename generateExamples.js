@@ -23,12 +23,14 @@ const generator = require('.');
     fs.writeFileSync('./example/javaSnippet.txt', getAllSamples('javaSnippet'));
     fs.writeFileSync('./example/pythonSnippet.txt', getAllSamples('pythonSnippet'));
     fs.writeFileSync('./example/csharpSnippet.txt', getAllSamples('csharpSnippet'));
+    fs.writeFileSync('./example/phpSnippet.txt', getAllSamples('phpSnippet'));
 
     fs.writeFileSync('./example/requestBody.json', getAllSamples('requestBody'));
 
     fs.writeFileSync('./example/javaModel.java', getAllSamples('javaModel'));
     fs.writeFileSync('./example/pythonModel.py', getAllSamples('pythonModel'));
     fs.writeFileSync('./example/csharpModel.cs', getAllSamples('csharpModel'));
+    fs.writeFileSync('./example/phpModel.php', getAllSamples('phpModel'));
 
     fs.writeFileSync('./example/generated.json', JSON.stringify(generated, null, 2));
   } catch (err) {

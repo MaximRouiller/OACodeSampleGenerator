@@ -1,0 +1,30 @@
+<?php
+  
+// ResourceGroups_CreateOrUpdate
+
+$url="https://management.azure.com/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}?api-version=2021-04-01";
+$ch = curl_init($url);
+
+$payload = json_decode(file_get_contents("body.json"),true);
+//var_dump ($payload);
+
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+curl_setopt($ch, CURLOPT_HEADER, FALSE);
+curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
+curl_setopt( $ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
+curl_setopt( $ch, CURLOPT_POSTFIELDS,  json_decode(file_get_contents("body.json"),true));
+
+try
+{
+    $response = curl_exec($ch);
+    $responseCode = curl_getinfo($ch,CURLINFO_HTTP_CODE);
+    echo $responseCode;
+}catch (Exception $e)
+{
+    echo 'Error message: ' .$e->getMessage();
+}
+
+$decoded_resp = json_decode($response);
+echo $response;
+
+?>
