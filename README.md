@@ -1,12 +1,16 @@
 # OACodeSampleGenerator
 
+[![Build Status](https://github.com/MaximRouiller/oacodesamplegenerator/workflows/Node.js%20CI/badge.svg?branch=main)](https://github.com/MaximRouiller/oacodesamplegenerator/actions)
+
+[![npm](https://img.shields.io/npm/v/oacodesamplegenerator.svg)](https://www.npmjs.com/package/oacodesamplegenerator)
+
 Generate request snippets, a request body, and response models for each operation in a given Swagger/OpenAPI specification.
 
 Currently generated: Java, Python, C#
 
 Part of the purpose for our team of this package is to be able to generate code samples for the Azure REST API and create a statically-generated site which can show the samples. This can be found at [this repository](https://github.com/ArchawinWongkittiruk/azure-rest-api-code-samples).
 
-This package has only been tested on Node.js v14+. 
+This package has only been tested on Node.js v14+.
 
 ## Installation
 
