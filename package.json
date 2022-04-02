@@ -15,7 +15,7 @@
     "url": "git+https://github.com/MaximRouiller/OACodeSampleGenerator.git"
   },
   "author": "S. Imran, Y. Fu, D. Du, L. Huang, A. Wongkittiruk",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/MaximRouiller/OACodeSampleGenerator/issues"
   },
